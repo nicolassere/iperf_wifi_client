@@ -1,6 +1,8 @@
 import time
 from datetime import datetime
 from services.wifi_analyzer import WiFiAnalyzer
+from services.network_tests import run_ping, run_speedtest
+from services.utils import save_result
 
 def test_single_network(ssid: str, password: str = None, test_duration: int = 60):
     """Prueba una red específica durante un tiempo determinado."""

@@ -4,7 +4,9 @@ import time
 import os
 from config.config import IPERF_PATH, IPERF_SERVER
 from services.network_tests import check_iperf_server
-
+from services.wifi_analyzer import WiFiAnalyzer
+from datetime import datetime
+from pathlib import Path
 
 def run_iperf_external(path=IPERF_PATH, server_ip=IPERF_SERVER):
     """Ejecuta iperf3 con manejo de errores mejorado."""

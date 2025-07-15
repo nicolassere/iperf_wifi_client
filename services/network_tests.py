@@ -3,6 +3,7 @@ import json
 import time
 import os
 from datetime import datetime
+from services.wifi_analyzer import WiFiAnalyzer
 
 
 # Funciones prueba de red
