@@ -1,0 +1,949 @@
+[
+    {
+        "iteration": 1,
+        "current_wifi": {
+            "interface_name": "Wi-Fi 2",
+            "adapter_description": "Intel(R) Dual Band Wireless-AC 7260 #2",
+            "guid": "525fa706-984f-4270-8953-0777cf498ae5",
+            "mac_address": "d8:fc:93:bc:e1:16",
+            "connection_state": "conectado",
+            "ssid": "Pumita",
+            "bssid": "b8:dd:71:e3:9c:3c",
+            "ap_mac": "b8:dd:71:e3:9c:3c",
+            "network_type": "Infraestructura",
+            "radio_type": "802.11ac",
+            "authentication": "WPA2-Personal",
+            "encryption": "CCMP",
+            "connection_mode": "Conexi¢n autom tica",
+            "channel": "149",
+            "receive_rate": "702",
+            "transmit_rate": "702",
+            "signal_strength": "86%",
+            "signal_percentage": 86
+        },
+        "wifi_summary": {
+            "total_networks": 64,
+            "connected_networks": 1,
+            "saved_networks": 61,
+            "open_networks": 0,
+            "strongest_signal": 99,
+            "networks": [
+                {
+                    "ssid": "UM_WiFi",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "GCMP",
+                    "security_type": "Presente",
+                    "has_password": true,
+                    "is_current": false
+                },
+                {
+                    "ssid": "PlantaIA",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "GCMP",
+                    "security_type": "Presente",
+                    "has_password": true,
+                    "is_current": false
+                },
+                {
+                    "ssid": "TIC",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "GCMP",
+                    "security_type": "Presente",
+                    "has_password": true,
+                    "is_current": false
+                },
+                {
+                    "ssid": "Hogsmeade",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "GCMP",
+                    "security_type": "Presente",
+                    "has_password": true,
+                    "is_current": false
+                },
+                {
+                    "ssid": "Ariana-5GHz",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "GCMP",
+                    "security_type": "Presente",
+                    "has_password": true,
+                    "is_current": false
+                },
+                {
+                    "ssid": "iPhone de Nacho",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "GCMP",
+                    "security_type": "Presente",
+                    "has_password": true,
+                    "is_current": false
+                },
+                {
+                    "ssid": "Soydeliveryext",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "GCMP",
+                    "security_type": "Presente",
+                    "has_password": true,
+                    "is_current": false
+                },
+                {
+                    "ssid": "AndroidA",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "GCMP",
+                    "security_type": "Presente",
+                    "has_password": true,
+                    "is_current": false
+                },
+                {
+                    "ssid": "Puma",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "CCMP",
+                    "security_type": "Presente",
+                    "has_password": true,
+                    "is_current": false,
+                    "signal_strength": "99%",
+                    "signal_percentage": 99,
+                    "channel": "1",
+                    "radio_type": "802.11n",
+                    "authentication": "WPA2-Personal",
+                    "bssid": "b8:dd:71:e3:9c:3a",
+                    "mac_address": "b8:dd:71:e3:9c:3a",
+                    "network_type": "Infraestructura"
+                },
+                {
+                    "ssid": "SD_Infra 3",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "GCMP",
+                    "security_type": "Presente",
+                    "has_password": true,
+                    "is_current": false
+                },
+                {
+                    "ssid": "SD_Infra 2",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "GCMP",
+                    "security_type": "Presente",
+                    "has_password": true,
+                    "is_current": false
+                },
+                {
+                    "ssid": "SD_Desa",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "GCMP",
+                    "security_type": "Presente",
+                    "has_password": true,
+                    "is_current": false
+                },
+                {
+                    "ssid": "SD_Infra",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "GCMP",
+                    "security_type": "Presente",
+                    "has_password": true,
+                    "is_current": false
+                },
+                {
+                    "ssid": "SD_Corp",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "GCMP",
+                    "security_type": "Presente",
+                    "has_password": true,
+                    "is_current": false
+                },
+                {
+                    "ssid": "SD_Dep",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "GCMP",
+                    "security_type": "Presente",
+                    "has_password": true,
+                    "is_current": false
+                },
+                {
+                    "ssid": "SD_Wifi",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "GCMP",
+                    "security_type": "Presente",
+                    "has_password": true,
+                    "is_current": false
+                },
+                {
+                    "ssid": "MikroTik-2B76D1 2",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "GCMP",
+                    "security_type": "Presente",
+                    "has_password": true,
+                    "is_current": false
+                },
+                {
+                    "ssid": "MikroTik-2B76D1",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "Ninguna",
+                    "security_type": "Ausente",
+                    "is_current": false
+                },
+                {
+                    "ssid": "bach1",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "GCMP",
+                    "security_type": "Presente",
+                    "has_password": true,
+                    "is_current": false
+                },
+                {
+                    "ssid": "Patrucho",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "GCMP",
+                    "security_type": "Presente",
+                    "has_password": true,
+                    "is_current": false
+                },
+                {
+                    "ssid": "Canon_ij_29470_G3070series",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "Ninguna",
+                    "security_type": "Ausente",
+                    "is_current": false
+                },
+                {
+                    "ssid": "Hotel Acacias",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "GCMP",
+                    "security_type": "Presente",
+                    "has_password": true,
+                    "is_current": false
+                },
+                {
+                    "ssid": "Dayman_2.4",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "GCMP",
+                    "security_type": "Presente",
+                    "has_password": true,
+                    "is_current": false
+                },
+                {
+                    "ssid": "Pumita",
+                    "is_saved": true,
+                    "status": "connected",
+                    "encryption": "CCMP",
+                    "security_type": "Presente",
+                    "has_password": true,
+                    "interface_name": "Wi-Fi 2",
+                    "adapter_description": "Intel(R) Dual Band Wireless-AC 7260 #2",
+                    "guid": "525fa706-984f-4270-8953-0777cf498ae5",
+                    "mac_address": "b8:dd:71:e3:9c:3c",
+                    "connection_state": "conectado",
+                    "bssid": "b8:dd:71:e3:9c:3c",
+                    "ap_mac": "b8:dd:71:e3:9c:3c",
+                    "network_type": "Infraestructura",
+                    "radio_type": "802.11ac",
+                    "authentication": "WPA2-Personal",
+                    "connection_mode": "Conexi¢n autom tica",
+                    "channel": "149",
+                    "receive_rate": "702",
+                    "transmit_rate": "702",
+                    "signal_strength": "99%",
+                    "signal_percentage": 99,
+                    "is_current": true
+                },
+                {
+                    "ssid": "SoyDeliveryOp",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "Ninguna",
+                    "security_type": "Ausente",
+                    "is_current": false
+                },
+                {
+                    "ssid": "SoyDeliveryextm5",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "GCMP",
+                    "security_type": "Presente",
+                    "has_password": true,
+                    "is_current": false
+                },
+                {
+                    "ssid": "SoyDeliveryTech",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "GCMP",
+                    "security_type": "Presente",
+                    "has_password": true,
+                    "is_current": false
+                },
+                {
+                    "ssid": "Prueba",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "GCMP",
+                    "security_type": "Presente",
+                    "has_password": true,
+                    "is_current": false
+                },
+                {
+                    "ssid": "SoyDeliveryM5",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "GCMP",
+                    "security_type": "Presente",
+                    "has_password": true,
+                    "is_current": false
+                },
+                {
+                    "ssid": "MikroTik-2B75F5",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "Ninguna",
+                    "security_type": "Ausente",
+                    "is_current": false
+                },
+                {
+                    "ssid": "MikroTik-2B7687",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "Ninguna",
+                    "security_type": "Ausente",
+                    "is_current": false
+                },
+                {
+                    "ssid": "SoyDeliverym3",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "GCMP",
+                    "security_type": "Presente",
+                    "has_password": true,
+                    "is_current": false
+                },
+                {
+                    "ssid": "MikroTik-2B766B",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "Ninguna",
+                    "security_type": "Ausente",
+                    "is_current": false
+                },
+                {
+                    "ssid": "MikroTik-2B7689",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "Ninguna",
+                    "security_type": "Ausente",
+                    "is_current": false
+                },
+                {
+                    "ssid": "SoyDeliveryextO",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "GCMP",
+                    "security_type": "Presente",
+                    "has_password": true,
+                    "is_current": false
+                },
+                {
+                    "ssid": "MikroTik-2B75E1",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "Ninguna",
+                    "security_type": "Ausente",
+                    "is_current": false
+                },
+                {
+                    "ssid": "Iphone Tito",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "GCMP",
+                    "security_type": "Presente",
+                    "has_password": true,
+                    "is_current": false
+                },
+                {
+                    "ssid": "Soydeliveryextm1 2",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "CCMP",
+                    "security_type": "Presente",
+                    "has_password": true,
+                    "is_current": false
+                },
+                {
+                    "ssid": "Soydeliveryextm1",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "Ninguna",
+                    "security_type": "Ausente",
+                    "is_current": false
+                },
+                {
+                    "ssid": "Ingenio_",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "GCMP",
+                    "security_type": "Presente",
+                    "has_password": true,
+                    "is_current": false
+                },
+                {
+                    "ssid": "LATUWIFI",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "Ninguna",
+                    "security_type": "Ausente",
+                    "is_current": false
+                },
+                {
+                    "ssid": "Cowork",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "GCMP",
+                    "security_type": "Presente",
+                    "has_password": true,
+                    "is_current": false
+                },
+                {
+                    "ssid": "soydelivery",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "GCMP",
+                    "security_type": "Presente",
+                    "has_password": true,
+                    "is_current": false
+                },
+                {
+                    "ssid": "L104",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "GCMP",
+                    "security_type": "Presente",
+                    "has_password": true,
+                    "is_current": false
+                },
+                {
+                    "ssid": "Modo Obeso",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "GCMP",
+                    "security_type": "Presente",
+                    "has_password": true,
+                    "is_current": false
+                },
+                {
+                    "ssid": "Savage's",
+                    "is_saved": true,
+                    "status": "saved",
+                    "is_current": false
+                },
+                {
+                    "ssid": "IPhone de Sofi (2)",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "GCMP",
+                    "security_type": "Presente",
+                    "has_password": true,
+                    "is_current": false
+                },
+                {
+                    "ssid": "Radisson Hotel",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "Ninguna",
+                    "security_type": "Ausente",
+                    "is_current": false
+                },
+                {
+                    "ssid": "OF1",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "GCMP",
+                    "security_type": "Presente",
+                    "has_password": true,
+                    "is_current": false
+                },
+                {
+                    "ssid": "Fer",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "GCMP",
+                    "security_type": "Presente",
+                    "has_password": true,
+                    "is_current": false
+                },
+                {
+                    "ssid": "CasalLeon",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "CCMP",
+                    "security_type": "Presente",
+                    "has_password": true,
+                    "is_current": false,
+                    "signal_strength": "48%",
+                    "signal_percentage": 48,
+                    "channel": "5",
+                    "radio_type": "802.11n",
+                    "authentication": "WPA2-Personal",
+                    "bssid": "98:da:c4:d1:16:e6",
+                    "mac_address": "98:da:c4:d1:16:e6",
+                    "network_type": "Infraestructura"
+                },
+                {
+                    "ssid": "Leon",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "GCMP",
+                    "security_type": "Presente",
+                    "has_password": true,
+                    "is_current": false
+                },
+                {
+                    "ssid": "DANIEL",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "GCMP",
+                    "security_type": "Presente",
+                    "has_password": true,
+                    "is_current": false
+                },
+                {
+                    "ssid": "VALE_EXT_EXT",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "GCMP",
+                    "security_type": "Presente",
+                    "has_password": true,
+                    "is_current": false
+                },
+                {
+                    "ssid": "WiFi-Hospital-Britanico",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "Ninguna",
+                    "security_type": "Ausente",
+                    "is_current": false
+                },
+                {
+                    "ssid": "Melman",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "GCMP",
+                    "security_type": "Presente",
+                    "has_password": true,
+                    "is_current": false
+                },
+                {
+                    "ssid": "Casa Puma",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "GCMP",
+                    "security_type": "Presente",
+                    "has_password": true,
+                    "is_current": false
+                },
+                {
+                    "ssid": "MAGGIE",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "GCMP",
+                    "security_type": "Presente",
+                    "has_password": true,
+                    "is_current": false
+                },
+                {
+                    "ssid": "AndroidAP",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "GCMP",
+                    "security_type": "Presente",
+                    "has_password": true,
+                    "is_current": false
+                },
+                {
+                    "ssid": "Preu",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "GCMP",
+                    "security_type": "Presente",
+                    "has_password": true,
+                    "is_current": false
+                },
+                {
+                    "ssid": "VidaVeterinaria",
+                    "is_saved": true,
+                    "status": "saved",
+                    "encryption": "GCMP",
+                    "security_type": "Presente",
+                    "has_password": true,
+                    "is_current": false
+                },
+                {
+                    "ssid": "CasaM",
+                    "is_current": false,
+                    "is_saved": false,
+                    "signal_strength": "46%",
+                    "signal_percentage": 46,
+                    "channel": "3",
+                    "radio_type": "802.11n",
+                    "authentication": "WPA2-Personal",
+                    "encryption": "CCMP",
+                    "bssid": "d8:47:32:50:7d:5a",
+                    "mac_address": "d8:47:32:50:7d:5a",
+                    "network_type": "Infraestructura",
+                    "status": "available"
+                },
+                {
+                    "ssid": "ABEL-2.4GHz",
+                    "is_current": false,
+                    "is_saved": false,
+                    "signal_strength": "26%",
+                    "signal_percentage": 26,
+                    "channel": "10",
+                    "radio_type": "802.11ax",
+                    "authentication": "WPA2-Personal",
+                    "encryption": "CCMP",
+                    "bssid": "cc:29:bd:89:7e:08",
+                    "mac_address": "cc:29:bd:89:7e:08",
+                    "network_type": "Infraestructura",
+                    "status": "available"
+                },
+                {
+                    "ssid": "CasaM_EXT",
+                    "is_current": false,
+                    "is_saved": false,
+                    "signal_strength": "71%",
+                    "signal_percentage": 71,
+                    "channel": "3",
+                    "radio_type": "802.11n",
+                    "authentication": "WPA2-Personal",
+                    "encryption": "CCMP",
+                    "bssid": "62:61:b4:05:92:54",
+                    "mac_address": "62:61:b4:05:92:54",
+                    "network_type": "Infraestructura",
+                    "status": "available"
+                }
+            ]
+        },
+        "ping": {
+            "raw_output": "\nHaciendo ping a 8.8.8.8 con 32 bytes de datos:\nRespuesta desde 8.8.8.8: bytes=32 tiempo=16ms TTL=116\nRespuesta desde 8.8.8.8: bytes=32 tiempo=12ms TTL=116\nRespuesta desde 8.8.8.8: bytes=32 tiempo=14ms TTL=116\nRespuesta desde 8.8.8.8: bytes=32 tiempo=17ms TTL=116\n\nEstad¡sticas de ping para 8.8.8.8:\n    Paquetes: enviados = 4, recibidos = 4, perdidos = 0\n    (0% perdidos),\nTiempos aproximados de ida y vuelta en milisegundos:\n    M¡nimo = 12ms, M ximo = 17ms, Media = 14ms\n",
+            "avg_time": 14.75,
+            "min_time": 12,
+            "max_time": 17,
+            "packet_loss": "0% perdidos"
+        },
+        "traceroute": "\nTraza a la direcci¢n dns.google [8.8.8.8]\nsobre un m ximo de 30 saltos:\n\n  1     5 ms     4 ms     3 ms  gpon.net [192.168.1.1] \n  2     8 ms     4 ms     8 ms  mue4bras1.antel.net.uy [200.40.162.203] \n  3     6 ms    12 ms     9 ms  cbb4cor1-be120-605.antel.net.uy [200.40.162.2] \n  4     *        *        *     Tiempo de espera agotado para esta solicitud.\n  5    13 ms    12 ms    13 ms  brmln2.pdp-be1004.antel.net.uy [179.31.62.148] \n  6    14 ms    14 ms    12 ms  crltt1.eze-ae1101.antel.net.uy [179.31.62.172] \n  7    12 ms    11 ms    11 ms  72.14.216.159 \n  8     *       12 ms    11 ms  72.14.216.158 \n  9    13 ms    14 ms    14 ms  108.170.255.35 \n 10    12 ms    12 ms    12 ms  142.251.239.149 \n 11    15 ms    15 ms    12 ms  dns.google [8.8.8.8] \n\nTraza completa.\n",
+        "speedtest": {
+            "error": "speedtest falló",
+            "stderr": "==============================================================================\n\nYou may only use this Speedtest software and information generated\nfrom it for personal, non-commercial use, through a command line\ninterface on a personal computer. Your use of this software is subject\nto the End User License Agreement, Terms of Use and Privacy Policy at\nthese URLs:\n\n\thttps://www.speedtest.net/about/eula\n\thttps://www.speedtest.net/about/terms\n\thttps://www.speedtest.net/about/privacy\n\n==============================================================================\n\nTo accept the message please run speedtest interactively or use the following: \n\n    speedtest --accept-license\n"
+        },
+        "iperf3": {
+            "start": {
+                "connected": [
+                    {
+                        "socket": 4,
+                        "local_host": "127.0.0.1",
+                        "local_port": 52614,
+                        "remote_host": "127.0.0.1",
+                        "remote_port": 5201
+                    }
+                ],
+                "version": "iperf 3.1.1",
+                "system_info": "CYGWIN_NT-10.0-WOW PC-587b00 2.3.1(0.291/5/3) 2015-11-14 12:42 i686",
+                "timestamp": {
+                    "time": "Tue, 15 Jul 2025 02:41:46 GMT",
+                    "timesecs": 1752547306
+                },
+                "connecting_to": {
+                    "host": "127.0.0.1",
+                    "port": 5201
+                },
+                "cookie": "PC-587b00.1752547306.164323.088db54b",
+                "tcp_mss_default": 0,
+                "test_start": {
+                    "protocol": "TCP",
+                    "num_streams": 1,
+                    "blksize": 131072,
+                    "omit": 0,
+                    "duration": 10,
+                    "bytes": 0,
+                    "blocks": 0,
+                    "reverse": 0
+                }
+            },
+            "intervals": [
+                {
+                    "streams": [
+                        {
+                            "socket": 4,
+                            "start": 0,
+                            "end": 1.00775,
+                            "seconds": 1.00776,
+                            "bytes": 21949440,
+                            "bits_per_second": 174244000.0,
+                            "omitted": false
+                        }
+                    ],
+                    "sum": {
+                        "start": 0,
+                        "end": 1.00775,
+                        "seconds": 1.00776,
+                        "bytes": 21949440,
+                        "bits_per_second": 174244000.0,
+                        "omitted": false
+                    }
+                },
+                {
+                    "streams": [
+                        {
+                            "socket": 4,
+                            "start": 1.00775,
+                            "end": 2.003,
+                            "seconds": 0.995241,
+                            "bytes": 69443584,
+                            "bits_per_second": 558205000.0,
+                            "omitted": false
+                        }
+                    ],
+                    "sum": {
+                        "start": 1.00775,
+                        "end": 2.003,
+                        "seconds": 0.995241,
+                        "bytes": 69443584,
+                        "bits_per_second": 558205000.0,
+                        "omitted": false
+                    }
+                },
+                {
+                    "streams": [
+                        {
+                            "socket": 4,
+                            "start": 2.003,
+                            "end": 3.0015,
+                            "seconds": 0.998508,
+                            "bytes": 42228736,
+                            "bits_per_second": 338335000.0,
+                            "omitted": false
+                        }
+                    ],
+                    "sum": {
+                        "start": 2.003,
+                        "end": 3.0015,
+                        "seconds": 0.998508,
+                        "bytes": 42228736,
+                        "bits_per_second": 338335000.0,
+                        "omitted": false
+                    }
+                },
+                {
+                    "streams": [
+                        {
+                            "socket": 4,
+                            "start": 3.0015,
+                            "end": 4.00543,
+                            "seconds": 1.00393,
+                            "bytes": 56116224,
+                            "bits_per_second": 447172000.0,
+                            "omitted": false
+                        }
+                    ],
+                    "sum": {
+                        "start": 3.0015,
+                        "end": 4.00543,
+                        "seconds": 1.00393,
+                        "bytes": 56116224,
+                        "bits_per_second": 447172000.0,
+                        "omitted": false
+                    }
+                },
+                {
+                    "streams": [
+                        {
+                            "socket": 4,
+                            "start": 4.00543,
+                            "end": 5.00268,
+                            "seconds": 0.997245,
+                            "bytes": 49503232,
+                            "bits_per_second": 397120000.0,
+                            "omitted": false
+                        }
+                    ],
+                    "sum": {
+                        "start": 4.00543,
+                        "end": 5.00268,
+                        "seconds": 0.997245,
+                        "bytes": 49503232,
+                        "bits_per_second": 397120000.0,
+                        "omitted": false
+                    }
+                },
+                {
+                    "streams": [
+                        {
+                            "socket": 4,
+                            "start": 5.00268,
+                            "end": 6.00201,
+                            "seconds": 0.999335,
+                            "bytes": 78313472,
+                            "bits_per_second": 626925000.0,
+                            "omitted": false
+                        }
+                    ],
+                    "sum": {
+                        "start": 5.00268,
+                        "end": 6.00201,
+                        "seconds": 0.999335,
+                        "bytes": 78313472,
+                        "bits_per_second": 626925000.0,
+                        "omitted": false
+                    }
+                },
+                {
+                    "streams": [
+                        {
+                            "socket": 4,
+                            "start": 6.00201,
+                            "end": 7.0029,
+                            "seconds": 1.00089,
+                            "bytes": 58940416,
+                            "bits_per_second": 471105000.0,
+                            "omitted": false
+                        }
+                    ],
+                    "sum": {
+                        "start": 6.00201,
+                        "end": 7.0029,
+                        "seconds": 1.00089,
+                        "bytes": 58940416,
+                        "bits_per_second": 471105000.0,
+                        "omitted": false
+                    }
+                },
+                {
+                    "streams": [
+                        {
+                            "socket": 4,
+                            "start": 7.0029,
+                            "end": 8.00775,
+                            "seconds": 1.00485,
+                            "bytes": 52118528,
+                            "bits_per_second": 414937000.0,
+                            "omitted": false
+                        }
+                    ],
+                    "sum": {
+                        "start": 7.0029,
+                        "end": 8.00775,
+                        "seconds": 1.00485,
+                        "bytes": 52118528,
+                        "bits_per_second": 414937000.0,
+                        "omitted": false
+                    }
+                },
+                {
+                    "streams": [
+                        {
+                            "socket": 4,
+                            "start": 8.00775,
+                            "end": 9.00449,
+                            "seconds": 0.99674,
+                            "bytes": 53825536,
+                            "bits_per_second": 432013000.0,
+                            "omitted": false
+                        }
+                    ],
+                    "sum": {
+                        "start": 8.00775,
+                        "end": 9.00449,
+                        "seconds": 0.99674,
+                        "bytes": 53825536,
+                        "bits_per_second": 432013000.0,
+                        "omitted": false
+                    }
+                },
+                {
+                    "streams": [
+                        {
+                            "socket": 4,
+                            "start": 9.00449,
+                            "end": 10.0015,
+                            "seconds": 0.997013,
+                            "bytes": 56455168,
+                            "bits_per_second": 452994000.0,
+                            "omitted": false
+                        }
+                    ],
+                    "sum": {
+                        "start": 9.00449,
+                        "end": 10.0015,
+                        "seconds": 0.997013,
+                        "bytes": 56455168,
+                        "bits_per_second": 452994000.0,
+                        "omitted": false
+                    }
+                }
+            ],
+            "end": {
+                "streams": [
+                    {
+                        "sender": {
+                            "socket": 4,
+                            "start": 0,
+                            "end": 10.0015,
+                            "seconds": 10.0015,
+                            "bytes": 538894336,
+                            "bits_per_second": 431051000.0
+                        },
+                        "receiver": {
+                            "socket": 4,
+                            "start": 0,
+                            "end": 10.0015,
+                            "seconds": 10.0015,
+                            "bytes": 538890240,
+                            "bits_per_second": 431047000.0
+                        }
+                    }
+                ],
+                "sum_sent": {
+                    "start": 0,
+                    "end": 10.0015,
+                    "seconds": 10.0015,
+                    "bytes": 538894336,
+                    "bits_per_second": 431051000.0
+                },
+                "sum_received": {
+                    "start": 0,
+                    "end": 10.0015,
+                    "seconds": 10.0015,
+                    "bytes": 538890240,
+                    "bits_per_second": 431047000.0
+                },
+                "cpu_utilization_percent": {
+                    "host_total": 23.7211,
+                    "host_user": 2.02753,
+                    "host_system": 21.6936,
+                    "remote_total": 2.35124,
+                    "remote_user": 0.723754,
+                    "remote_system": 1.62748
+                }
+            }
+        },
+        "timestamp": "2025-07-14T23:41:56.222119"
+    }
+]

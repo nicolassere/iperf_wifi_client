@@ -1,138 +1,38 @@
-# network_tests.py
-"""
-Funciones para ejecutar pruebas de red (ping, traceroute, speedtest, iperf3)
-"""
-
 import subprocess
 import json
-import os
 import time
-from config import (
-    IPERF_PATH, IPERF_SERVER, PING_TIMEOUT, TRACEROUTE_TIMEOUT,
-    SPEEDTEST_TIMEOUT, IPERF_TIMEOUT
-)
-
-
-def check_iperf_server():
-    """Verifica si hay un servidor iperf3 corriendo."""
-    try:
-        result = subprocess.run(
-            ["netstat", "-an"], 
-            capture_output=True, 
-            text=True,
-            timeout=10
-        )
-        return ":5201" in result.stdout
-    except:
-        return False
-
-
-def run_ping(target="8.8.8.8", count=4):
-    """Ejecuta ping y extrae métricas básicas."""
-    try:
-        result = subprocess.run(
-            ["ping", "-n", str(count), target], 
-            capture_output=True, 
-            text=True,
-            timeout=PING_TIMEOUT
-        )
-        
-        lines = result.stdout.splitlines()
-        ping_times = []
-        packet_loss = "0%"
-        
-        for line in lines:
-            if "tiempo=" in line:
-                try:
-                    time_part = line.split("tiempo=")[1].split("ms")[0]
-                    ping_times.append(int(time_part))
-                except:
-                    pass
-            elif "perdidos" in line:
-                try:
-                    packet_loss = line.split("(")[1].split(")")[0]
-                except:
-                    pass
-        
-        return {
-            "raw_output": result.stdout,
-            "avg_time": sum(ping_times) / len(ping_times) if ping_times else 0,
-            "min_time": min(ping_times) if ping_times else 0,
-            "max_time": max(ping_times) if ping_times else 0,
-            "packet_loss": packet_loss
-        }
-    except Exception as e:
-        return {"error": f"Error en ping: {str(e)}"}
-
-
-def run_traceroute(target="8.8.8.8"):
-    """Ejecuta traceroute con timeout."""
-    try:
-        result = subprocess.run(
-            ["tracert", target], 
-            capture_output=True, 
-            text=True,
-            timeout=TRACEROUTE_TIMEOUT
-        )
-        return result.stdout
-    except subprocess.TimeoutExpired:
-        return "Traceroute timeout después de 60 segundos"
-    except Exception as e:
-        return f"Error en traceroute: {str(e)}"
-
-
-def run_speedtest():
-    """Ejecuta speedtest-cli si está disponible."""
-    try:
-        # Verificar si speedtest-cli está disponible
-        subprocess.run(["speedtest-cli", "--version"], 
-                      capture_output=True, 
-                      text=True, 
-                      timeout=5)
-        
-        result = subprocess.run(
-            ["speedtest-cli", "--json"], 
-            capture_output=True, 
-            text=True,
-            timeout=SPEEDTEST_TIMEOUT
-        )
-        
-        if result.returncode == 0:
-            return json.loads(result.stdout)
-        else:
-            return {"error": "speedtest-cli falló", "stderr": result.stderr}
-            
-    except subprocess.TimeoutExpired:
-        return {"error": "Speedtest timeout después de 2 minutos"}
-    except FileNotFoundError:
-        return {"error": "speedtest-cli no está instalado"}
-    except json.JSONDecodeError:
-        return {"error": "No se pudo parsear el JSON de speedtest-cli"}
-    except Exception as e:
-        return {"error": f"Error en speedtest: {str(e)}"}
+import os
+from config.config import IPERF_PATH, IPERF_SERVER
+from services.network_tests import check_iperf_server
 
 
 def run_iperf_external(path=IPERF_PATH, server_ip=IPERF_SERVER):
     """Ejecuta iperf3 con manejo de errores mejorado."""
     
+    # Verificar si el archivo existe
     if not os.path.exists(path):
         return {"error": f"iperf3 no encontrado en {path}"}
     
+    # Verificar si hay servidor corriendo
     if not check_iperf_server():
         return {"error": "No hay servidor iperf3 corriendo en el puerto 5201"}
     
     try:
+        # Intentar ejecutar iperf3 con diferentes métodos
         methods = [
+            # Método 1: Usar shell=True (más compatible con Windows)
             {
                 "args": f'"{path}" -c {server_ip} -J -t 10',
                 "shell": True,
                 "cwd": os.path.dirname(path)
             },
+            # Método 2: Lista de argumentos sin shell
             {
                 "args": [path, "-c", server_ip, "-J", "-t", "10"],
                 "shell": False,
                 "cwd": os.path.dirname(path)
             },
+            # Método 3: Cambiar al directorio de iperf3
             {
                 "args": ["iperf3.exe", "-c", server_ip, "-J", "-t", "10"],
                 "shell": False,
@@ -147,7 +47,7 @@ def run_iperf_external(path=IPERF_PATH, server_ip=IPERF_SERVER):
                     method["args"],
                     capture_output=True,
                     text=True,
-                    timeout=IPERF_TIMEOUT,
+                    timeout=30,
                     shell=method["shell"],
                     cwd=method["cwd"],
                     creationflags=subprocess.CREATE_NO_WINDOW if not method["shell"] else 0
@@ -158,7 +58,7 @@ def run_iperf_external(path=IPERF_PATH, server_ip=IPERF_SERVER):
                     return json.loads(result.stdout)
                 else:
                     print(f"  ✗ Método {i+1} falló: código {result.returncode}")
-                    if i == len(methods) - 1:
+                    if i == len(methods) - 1:  # Último método
                         return {
                             "error": f"Todos los métodos fallaron. Último error: código {result.returncode}",
                             "stderr": result.stderr,
@@ -184,7 +84,6 @@ def run_iperf_external(path=IPERF_PATH, server_ip=IPERF_SERVER):
     except Exception as e:
         return {"error": f"Error general ejecutando iperf3: {str(e)}"}
 
-
 def start_iperf_server(path=IPERF_PATH):
     """Inicia servidor iperf3 si no está corriendo."""
     if check_iperf_server():
@@ -194,7 +93,7 @@ def start_iperf_server(path=IPERF_PATH):
     try:
         print("Iniciando servidor iperf3...")
         subprocess.Popen([path, "-s"], creationflags=subprocess.CREATE_NEW_CONSOLE)
-        time.sleep(2)
+        time.sleep(2)  # Esperar a que arranque
         
         if check_iperf_server():
             print("✓ Servidor iperf3 iniciado correctamente")
@@ -207,6 +106,29 @@ def start_iperf_server(path=IPERF_PATH):
         print(f"✗ Error iniciando servidor iperf3: {e}")
         return False
 
+def save_result(result_dict, output_path="test_results.json"):
+    """Guarda resultado con timestamp."""
+    result_dict["timestamp"] = datetime.now().isoformat()
+    
+    try:
+        # Crear directorio si no existe
+        Path(output_path).parent.mkdir(parents=True, exist_ok=True)
+        
+        # Cargar datos existentes
+        try:
+            with open(output_path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+        except FileNotFoundError:
+            data = []
+        
+        data.append(result_dict)
+        
+        # Guardar con encoding UTF-8
+        with open(output_path, "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=4, ensure_ascii=False)
+            
+    except Exception as e:
+        print(f"✗ Error guardando resultado: {e}")
 
 def diagnose_iperf3():
     """Diagnóstico completo de iperf3."""

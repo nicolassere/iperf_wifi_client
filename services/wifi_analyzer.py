@@ -1,13 +1,12 @@
-# wifi_analyzer.py
-"""
-Analizador WiFi para Windows usando netsh
-"""
-
 import subprocess
+import json
 import time
+import os
 import re
+from datetime import datetime
+from pathlib import Path
 from typing import List, Dict, Optional
-from config import NETSH_TIMEOUT
+from config.config import *
 
 
 class WiFiAnalyzer:
@@ -32,7 +31,7 @@ class WiFiAnalyzer:
             subprocess.run(["netsh", "wlan", "refresh"], 
                          capture_output=True, timeout=10)
             
-            # Obtener redes disponibles
+            # Obtener redes disponibles (comando correcto)
             networks = self._parse_available_networks()
             self.cached_networks = networks
             self.last_scan = current_time
@@ -49,12 +48,12 @@ class WiFiAnalyzer:
         networks = []
         
         try:
-            # Obtener perfiles guardados
+            # COMANDO CORRECTO: Obtener todas las redes visibles
             result = subprocess.run(
                 ["netsh", "wlan", "show", "profiles"],
                 capture_output=True,
                 text=True,
-                timeout=NETSH_TIMEOUT
+                timeout=15
             )
             
             # Obtener información de la conexión actual
@@ -65,6 +64,7 @@ class WiFiAnalyzer:
             saved_profiles = []
             for line in result.stdout.splitlines():
                 if "All User Profile" in line or "Perfil de todos los usuarios" in line:
+                    # Extraer nombre del perfil
                     profile_name = line.split(":")[-1].strip()
                     if profile_name:
                         saved_profiles.append(profile_name)
@@ -73,6 +73,7 @@ class WiFiAnalyzer:
             for profile_name in saved_profiles:
                 network_info = self._get_network_details(profile_name)
                 if network_info:
+                    # Marcar si es la red actual
                     if profile_name == current_ssid:
                         network_info.update(current_info)
                         network_info["is_current"] = True
@@ -83,17 +84,20 @@ class WiFiAnalyzer:
                     
                     networks.append(network_info)
             
-            # Obtener redes disponibles (no solo guardadas)
+            # NUEVO: Obtener redes disponibles (no solo guardadas)
             visible_networks = self._get_all_visible_networks()
             
-            # Combinar información
+            # Combinar información: agregar redes visibles que no estén guardadas
             for visible in visible_networks:
+                # Buscar si ya existe en perfiles guardados
                 existing = next((n for n in networks if n.get('ssid') == visible.get('ssid')), None)
                 if not existing:
+                    # Agregar nueva red visible (no guardada)
                     visible["is_saved"] = False
                     visible["status"] = "available"
                     networks.append(visible)
                 else:
+                    # Actualizar información de red guardada con datos visibles
                     existing.update({k: v for k, v in visible.items() if v and k not in ['is_saved', 'status']})
             
         except Exception as e:
@@ -102,27 +106,33 @@ class WiFiAnalyzer:
         return networks
     
     def _get_all_visible_networks(self) -> List[Dict]:
-        """Obtiene TODAS las redes visibles."""
+        """Obtiene TODAS las redes visibles (no solo la conectada)."""
         networks = []
         
         try:
+            # Comando para obtener todas las redes disponibles
             result = subprocess.run(
                 ["netsh", "wlan", "show", "networks", "mode=bssid"],
                 capture_output=True,
                 text=True,
                 timeout=20,
-                encoding='cp1252'
+                encoding='cp1252'  # Codificación para Windows en español
             )
+            
+
             
             current_network = {}
             
             for line in result.stdout.splitlines():
                 line = line.strip()
                 
+                # Detectar inicio de nueva red
                 if line.startswith("SSID") and ":" in line:
+                    # Guardar red anterior si existe
                     if current_network.get("ssid"):
                         networks.append(current_network.copy())
                     
+                    # Iniciar nueva red
                     ssid = line.split(":", 1)[1].strip()
                     current_network = {
                         "ssid": ssid,
@@ -144,6 +154,9 @@ class WiFiAnalyzer:
                     key = key.strip().lower()
                     value = value.strip()
                     
+       
+                    
+                    # Múltiples variaciones de nombres según idioma y codificación
                     if any(term in key for term in ["network type", "tipo de red"]):
                         current_network["network_type"] = value
                     elif any(term in key for term in ["authentication", "autenticación", "autenticacion", "autenticaci¢n"]):
@@ -155,10 +168,12 @@ class WiFiAnalyzer:
                         current_network["mac_address"] = value
                     elif any(term in key for term in ["signal", "señal", "senal", "se¤al"]):
                         current_network["signal_strength"] = value
+                        # Extraer porcentaje numérico
                         match = re.search(r'(\d+)%', value)
                         if match:
                             current_network["signal_percentage"] = int(match.group(1))
                         else:
+                            # Si no tiene %, buscar solo números
                             match = re.search(r'(\d+)', value)
                             if match:
                                 current_network["signal_percentage"] = int(match.group(1))
@@ -167,11 +182,13 @@ class WiFiAnalyzer:
                     elif any(term in key for term in ["channel", "canal"]):
                         current_network["channel"] = value
             
+            # Agregar última red
             if current_network.get("ssid"):
                 networks.append(current_network)
             
+            
         except Exception as e:
-            print(f"❌ Error obteniendo redes visibles: {e}")
+            print(f"❌ Error obteniendo todas las redes visibles: {e}")
         
         return networks
     
@@ -218,16 +235,26 @@ class WiFiAnalyzer:
         try:
             print(f"🔗 Intentando conectar a: {ssid}")
             
-            result = subprocess.run(
-                ["netsh", "wlan", "connect", f"name={ssid}"],
-                capture_output=True,
-                text=True,
-                timeout=30
-            )
+            if password:
+                # Conectar con contraseña
+                result = subprocess.run(
+                    ["netsh", "wlan", "connect", f"name={ssid}"],
+                    capture_output=True,
+                    text=True,
+                    timeout=30
+                )
+            else:
+                # Conectar sin contraseña (red abierta)
+                result = subprocess.run(
+                    ["netsh", "wlan", "connect", f"name={ssid}"],
+                    capture_output=True,
+                    text=True,
+                    timeout=30
+                )
             
             if result.returncode == 0:
                 print(f"✅ Conectado exitosamente a {ssid}")
-                time.sleep(3)
+                time.sleep(3)  # Esperar estabilización
                 return {
                     "success": True,
                     "ssid": ssid,
@@ -260,8 +287,9 @@ class WiFiAnalyzer:
                 capture_output=True,
                 text=True,
                 timeout=10,
-                encoding='cp1252'
+                encoding='cp1252'  # Codificación para Windows en español
             )
+
             
             info = {}
             for line in result.stdout.splitlines():
@@ -270,6 +298,8 @@ class WiFiAnalyzer:
                     key, value = line.split(":", 1)
                     key = key.strip().lower()
                     value = value.strip()
+                    
+                    # DEBUG: Imprimir cada parseo
                     
                     if any(term in key for term in ["name", "nombre"]):
                         info["interface_name"] = value
@@ -304,10 +334,12 @@ class WiFiAnalyzer:
                         info["transmit_rate"] = value
                     elif any(term in key for term in ["signal", "señal", "senal", "se¤al"]):
                         info["signal_strength"] = value
+                        # Extraer porcentaje numérico
                         match = re.search(r'(\d+)%', value)
                         if match:
                             info["signal_percentage"] = int(match.group(1))
                         else:
+                            # Si no tiene %, buscar solo números
                             match = re.search(r'(\d+)', value)
                             if match:
                                 info["signal_percentage"] = int(match.group(1))
