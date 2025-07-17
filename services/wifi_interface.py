@@ -4,23 +4,29 @@ from services.wifi_analyzer import WiFiAnalyzer
 from config.config import *
 
 def display_wifi_summary(analyzer: WiFiAnalyzer):
-    """Muestra resumen de WiFi de forma amigable."""
+    """Muestra resumen de WiFi solo de redes visibles."""
     summary = analyzer.get_network_summary()
     
-    print(f"\n📊 === RESUMEN WIFI ===")
-    print(f"📡 Redes totales: {summary['total_networks']}")
+    # Filtrar solo las redes visibles (que tienen signal_strength distinto de "N/A")
+    visible_networks = [
+        net for net in summary['networks'] 
+        if net.get('signal_strength') != "N/A"
+    ]
+    
+    print(f"\n📊 === RESUMEN WIFI (Solo redes visibles) ===")
+    print(f"📡 Redes visibles: {len(visible_networks)}")
     print(f"🔗 Redes conectadas: {summary['connected_networks']}")
     print(f"💾 Redes guardadas: {summary['saved_networks']}")
     print(f"🔓 Redes abiertas: {summary['open_networks']}")
     print(f"📶 Señal más fuerte: {summary['strongest_signal']}%")
     
-    print(f"\n📱 === REDES DETECTADAS ===")
-    for i, network in enumerate(summary['networks'][:10], 1):  # Mostrar máximo 10
+    print(f"\n📱 === REDES DETECTADAS (VISIBLES) ===")
+    for i, network in enumerate(visible_networks[:10], 1):  # Mostrar máximo 10
         status_icon = "🟢" if network.get('is_current') else "🔵" if network.get('is_saved') else "⚪"
         
         print(f"{status_icon} {i}. {network.get('ssid', 'Sin nombre')}")
         print(f"   📍 MAC: {network.get('bssid', 'N/A')}")
-        print(f"   📶 Señal: {network.get('signal_strength', 'N/A')} ({network.get('signal_percentage', 0)}%)")
+        print(f"   📶 Señal: {network.get('signal_strength')} ({network.get('signal_percentage', 0)}%)")
         print(f"   🔐 Seguridad: {network.get('authentication', 'N/A')} | {network.get('encryption', 'N/A')}")
         print(f"   📻 Canal: {network.get('channel', 'N/A')} | Tipo: {network.get('radio_type', 'N/A')}")
         if network.get('is_current'):
@@ -28,6 +34,8 @@ def display_wifi_summary(analyzer: WiFiAnalyzer):
         elif network.get('is_saved'):
             print(f"   💾 Estado: GUARDADA")
         print()
+
+ 
 
 def wifi_analyzer_mode():
     """Modo analizador WiFi interactivo."""

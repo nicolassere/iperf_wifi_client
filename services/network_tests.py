@@ -105,8 +105,17 @@ def run_speedtest(server_id=40741):
         )
 
         if result.returncode == 0:
-            return json.loads(result.stdout)
+                try:
+                    print("entro aca")
+                    parsed = json.loads(result.stdout)
+                    return parsed
+                except json.JSONDecodeError:
+                    return {
+                        "error": "No se pudo parsear el JSON de speedtest",
+                        "raw_output": result.stdout
+                    }
         else:
+            print("entro aca 2")
             return {"error": "speedtest falló", "stderr": result.stderr}
 
     except subprocess.TimeoutExpired:

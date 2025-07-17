@@ -7,17 +7,19 @@ from datetime import datetime
 from pathlib import Path
 from typing import List, Dict, Optional
 from config.config import *
+import traceback
 
 
 class WiFiAnalyzer:
-    """Analizador WiFi para Windows usando netsh."""
+    """Analizador WiFi para Windows usando netsh - Solo redes visibles."""
     
     def __init__(self):
         self.last_scan = 0
         self.cached_networks = []
+        self.tested_networks = set()  # Para evitar reconectar constantemente
     
     def scan_networks(self, force_refresh=False) -> List[Dict]:
-        """Escanea redes WiFi disponibles."""
+        """Escanea SOLO redes WiFi visibles actualmente."""
         current_time = time.time()
         
         # Usar caché si es reciente y no se fuerza refresh
@@ -25,85 +27,41 @@ class WiFiAnalyzer:
             return self.cached_networks
         
         try:
-            print("🔍 Escaneando redes WiFi...")
+            print("🔍 Escaneando redes WiFi visibles...")
             
             # Forzar refresh del perfil WiFi
             subprocess.run(["netsh", "wlan", "refresh"], 
                          capture_output=True, timeout=10)
             
-            # Obtener redes disponibles (comando correcto)
-            networks = self._parse_available_networks()
+            # Obtener SOLO redes visibles
+            networks = self._get_all_visible_networks()
+            
+            # Obtener información de conexión actual
+            current_info = self.get_current_connection_info()
+            current_ssid = current_info.get("ssid", "")
+            
+            # Marcar red actual y verificar cuáles están guardadas
+            for network in networks:
+                if network.get('ssid') == current_ssid:
+                    network.update(current_info)
+                    network["is_current"] = True
+                    network["status"] = "connected"
+                else:
+                    network["is_current"] = False
+                    network["status"] = "available"
+                
+                # Verificar si está guardada
+                network["is_saved"] = self._is_network_saved(network.get('ssid', ''))
+            
             self.cached_networks = networks
             self.last_scan = current_time
             
-            print(f"✓ Encontradas {len(networks)} redes")
+            print(f"✓ Encontradas {len(networks)} redes visibles")
             return networks
             
         except Exception as e:
             print(f"❌ Error escaneando redes: {e}")
             return []
-    
-    def _parse_available_networks(self) -> List[Dict]:
-        """Parsea la salida de netsh para obtener información de redes."""
-        networks = []
-        
-        try:
-            # COMANDO CORRECTO: Obtener todas las redes visibles
-            result = subprocess.run(
-                ["netsh", "wlan", "show", "profiles"],
-                capture_output=True,
-                text=True,
-                timeout=15
-            )
-            
-            # Obtener información de la conexión actual
-            current_info = self.get_current_connection_info()
-            current_ssid = current_info.get("ssid", "")
-            
-            # Parsear perfiles guardados
-            saved_profiles = []
-            for line in result.stdout.splitlines():
-                if "All User Profile" in line or "Perfil de todos los usuarios" in line:
-                    # Extraer nombre del perfil
-                    profile_name = line.split(":")[-1].strip()
-                    if profile_name:
-                        saved_profiles.append(profile_name)
-            
-            # Obtener detalles de cada perfil guardado
-            for profile_name in saved_profiles:
-                network_info = self._get_network_details(profile_name)
-                if network_info:
-                    # Marcar si es la red actual
-                    if profile_name == current_ssid:
-                        network_info.update(current_info)
-                        network_info["is_current"] = True
-                        network_info["status"] = "connected"
-                    else:
-                        network_info["is_current"] = False
-                        network_info["status"] = "saved"
-                    
-                    networks.append(network_info)
-            
-            # NUEVO: Obtener redes disponibles (no solo guardadas)
-            visible_networks = self._get_all_visible_networks()
-            
-            # Combinar información: agregar redes visibles que no estén guardadas
-            for visible in visible_networks:
-                # Buscar si ya existe en perfiles guardados
-                existing = next((n for n in networks if n.get('ssid') == visible.get('ssid')), None)
-                if not existing:
-                    # Agregar nueva red visible (no guardada)
-                    visible["is_saved"] = False
-                    visible["status"] = "available"
-                    networks.append(visible)
-                else:
-                    # Actualizar información de red guardada con datos visibles
-                    existing.update({k: v for k, v in visible.items() if v and k not in ['is_saved', 'status']})
-            
-        except Exception as e:
-            print(f"❌ Error parseando redes: {e}")
-        
-        return networks
     
     def _get_all_visible_networks(self) -> List[Dict]:
         """Obtiene TODAS las redes visibles (no solo la conectada)."""
@@ -116,10 +74,8 @@ class WiFiAnalyzer:
                 capture_output=True,
                 text=True,
                 timeout=20,
-                encoding='cp1252'  # Codificación para Windows en español
+                encoding='cp1252'
             )
-            
-
             
             current_network = {}
             
@@ -146,7 +102,8 @@ class WiFiAnalyzer:
                         "encryption": "N/A",
                         "bssid": "N/A",
                         "mac_address": "N/A",
-                        "network_type": "N/A"
+                        "network_type": "N/A",
+                        "is_connectable": True
                     }
                 
                 elif ":" in line and current_network.get("ssid"):
@@ -154,13 +111,16 @@ class WiFiAnalyzer:
                     key = key.strip().lower()
                     value = value.strip()
                     
-       
-                    
                     # Múltiples variaciones de nombres según idioma y codificación
                     if any(term in key for term in ["network type", "tipo de red"]):
                         current_network["network_type"] = value
                     elif any(term in key for term in ["authentication", "autenticación", "autenticacion", "autenticaci¢n"]):
                         current_network["authentication"] = value
+                        # Determinar si es conectable
+                        if "open" in value.lower() or "abierto" in value.lower():
+                            current_network["is_open"] = True
+                        else:
+                            current_network["is_open"] = False
                     elif any(term in key for term in ["encryption", "cifrado", "cipher"]):
                         current_network["encryption"] = value
                     elif "bssid" in key:
@@ -186,55 +146,163 @@ class WiFiAnalyzer:
             if current_network.get("ssid"):
                 networks.append(current_network)
             
+            # Filtrar redes válidas y ordenar por señal
+            valid_networks = []
+            for network in networks:
+                if network.get("ssid") and network.get("ssid") != "":
+                    valid_networks.append(network)
+            
+            # Ordenar por señal (más fuerte primero)
+            valid_networks.sort(key=lambda x: x.get("signal_percentage", 0), reverse=True)
+            
+            return valid_networks
             
         except Exception as e:
-            print(f"❌ Error obteniendo todas las redes visibles: {e}")
-        
-        return networks
+            print(f"❌ Error obteniendo redes visibles: {e}")
+            return []
     
-    def _get_network_details(self, profile_name: str) -> Optional[Dict]:
-        """Obtiene detalles de una red específica."""
+    def _is_network_saved(self, ssid: str) -> bool:
+        """Verifica si una red está guardada en el sistema."""
         try:
             result = subprocess.run(
-                ["netsh", "wlan", "show", "profile", profile_name, "key=clear"],
+                ["netsh", "wlan", "show", "profiles"],
                 capture_output=True,
                 text=True,
                 timeout=10
             )
             
-            network_info = {
-                "ssid": profile_name,
-                "is_saved": True,
-                "status": "saved"
-            }
-            
             for line in result.stdout.splitlines():
-                line = line.strip()
-                if ":" in line:
-                    key, value = line.split(":", 1)
-                    key = key.strip().lower()
-                    value = value.strip()
-                    
-                    if "authentication" in key or "autenticación" in key:
-                        network_info["authentication"] = value
-                    elif "cipher" in key or "cifrado" in key:
-                        network_info["encryption"] = value
-                    elif "security key" in key or "clave de seguridad" in key:
-                        network_info["security_type"] = value
-                    elif "key content" in key or "contenido de la clave" in key:
-                        network_info["has_password"] = bool(value and value != "")
+                if "All User Profile" in line or "Perfil de todos los usuarios" in line:
+                    profile_name = line.split(":")[-1].strip()
+                    if profile_name == ssid:
+                        return True
+            return False
             
-            return network_info
+        except Exception:
+            return False
+    
+    def connect_to_all_available_networks(self) -> List[Dict]:
+        """Conecta a TODAS las redes disponibles y prueba cada una."""
+        networks = self.scan_networks(force_refresh=True)
+        connection_results = []
+        
+        print(f"\n🔄 === PROBANDO TODAS LAS REDES DISPONIBLES ===")
+        print(f"📡 Redes encontradas: {len(networks)}")
+        
+        for i, network in enumerate(networks, 1):
+            ssid = network.get("ssid", "")
+            if not ssid or ssid in self.tested_networks:
+                continue
+            
+            print(f"\n🔗 [{i}/{len(networks)}] Probando: {ssid}")
+            print(f"   📶 Señal: {network.get('signal_percentage', 0)}%")
+            print(f"   🔐 Seguridad: {network.get('authentication', 'N/A')}")
+            print(f"   📍 BSSID: {network.get('bssid', 'N/A')}")
+            
+            # Intentar conexión
+            connection_result = self.test_network_connection(network)
+            connection_results.append(connection_result)
+            
+            # Marcar como probada
+            self.tested_networks.add(ssid)
+            
+            # Pequeña pausa entre conexiones
+            time.sleep(2)
+        
+        return connection_results
+    
+    def test_network_connection(self, network: Dict) -> Dict:
+        """Prueba la conexión a una red específica."""
+        ssid = network.get("ssid", "")
+        is_open = network.get("is_open", False)
+        is_saved = network.get("is_saved", False)
+        
+        result = {
+            "ssid": ssid,
+            "network_info": network,
+            "connection_attempted": True,
+            "connection_successful": False,
+            "connection_time": None,
+            "test_results": {},
+            "error": None
+        }
+        
+        try:
+            start_time = time.time()
+            
+            # Desconectar de red actual
+            self.disconnect_current()
+            time.sleep(1)
+            
+            # Intentar conexión
+            if is_saved:
+                # Red guardada - intentar conexión directa
+                print(f"   💾 Red guardada - conectando...")
+                connection_result = self.connect_to_network(ssid)
+            elif is_open:
+                # Red abierta - intentar conexión sin contraseña
+                print(f"   🔓 Red abierta - conectando...")
+                connection_result = self.connect_to_network(ssid)
+            else:
+                # Red protegida no guardada - marcar como no conectable
+                print(f"   🔒 Red protegida sin credenciales - saltando...")
+                result["connection_attempted"] = False
+                result["error"] = "Red protegida sin credenciales guardadas"
+                return result
+            
+            connection_time = time.time() - start_time
+            result["connection_time"] = connection_time
+            
+            if connection_result.get("success", False):
+                result["connection_successful"] = True
+                print(f"   ✅ Conectado en {connection_time:.1f}s")
+                
+                # Realizar pruebas de red
+                test_results = self.perform_network_tests()
+                print(test_results)
+                result["test_results"] = test_results
+                
+                # Mostrar resultados inmediatos
+                if "ping" in test_results and "error" not in test_results["ping"]:
+                    ping_avg = test_results["ping"].get("avg_time", 0)
+                    print(f"   🏓 Ping: {ping_avg:.1f}ms")
+
+                if "speedtest" in test_results and "error" not in test_results["speedtest"]:
+                    download_val = test_results["speedtest"].get("download", {}).get("bandwidth", 0)
+                    download = download_val / 1_000_000 if isinstance(download_val, (int, float)) else 0
+                    
+                    upload_val = test_results["speedtest"].get("upload", {}).get("bandwidth", 0)
+                    upload = upload_val / 1_000_000 if isinstance(upload_val, (int, float)) else 0
+                    
+                    print(f"   🚀 Velocidad: {download:.1f}↓ / {upload:.1f}↑ Mbps")                
+                            
+                
+            else:
+                result["error"] = connection_result.get("error", "Error desconocido")
+                print(f"   ❌ Falló: {result['error']}")
             
         except Exception as e:
-            print(f"❌ Error obteniendo detalles de {profile_name}: {e}")
-            return None
+            result["error"] = str(e)
+            print(traceback.format_exc())
+
+            print("ERROR ACA")
+            print(f"   💥 Excepción: {e}")
+        
+        return result
+    
+    def perform_network_tests(self) -> Dict:
+        """Realiza pruebas de red rápidas."""
+        from services.network_tests import run_ping, run_speedtest
+        
+        return {
+            "ping": run_ping(),
+            "speedtest": run_speedtest(),
+            "connection_info": self.get_current_connection_info()
+        }
     
     def connect_to_network(self, ssid: str, password: str = None) -> Dict:
         """Intenta conectar a una red WiFi."""
         try:
-            print(f"🔗 Intentando conectar a: {ssid}")
-            
             if password:
                 # Conectar con contraseña
                 result = subprocess.run(
@@ -244,7 +312,7 @@ class WiFiAnalyzer:
                     timeout=30
                 )
             else:
-                # Conectar sin contraseña (red abierta)
+                # Conectar sin contraseña (red abierta o guardada)
                 result = subprocess.run(
                     ["netsh", "wlan", "connect", f"name={ssid}"],
                     capture_output=True,
@@ -253,25 +321,21 @@ class WiFiAnalyzer:
                 )
             
             if result.returncode == 0:
-                print(f"✅ Conectado exitosamente a {ssid}")
                 time.sleep(3)  # Esperar estabilización
                 return {
                     "success": True,
                     "ssid": ssid,
-                    "message": "Conexión exitosa",
-                    "details": self.get_current_connection_info()
+                    "message": "Conexión exitosa"
                 }
             else:
-                print(f"❌ Error conectando a {ssid}: {result.stderr}")
                 return {
                     "success": False,
                     "ssid": ssid,
-                    "error": result.stderr,
+                    "error": result.stderr or "Error de conexión",
                     "message": "Falló la conexión"
                 }
                 
         except Exception as e:
-            print(f"❌ Excepción conectando a {ssid}: {e}")
             return {
                 "success": False,
                 "ssid": ssid,
@@ -287,9 +351,8 @@ class WiFiAnalyzer:
                 capture_output=True,
                 text=True,
                 timeout=10,
-                encoding='cp1252'  # Codificación para Windows en español
+                encoding='cp1252'
             )
-
             
             info = {}
             for line in result.stdout.splitlines():
@@ -298,8 +361,6 @@ class WiFiAnalyzer:
                     key, value = line.split(":", 1)
                     key = key.strip().lower()
                     value = value.strip()
-                    
-                    # DEBUG: Imprimir cada parseo
                     
                     if any(term in key for term in ["name", "nombre"]):
                         info["interface_name"] = value
@@ -347,7 +408,6 @@ class WiFiAnalyzer:
             return info
             
         except Exception as e:
-            print(f"❌ Error obteniendo info de conexión: {e}")
             return {"error": f"Error obteniendo info de conexión: {str(e)}"}
     
     def disconnect_current(self) -> bool:
@@ -364,16 +424,21 @@ class WiFiAnalyzer:
             return False
     
     def get_network_summary(self) -> Dict:
-        """Obtiene resumen de todas las redes."""
+        """Obtiene resumen de redes VISIBLES."""
         networks = self.scan_networks()
         
         summary = {
             "total_networks": len(networks),
             "connected_networks": len([n for n in networks if n.get("is_current", False)]),
             "saved_networks": len([n for n in networks if n.get("is_saved", False)]),
-            "open_networks": len([n for n in networks if n.get("authentication", "").lower() in ["open", "abierto"]]),
+            "open_networks": len([n for n in networks if n.get("is_open", False)]),
             "strongest_signal": max([n.get("signal_percentage", 0) for n in networks] + [0]),
             "networks": networks
         }
         
         return summary
+    
+    def reset_tested_networks(self):
+        """Reinicia el conjunto de redes probadas."""
+        self.tested_networks.clear()
+        print("🔄 Lista de redes probadas reiniciada")
