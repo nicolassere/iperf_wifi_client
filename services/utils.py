@@ -4,7 +4,7 @@ from pathlib import Path
 from config.config import *
 
 
-def save_result(result_dict, output_path="test_results.json"):
+def save_result(result_dict, output_path="data/test_results.json"):
     """Guarda resultado con timestamp."""
     result_dict["timestamp"] = datetime.now().isoformat()
     

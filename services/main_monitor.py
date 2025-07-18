@@ -199,6 +199,46 @@ def main_loop():
         
         # Guardar resultado
         save_result(result, f"all_networks_test_{datetime.now().strftime('%Y%m%d')}.json")
+        if iteration % 10 == 0:
+            print(f"\n🗺️  === ANÁLISIS DE HEATMAP AUTOMÁTICO ===")
+            try:
+                from services.heatmap_analyzer import HeatmapAnalyzer
+                
+                heatmap_analyzer = HeatmapAnalyzer()
+                
+                # Cargar datos recientes
+                recent_data = heatmap_analyzer.load_historical_data(1)
+                
+                if recent_data:
+                    # Detectar conflictos de canal
+                    conflicts = heatmap_analyzer.detect_channel_conflicts(recent_data)
+                    
+                    if conflicts:
+                        print(f"⚠️  Conflictos detectados: {len(conflicts)}")
+                        for conflict in conflicts[:3]:  # Mostrar solo los 3 más importantes
+                            print(f"   🚨 Canal {conflict['channel']}: {conflict['aps_count']} APs - {conflict['conflict_severity']}")
+                    else:
+                        print("✅ No se detectaron conflictos de canal")
+                    
+                    # Análisis rápido de rendimiento
+                    ap_stats = heatmap_analyzer.analyze_ap_performance(recent_data)
+                    
+                    # Mostrar tendencias
+                    declining_aps = []
+                    for name, stats in ap_stats.items():
+                        if stats['success_rate'] < 70 and stats['connection_attempts'] > 2:
+                            declining_aps.append((name, stats['success_rate']))
+                    
+                    if declining_aps:
+                        print(f"📉 APs con rendimiento declinante: {len(declining_aps)}")
+                        for name, rate in declining_aps[:3]:
+                            print(f"   ⚠️  {name.split('(')[0][:25]}: {rate:.1f}% éxito")
+                    
+                else:
+                    print("❌ No hay datos suficientes para análisis")
+                    
+            except Exception as e:
+                print(f"❌ Error en análisis de heatmap: {e}")
         print(f"\n💾 Resultado guardado")
         
         # Esperar siguiente iteración

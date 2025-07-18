@@ -438,7 +438,64 @@ class WiFiAnalyzer:
         
         return summary
     
+    def get_detailed_scan_info(self) -> List[Dict]:
+        """Obtiene información detallada de escaneo incluyendo canales y BSSID."""
+        try:
+            # Comando para obtener información detallada
+            result = subprocess.run(
+                ["netsh", "wlan", "show", "profiles"], 
+                capture_output=True, text=True, encoding='utf-8'
+            )
+            
+            # También obtener información de redes disponibles
+            scan_result = subprocess.run(
+                ["netsh", "wlan", "show", "interfaces"],
+                capture_output=True, text=True, encoding='utf-8'
+            )
+            
+            # Parsear y devolver información estructurada
+            detailed_networks = []
+            # Aquí iría la lógica de parsing específica para tu sistema
+            # Esta es una implementación de ejemplo
+            
+            return detailed_networks
+        except Exception as e:
+            return {"error": f"Error en escaneo detallado: {e}"}
+
+    def analyze_channel_distribution(self) -> Dict:
+        """Analiza la distribución de canales en el entorno."""
+        networks = self.get_detailed_scan_info()
+        
+        channel_analysis = {
+            'channel_distribution': defaultdict(int),
+            'band_distribution': {'2.4GHz': 0, '5GHz': 0},
+            'congestion_score': 0,
+            'recommendations': []
+        }
+        
+        for network in networks:
+            channel = network.get('channel')
+            if channel:
+                channel_analysis['channel_distribution'][channel] += 1
+                
+                # Clasificar por banda
+                if channel <= 14:
+                    channel_analysis['band_distribution']['2.4GHz'] += 1
+                else:
+                    channel_analysis['band_distribution']['5GHz'] += 1
+        
+        # Calcular puntuación de congestión
+        total_networks = len(networks)
+        if total_networks > 0:
+            # Más redes en pocos canales = mayor congestión
+            unique_channels = len(channel_analysis['channel_distribution'])
+            channel_analysis['congestion_score'] = (total_networks / max(unique_channels, 1)) * 10
+        
+        return channel_analysis
+        
+        
+        
     def reset_tested_networks(self):
-        """Reinicia el conjunto de redes probadas."""
-        self.tested_networks.clear()
-        print("🔄 Lista de redes probadas reiniciada")
+            """Reinicia el conjunto de redes probadas."""
+            self.tested_networks.clear()
+            print("🔄 Lista de redes probadas reiniciada")
