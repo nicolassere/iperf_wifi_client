@@ -212,6 +212,8 @@ class WiFiAnalyzer:
         return connection_results
     
     def test_network_connection(self, network: Dict) -> Dict:
+        from services.geographic_heatmap import GeographicHeatmapGenerator
+
         """Prueba la conexión a una red específica."""
         ssid = network.get("ssid", "")
         is_open = network.get("is_open", False)
@@ -252,6 +254,9 @@ class WiFiAnalyzer:
             
             connection_time = time.time() - start_time
             result["connection_time"] = connection_time
+
+            geo_heatmap = GeographicHeatmapGenerator()
+            geo_heatmap.update_ap_locations([network])
             
             if connection_result.get("success", False):
                 result["connection_successful"] = True

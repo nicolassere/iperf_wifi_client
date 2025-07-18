@@ -92,6 +92,36 @@ if __name__ == "__main__":
             print(f"\n📁 Reportes generados:")
             print(f"  HTML: {html_report}")
             print(f"  JSON: {json_report}")
+
+        elif cmd == "geomap":
+            # Nuevo modo: mapa de calor geográfico
+            from services.heatmap_analyzer import HeatmapAnalyzer
+            from services.geographic_heatmap import GeographicHeatmapGenerator
+            
+            print("🗺️  Generando mapa de calor geográfico...")
+            
+            days = int(sys.argv[2]) if len(sys.argv) >= 3 else 7
+            
+            # Cargar datos históricos
+            heatmap_analyzer = HeatmapAnalyzer()
+            geo_heatmap = GeographicHeatmapGenerator()
+            
+            historical_data = heatmap_analyzer.load_historical_data(days)
+            
+            if not historical_data:
+                print("❌ No se encontraron datos históricos suficientes")
+                sys.exit(1)
+            
+            # Analizar rendimiento
+            ap_stats = heatmap_analyzer.analyze_ap_performance(historical_data)
+            
+            # Generar mapas geográficos
+            signal_map = geo_heatmap.generate_signal_heatmap(ap_stats)
+            speed_map = geo_heatmap.generate_performance_heatmap(ap_stats)
+            
+            print(f"\n🗺️  Mapas generados:")
+            print(f"   📶 Señal: {signal_map}")
+            print(f"   🚀 Velocidad: {speed_map}")
         elif cmd == "trends":
             # Nuevo modo: análisis de tendencias
             from services.heatmap_analyzer import HeatmapAnalyzer
