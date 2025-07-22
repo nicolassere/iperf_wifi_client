@@ -1,0 +1,912 @@
+[
+    {
+        "iteration": 1,
+        "timestamp": "2025-07-22T16:32:00.160722",
+        "all_networks_tested": [
+            {
+                "ssid": "Pumita",
+                "network_info": {
+                    "ssid": "Pumita",
+                    "is_current": true,
+                    "is_saved": true,
+                    "signal_strength": "90%",
+                    "signal_percentage": 90,
+                    "channel": "149",
+                    "radio_type": "802.11ac",
+                    "authentication": "WPA2-Personal",
+                    "encryption": "CCMP",
+                    "bssid": "b8:dd:71:e3:9c:3c",
+                    "mac_address": "d8:fc:93:bc:e1:16",
+                    "network_type": "Infraestructura",
+                    "is_connectable": true,
+                    "is_open": false,
+                    "interface_name": "Wi-Fi 2",
+                    "adapter_description": "Intel(R) Dual Band Wireless-AC 7260 #2",
+                    "guid": "525fa706-984f-4270-8953-0777cf498ae5",
+                    "connection_state": "conectado",
+                    "ap_mac": "b8:dd:71:e3:9c:3c",
+                    "connection_mode": "Conexi¢n autom tica",
+                    "receive_rate": "780",
+                    "transmit_rate": "780",
+                    "status": "connected"
+                },
+                "connection_attempted": true,
+                "connection_successful": true,
+                "connection_time": 6.416975498199463,
+                "test_results": {
+                    "ping": {
+                        "raw_output": "\nHaciendo ping a 8.8.8.8 con 32 bytes de datos:\nRespuesta desde 8.8.8.8: bytes=32 tiempo=13ms TTL=117\nRespuesta desde 8.8.8.8: bytes=32 tiempo=12ms TTL=117\nRespuesta desde 8.8.8.8: bytes=32 tiempo=13ms TTL=117\nRespuesta desde 8.8.8.8: bytes=32 tiempo=13ms TTL=117\n\nEstad¡sticas de ping para 8.8.8.8:\n    Paquetes: enviados = 4, recibidos = 4, perdidos = 0\n    (0% perdidos),\nTiempos aproximados de ida y vuelta en milisegundos:\n    M¡nimo = 12ms, M ximo = 13ms, Media = 12ms\n",
+                        "avg_time": 12.75,
+                        "min_time": 12,
+                        "max_time": 13,
+                        "packet_loss": "0% perdidos"
+                    },
+                    "speedtest": {
+                        "type": "result",
+                        "timestamp": "2025-07-22T19:29:42Z",
+                        "ping": {
+                            "jitter": 0.557,
+                            "latency": 3.904,
+                            "low": 3.565,
+                            "high": 5.79
+                        },
+                        "download": {
+                            "bandwidth": 51811520,
+                            "bytes": 543369647,
+                            "elapsed": 10812,
+                            "latency": {
+                                "iqm": 108.832,
+                                "low": 5.87,
+                                "high": 455.774,
+                                "jitter": 37.089
+                            }
+                        },
+                        "upload": {
+                            "bandwidth": 5207977,
+                            "bytes": 39961734,
+                            "elapsed": 7725,
+                            "latency": {
+                                "iqm": 431.516,
+                                "low": 12.505,
+                                "high": 814.842,
+                                "jitter": 94.045
+                            }
+                        },
+                        "packetLoss": 0,
+                        "isp": "Antel Uruguay",
+                        "interface": {
+                            "internalIp": "2800:a4:1c4c:3300:689c:a6ce:f21c:e2a4",
+                            "name": "",
+                            "macAddr": "D8:FC:93:BC:E1:16",
+                            "isVpn": false,
+                            "externalIp": "2800:a4:1c4c:3300:689c:a6ce:f21c:e2a4"
+                        },
+                        "server": {
+                            "id": 40741,
+                            "host": "testdevelocidad.com.uy",
+                            "port": 8080,
+                            "name": "Antel",
+                            "location": "Montevideo",
+                            "country": "Uruguay",
+                            "ip": "2800:a0:1:c828:1e00:1800:0:8"
+                        },
+                        "result": {
+                            "id": "b481b492-a9b0-4354-8afa-2a9e825b484b",
+                            "url": "https://www.speedtest.net/result/c/b481b492-a9b0-4354-8afa-2a9e825b484b",
+                            "persisted": true
+                        }
+                    },
+                    "connection_info": {
+                        "interface_name": "Wi-Fi 2",
+                        "adapter_description": "Intel(R) Dual Band Wireless-AC 7260 #2",
+                        "guid": "525fa706-984f-4270-8953-0777cf498ae5",
+                        "mac_address": "d8:fc:93:bc:e1:16",
+                        "connection_state": "conectado",
+                        "ssid": "Pumita",
+                        "bssid": "b8:dd:71:e3:9c:3c",
+                        "ap_mac": "b8:dd:71:e3:9c:3c",
+                        "network_type": "Infraestructura",
+                        "radio_type": "802.11ac",
+                        "authentication": "WPA2-Personal",
+                        "encryption": "CCMP",
+                        "connection_mode": "Perfil",
+                        "channel": "149",
+                        "receive_rate": "780",
+                        "transmit_rate": "780",
+                        "signal_strength": "85%",
+                        "signal_percentage": 85
+                    }
+                },
+                "error": null
+            },
+            {
+                "ssid": "Puma",
+                "network_info": {
+                    "ssid": "Puma",
+                    "is_current": false,
+                    "is_saved": true,
+                    "signal_strength": "99%",
+                    "signal_percentage": 99,
+                    "channel": "1",
+                    "radio_type": "802.11n",
+                    "authentication": "WPA2-Personal",
+                    "encryption": "CCMP",
+                    "bssid": "b8:dd:71:e3:9c:3a",
+                    "mac_address": "b8:dd:71:e3:9c:3a",
+                    "network_type": "Infraestructura",
+                    "is_connectable": true,
+                    "is_open": false,
+                    "status": "available"
+                },
+                "connection_attempted": true,
+                "connection_successful": true,
+                "connection_time": 6.6016600131988525,
+                "test_results": {
+                    "ping": {
+                        "raw_output": "\nHaciendo ping a 8.8.8.8 con 32 bytes de datos:\nRespuesta desde 8.8.8.8: bytes=32 tiempo=12ms TTL=117\nRespuesta desde 8.8.8.8: bytes=32 tiempo=18ms TTL=117\nRespuesta desde 8.8.8.8: bytes=32 tiempo=14ms TTL=117\nRespuesta desde 8.8.8.8: bytes=32 tiempo=11ms TTL=117\n\nEstad¡sticas de ping para 8.8.8.8:\n    Paquetes: enviados = 4, recibidos = 4, perdidos = 0\n    (0% perdidos),\nTiempos aproximados de ida y vuelta en milisegundos:\n    M¡nimo = 11ms, M ximo = 18ms, Media = 13ms\n",
+                        "avg_time": 13.75,
+                        "min_time": 11,
+                        "max_time": 18,
+                        "packet_loss": "0% perdidos"
+                    },
+                    "speedtest": {
+                        "type": "result",
+                        "timestamp": "2025-07-22T19:30:15Z",
+                        "ping": {
+                            "jitter": 1.963,
+                            "latency": 6.202,
+                            "low": 3.801,
+                            "high": 8.387
+                        },
+                        "download": {
+                            "bandwidth": 2526826,
+                            "bytes": 20228094,
+                            "elapsed": 7912,
+                            "latency": {
+                                "iqm": 302.109,
+                                "low": 19.7,
+                                "high": 663.06,
+                                "jitter": 80.19
+                            }
+                        },
+                        "upload": {
+                            "bandwidth": 2482305,
+                            "bytes": 20953469,
+                            "elapsed": 8546,
+                            "latency": {
+                                "iqm": 359.897,
+                                "low": 15.342,
+                                "high": 1144.567,
+                                "jitter": 87.109
+                            }
+                        },
+                        "packetLoss": 0,
+                        "isp": "Antel Uruguay",
+                        "interface": {
+                            "internalIp": "2800:a4:1c4c:3300:689c:a6ce:f21c:e2a4",
+                            "name": "",
+                            "macAddr": "D8:FC:93:BC:E1:16",
+                            "isVpn": false,
+                            "externalIp": "2800:a4:1c4c:3300:689c:a6ce:f21c:e2a4"
+                        },
+                        "server": {
+                            "id": 40741,
+                            "host": "testdevelocidad.com.uy",
+                            "port": 8080,
+                            "name": "Antel",
+                            "location": "Montevideo",
+                            "country": "Uruguay",
+                            "ip": "2800:a0:1:c828:1e00:1800:0:8"
+                        },
+                        "result": {
+                            "id": "6e6caba7-2e40-4e97-8ff2-1296c8a0d7a0",
+                            "url": "https://www.speedtest.net/result/c/6e6caba7-2e40-4e97-8ff2-1296c8a0d7a0",
+                            "persisted": true
+                        }
+                    },
+                    "connection_info": {
+                        "interface_name": "Wi-Fi 2",
+                        "adapter_description": "Intel(R) Dual Band Wireless-AC 7260 #2",
+                        "guid": "525fa706-984f-4270-8953-0777cf498ae5",
+                        "mac_address": "d8:fc:93:bc:e1:16",
+                        "connection_state": "conectado",
+                        "ssid": "Puma",
+                        "bssid": "b8:dd:71:e3:9c:3a",
+                        "ap_mac": "b8:dd:71:e3:9c:3a",
+                        "network_type": "Infraestructura",
+                        "radio_type": "802.11g",
+                        "authentication": "WPA2-Personal",
+                        "encryption": "TKIP",
+                        "connection_mode": "Perfil",
+                        "channel": "1",
+                        "receive_rate": "54",
+                        "transmit_rate": "54",
+                        "signal_strength": "80%",
+                        "signal_percentage": 80
+                    }
+                },
+                "error": null
+            },
+            {
+                "ssid": "CasaM",
+                "network_info": {
+                    "ssid": "CasaM",
+                    "is_current": false,
+                    "is_saved": false,
+                    "signal_strength": "55%",
+                    "signal_percentage": 55,
+                    "channel": "3",
+                    "radio_type": "802.11n",
+                    "authentication": "WPA2-Personal",
+                    "encryption": "CCMP",
+                    "bssid": "40:ae:30:f3:9e:da",
+                    "mac_address": "40:ae:30:f3:9e:da",
+                    "network_type": "Infraestructura",
+                    "is_connectable": true,
+                    "is_open": false,
+                    "status": "available"
+                },
+                "connection_attempted": false,
+                "connection_successful": false,
+                "connection_time": null,
+                "test_results": {},
+                "error": "Red protegida sin credenciales guardadas"
+            },
+            {
+                "ssid": "HP-Print-2A-Deskjet 3540 series",
+                "network_info": {
+                    "ssid": "HP-Print-2A-Deskjet 3540 series",
+                    "is_current": false,
+                    "is_saved": false,
+                    "signal_strength": "53%",
+                    "signal_percentage": 53,
+                    "channel": "3",
+                    "radio_type": "802.11g",
+                    "authentication": "Abierta",
+                    "encryption": "Ninguna",
+                    "bssid": "a0:48:1c:5b:fd:2a",
+                    "mac_address": "a0:48:1c:5b:fd:2a",
+                    "network_type": "Infraestructura",
+                    "is_connectable": true,
+                    "is_open": false,
+                    "status": "available"
+                },
+                "connection_attempted": false,
+                "connection_successful": false,
+                "connection_time": null,
+                "test_results": {},
+                "error": "Red protegida sin credenciales guardadas"
+            }
+        ],
+        "successful_connections": 2,
+        "failed_connections": 2,
+        "best_network": {
+            "ssid": "Pumita",
+            "network_info": {
+                "ssid": "Pumita",
+                "is_current": true,
+                "is_saved": true,
+                "signal_strength": "90%",
+                "signal_percentage": 90,
+                "channel": "149",
+                "radio_type": "802.11ac",
+                "authentication": "WPA2-Personal",
+                "encryption": "CCMP",
+                "bssid": "b8:dd:71:e3:9c:3c",
+                "mac_address": "d8:fc:93:bc:e1:16",
+                "network_type": "Infraestructura",
+                "is_connectable": true,
+                "is_open": false,
+                "interface_name": "Wi-Fi 2",
+                "adapter_description": "Intel(R) Dual Band Wireless-AC 7260 #2",
+                "guid": "525fa706-984f-4270-8953-0777cf498ae5",
+                "connection_state": "conectado",
+                "ap_mac": "b8:dd:71:e3:9c:3c",
+                "connection_mode": "Conexi¢n autom tica",
+                "receive_rate": "780",
+                "transmit_rate": "780",
+                "status": "connected"
+            },
+            "connection_attempted": true,
+            "connection_successful": true,
+            "connection_time": 6.416975498199463,
+            "test_results": {
+                "ping": {
+                    "raw_output": "\nHaciendo ping a 8.8.8.8 con 32 bytes de datos:\nRespuesta desde 8.8.8.8: bytes=32 tiempo=13ms TTL=117\nRespuesta desde 8.8.8.8: bytes=32 tiempo=12ms TTL=117\nRespuesta desde 8.8.8.8: bytes=32 tiempo=13ms TTL=117\nRespuesta desde 8.8.8.8: bytes=32 tiempo=13ms TTL=117\n\nEstad¡sticas de ping para 8.8.8.8:\n    Paquetes: enviados = 4, recibidos = 4, perdidos = 0\n    (0% perdidos),\nTiempos aproximados de ida y vuelta en milisegundos:\n    M¡nimo = 12ms, M ximo = 13ms, Media = 12ms\n",
+                    "avg_time": 12.75,
+                    "min_time": 12,
+                    "max_time": 13,
+                    "packet_loss": "0% perdidos"
+                },
+                "speedtest": {
+                    "type": "result",
+                    "timestamp": "2025-07-22T19:29:42Z",
+                    "ping": {
+                        "jitter": 0.557,
+                        "latency": 3.904,
+                        "low": 3.565,
+                        "high": 5.79
+                    },
+                    "download": {
+                        "bandwidth": 51811520,
+                        "bytes": 543369647,
+                        "elapsed": 10812,
+                        "latency": {
+                            "iqm": 108.832,
+                            "low": 5.87,
+                            "high": 455.774,
+                            "jitter": 37.089
+                        }
+                    },
+                    "upload": {
+                        "bandwidth": 5207977,
+                        "bytes": 39961734,
+                        "elapsed": 7725,
+                        "latency": {
+                            "iqm": 431.516,
+                            "low": 12.505,
+                            "high": 814.842,
+                            "jitter": 94.045
+                        }
+                    },
+                    "packetLoss": 0,
+                    "isp": "Antel Uruguay",
+                    "interface": {
+                        "internalIp": "2800:a4:1c4c:3300:689c:a6ce:f21c:e2a4",
+                        "name": "",
+                        "macAddr": "D8:FC:93:BC:E1:16",
+                        "isVpn": false,
+                        "externalIp": "2800:a4:1c4c:3300:689c:a6ce:f21c:e2a4"
+                    },
+                    "server": {
+                        "id": 40741,
+                        "host": "testdevelocidad.com.uy",
+                        "port": 8080,
+                        "name": "Antel",
+                        "location": "Montevideo",
+                        "country": "Uruguay",
+                        "ip": "2800:a0:1:c828:1e00:1800:0:8"
+                    },
+                    "result": {
+                        "id": "b481b492-a9b0-4354-8afa-2a9e825b484b",
+                        "url": "https://www.speedtest.net/result/c/b481b492-a9b0-4354-8afa-2a9e825b484b",
+                        "persisted": true
+                    }
+                },
+                "connection_info": {
+                    "interface_name": "Wi-Fi 2",
+                    "adapter_description": "Intel(R) Dual Band Wireless-AC 7260 #2",
+                    "guid": "525fa706-984f-4270-8953-0777cf498ae5",
+                    "mac_address": "d8:fc:93:bc:e1:16",
+                    "connection_state": "conectado",
+                    "ssid": "Pumita",
+                    "bssid": "b8:dd:71:e3:9c:3c",
+                    "ap_mac": "b8:dd:71:e3:9c:3c",
+                    "network_type": "Infraestructura",
+                    "radio_type": "802.11ac",
+                    "authentication": "WPA2-Personal",
+                    "encryption": "CCMP",
+                    "connection_mode": "Perfil",
+                    "channel": "149",
+                    "receive_rate": "780",
+                    "transmit_rate": "780",
+                    "signal_strength": "85%",
+                    "signal_percentage": 85
+                }
+            },
+            "error": null
+        },
+        "current_wifi": {
+            "interface_name": "Wi-Fi 2",
+            "adapter_description": "Intel(R) Dual Band Wireless-AC 7260 #2",
+            "guid": "525fa706-984f-4270-8953-0777cf498ae5",
+            "mac_address": "d8:fc:93:bc:e1:16",
+            "connection_state": "conectado",
+            "ssid": "Pumita",
+            "bssid": "b8:dd:71:e3:9c:3c",
+            "ap_mac": "b8:dd:71:e3:9c:3c",
+            "network_type": "Infraestructura",
+            "radio_type": "802.11ac",
+            "authentication": "WPA2-Personal",
+            "encryption": "CCMP",
+            "connection_mode": "Perfil",
+            "channel": "149",
+            "receive_rate": "780",
+            "transmit_rate": "780",
+            "signal_strength": "85%",
+            "signal_percentage": 85
+        },
+        "wifi_summary": {
+            "total_networks": 7,
+            "connected_networks": 1,
+            "saved_networks": 3,
+            "open_networks": 0,
+            "strongest_signal": 88,
+            "networks": [
+                {
+                    "ssid": "Pumita",
+                    "is_current": true,
+                    "is_saved": true,
+                    "signal_strength": "85%",
+                    "signal_percentage": 85,
+                    "channel": "149",
+                    "radio_type": "802.11ac",
+                    "authentication": "WPA2-Personal",
+                    "encryption": "CCMP",
+                    "bssid": "b8:dd:71:e3:9c:3c",
+                    "mac_address": "d8:fc:93:bc:e1:16",
+                    "network_type": "Infraestructura",
+                    "is_connectable": true,
+                    "is_open": false,
+                    "interface_name": "Wi-Fi 2",
+                    "adapter_description": "Intel(R) Dual Band Wireless-AC 7260 #2",
+                    "guid": "525fa706-984f-4270-8953-0777cf498ae5",
+                    "connection_state": "conectado",
+                    "ap_mac": "b8:dd:71:e3:9c:3c",
+                    "connection_mode": "Perfil",
+                    "receive_rate": "780",
+                    "transmit_rate": "780",
+                    "status": "connected"
+                },
+                {
+                    "ssid": "Puma",
+                    "is_current": false,
+                    "is_saved": true,
+                    "signal_strength": "88%",
+                    "signal_percentage": 88,
+                    "channel": "1",
+                    "radio_type": "802.11n",
+                    "authentication": "WPA2-Personal",
+                    "encryption": "CCMP",
+                    "bssid": "b8:dd:71:e3:9c:3a",
+                    "mac_address": "b8:dd:71:e3:9c:3a",
+                    "network_type": "Infraestructura",
+                    "is_connectable": true,
+                    "is_open": false,
+                    "status": "available"
+                },
+                {
+                    "ssid": "CasalLeon",
+                    "is_current": false,
+                    "is_saved": true,
+                    "signal_strength": "55%",
+                    "signal_percentage": 55,
+                    "channel": "5",
+                    "radio_type": "802.11n",
+                    "authentication": "WPA2-Personal",
+                    "encryption": "CCMP",
+                    "bssid": "98:da:c4:d1:16:e6",
+                    "mac_address": "98:da:c4:d1:16:e6",
+                    "network_type": "Infraestructura",
+                    "is_connectable": true,
+                    "is_open": false,
+                    "status": "available"
+                },
+                {
+                    "ssid": "HP-Print-2A-Deskjet 3540 series",
+                    "is_current": false,
+                    "is_saved": false,
+                    "signal_strength": "48%",
+                    "signal_percentage": 48,
+                    "channel": "3",
+                    "radio_type": "802.11g",
+                    "authentication": "Abierta",
+                    "encryption": "Ninguna",
+                    "bssid": "a0:48:1c:5b:fd:2a",
+                    "mac_address": "a0:48:1c:5b:fd:2a",
+                    "network_type": "Infraestructura",
+                    "is_connectable": true,
+                    "is_open": false,
+                    "status": "available"
+                },
+                {
+                    "ssid": "CasaM",
+                    "is_current": false,
+                    "is_saved": false,
+                    "signal_strength": "36%",
+                    "signal_percentage": 36,
+                    "channel": "40",
+                    "radio_type": "802.11ac",
+                    "authentication": "WPA2-Personal",
+                    "encryption": "CCMP",
+                    "bssid": "d8:47:32:50:7d:5b",
+                    "mac_address": "d8:47:32:50:7d:5b",
+                    "network_type": "Infraestructura",
+                    "is_connectable": true,
+                    "is_open": false,
+                    "status": "available"
+                },
+                {
+                    "ssid": "SSID8",
+                    "is_current": false,
+                    "is_saved": false,
+                    "signal_strength": "20%",
+                    "signal_percentage": 20,
+                    "channel": "60",
+                    "radio_type": "802.11ax",
+                    "authentication": "WPA2-Personal",
+                    "encryption": "CCMP",
+                    "bssid": "ce:29:bd:89:7e:09",
+                    "mac_address": "ce:29:bd:89:7e:09",
+                    "network_type": "Infraestructura",
+                    "is_connectable": true,
+                    "is_open": false,
+                    "status": "available"
+                },
+                {
+                    "ssid": "ABEL-5GHz",
+                    "is_current": false,
+                    "is_saved": false,
+                    "signal_strength": "16%",
+                    "signal_percentage": 16,
+                    "channel": "60",
+                    "radio_type": "802.11ax",
+                    "authentication": "WPA2-Personal",
+                    "encryption": "CCMP",
+                    "bssid": "cc:29:bd:59:7e:09",
+                    "mac_address": "cc:29:bd:59:7e:09",
+                    "network_type": "Infraestructura",
+                    "is_connectable": true,
+                    "is_open": false,
+                    "status": "available"
+                }
+            ]
+        },
+        "additional_tests": {
+            "ping": {
+                "raw_output": "\nHaciendo ping a 8.8.8.8 con 32 bytes de datos:\nRespuesta desde 8.8.8.8: bytes=32 tiempo=12ms TTL=117\nRespuesta desde 8.8.8.8: bytes=32 tiempo=12ms TTL=117\nRespuesta desde 8.8.8.8: bytes=32 tiempo=12ms TTL=117\nRespuesta desde 8.8.8.8: bytes=32 tiempo=12ms TTL=117\n\nEstad¡sticas de ping para 8.8.8.8:\n    Paquetes: enviados = 4, recibidos = 4, perdidos = 0\n    (0% perdidos),\nTiempos aproximados de ida y vuelta en milisegundos:\n    M¡nimo = 12ms, M ximo = 12ms, Media = 12ms\n",
+                "avg_time": 12.0,
+                "min_time": 12,
+                "max_time": 12,
+                "packet_loss": "0% perdidos"
+            },
+            "traceroute": "\nTraza a la direcci¢n dns.google [8.8.8.8]\nsobre un m ximo de 30 saltos:\n\n  1     2 ms     1 ms     2 ms  gpon.net [192.168.1.1] \n  2     4 ms     5 ms     3 ms  mue4bras1.antel.net.uy [200.40.162.203] \n  3    12 ms     4 ms     5 ms  cbb4cor1-be120-605.antel.net.uy [200.40.162.2] \n  4     *        *        *     Tiempo de espera agotado para esta solicitud.\n  5     *       12 ms    12 ms  brmln2.pdp-be1004.antel.net.uy [179.31.62.148] \n  6    12 ms    12 ms    12 ms  72.14.216.159 \n  7     *        *        *     Tiempo de espera agotado para esta solicitud.\n  8    13 ms    13 ms    13 ms  108.170.255.33 \n  9    15 ms    12 ms    12 ms  142.251.239.191 \n 10    13 ms    16 ms    13 ms  dns.google [8.8.8.8] \n\nTraza completa.\n",
+            "speedtest": {
+                "type": "result",
+                "timestamp": "2025-07-22T19:31:46Z",
+                "ping": {
+                    "jitter": 0.523,
+                    "latency": 4.338,
+                    "low": 3.877,
+                    "high": 5.189
+                },
+                "download": {
+                    "bandwidth": 48868859,
+                    "bytes": 654976468,
+                    "elapsed": 15004,
+                    "latency": {
+                        "iqm": 18.525,
+                        "low": 4.23,
+                        "high": 304.475,
+                        "jitter": 11.619
+                    }
+                },
+                "upload": {
+                    "bandwidth": 5219163,
+                    "bytes": 18932888,
+                    "elapsed": 3630,
+                    "latency": {
+                        "iqm": 87.965,
+                        "low": 17.271,
+                        "high": 409.353,
+                        "jitter": 32.926
+                    }
+                },
+                "packetLoss": 0,
+                "isp": "Antel Uruguay",
+                "interface": {
+                    "internalIp": "2800:a4:1c4c:3300:689c:a6ce:f21c:e2a4",
+                    "name": "",
+                    "macAddr": "D8:FC:93:BC:E1:16",
+                    "isVpn": false,
+                    "externalIp": "2800:a4:1c4c:3300:689c:a6ce:f21c:e2a4"
+                },
+                "server": {
+                    "id": 40741,
+                    "host": "testdevelocidad.com.uy",
+                    "port": 8080,
+                    "name": "Antel",
+                    "location": "Montevideo",
+                    "country": "Uruguay",
+                    "ip": "2800:a0:1:c828:1e00:1800:0:8"
+                },
+                "result": {
+                    "id": "a5b42e72-ea4c-4b7a-947a-1faf60dc5f97",
+                    "url": "https://www.speedtest.net/result/c/a5b42e72-ea4c-4b7a-947a-1faf60dc5f97",
+                    "persisted": true
+                }
+            },
+            "iperf3": {
+                "start": {
+                    "connected": [
+                        {
+                            "socket": 4,
+                            "local_host": "127.0.0.1",
+                            "local_port": 58960,
+                            "remote_host": "127.0.0.1",
+                            "remote_port": 5201
+                        }
+                    ],
+                    "version": "iperf 3.1.1",
+                    "system_info": "CYGWIN_NT-10.0-WOW PC-587b00 2.3.1(0.291/5/3) 2015-11-14 12:42 i686",
+                    "timestamp": {
+                        "time": "Tue, 22 Jul 2025 19:31:47 GMT",
+                        "timesecs": 1753212707
+                    },
+                    "connecting_to": {
+                        "host": "127.0.0.1",
+                        "port": 5201
+                    },
+                    "cookie": "PC-587b00.1753212707.242403.1ca5b9b6",
+                    "tcp_mss_default": 0,
+                    "test_start": {
+                        "protocol": "TCP",
+                        "num_streams": 1,
+                        "blksize": 131072,
+                        "omit": 0,
+                        "duration": 10,
+                        "bytes": 0,
+                        "blocks": 0,
+                        "reverse": 0
+                    }
+                },
+                "intervals": [
+                    {
+                        "streams": [
+                            {
+                                "socket": 4,
+                                "start": 0,
+                                "end": 1.00042,
+                                "seconds": 1.00042,
+                                "bytes": 146264064,
+                                "bits_per_second": 1169620000.0,
+                                "omitted": false
+                            }
+                        ],
+                        "sum": {
+                            "start": 0,
+                            "end": 1.00042,
+                            "seconds": 1.00042,
+                            "bytes": 146264064,
+                            "bits_per_second": 1169620000.0,
+                            "omitted": false
+                        }
+                    },
+                    {
+                        "streams": [
+                            {
+                                "socket": 4,
+                                "start": 1.00042,
+                                "end": 2.00037,
+                                "seconds": 0.999954,
+                                "bytes": 139906048,
+                                "bits_per_second": 1119300000.0,
+                                "omitted": false
+                            }
+                        ],
+                        "sum": {
+                            "start": 1.00042,
+                            "end": 2.00037,
+                            "seconds": 0.999954,
+                            "bytes": 139906048,
+                            "bits_per_second": 1119300000.0,
+                            "omitted": false
+                        }
+                    },
+                    {
+                        "streams": [
+                            {
+                                "socket": 4,
+                                "start": 2.00037,
+                                "end": 3.00503,
+                                "seconds": 1.00466,
+                                "bytes": 95528960,
+                                "bits_per_second": 760690000.0,
+                                "omitted": false
+                            }
+                        ],
+                        "sum": {
+                            "start": 2.00037,
+                            "end": 3.00503,
+                            "seconds": 1.00466,
+                            "bytes": 95528960,
+                            "bits_per_second": 760690000.0,
+                            "omitted": false
+                        }
+                    },
+                    {
+                        "streams": [
+                            {
+                                "socket": 4,
+                                "start": 3.00503,
+                                "end": 4.00045,
+                                "seconds": 0.995424,
+                                "bytes": 162527232,
+                                "bits_per_second": 1306200000.0,
+                                "omitted": false
+                            }
+                        ],
+                        "sum": {
+                            "start": 3.00503,
+                            "end": 4.00045,
+                            "seconds": 0.995424,
+                            "bytes": 162527232,
+                            "bits_per_second": 1306200000.0,
+                            "omitted": false
+                        }
+                    },
+                    {
+                        "streams": [
+                            {
+                                "socket": 4,
+                                "start": 4.00045,
+                                "end": 5.00325,
+                                "seconds": 1.00279,
+                                "bytes": 200798208,
+                                "bits_per_second": 1601910000.0,
+                                "omitted": false
+                            }
+                        ],
+                        "sum": {
+                            "start": 4.00045,
+                            "end": 5.00325,
+                            "seconds": 1.00279,
+                            "bytes": 200798208,
+                            "bits_per_second": 1601910000.0,
+                            "omitted": false
+                        }
+                    },
+                    {
+                        "streams": [
+                            {
+                                "socket": 4,
+                                "start": 5.00325,
+                                "end": 6.01138,
+                                "seconds": 1.00813,
+                                "bytes": 143353856,
+                                "bits_per_second": 1137580000.0,
+                                "omitted": false
+                            }
+                        ],
+                        "sum": {
+                            "start": 5.00325,
+                            "end": 6.01138,
+                            "seconds": 1.00813,
+                            "bytes": 143353856,
+                            "bits_per_second": 1137580000.0,
+                            "omitted": false
+                        }
+                    },
+                    {
+                        "streams": [
+                            {
+                                "socket": 4,
+                                "start": 6.01138,
+                                "end": 7.00854,
+                                "seconds": 0.99716,
+                                "bytes": 104720384,
+                                "bits_per_second": 840149000.0,
+                                "omitted": false
+                            }
+                        ],
+                        "sum": {
+                            "start": 6.01138,
+                            "end": 7.00854,
+                            "seconds": 0.99716,
+                            "bytes": 104720384,
+                            "bits_per_second": 840149000.0,
+                            "omitted": false
+                        }
+                    },
+                    {
+                        "streams": [
+                            {
+                                "socket": 4,
+                                "start": 7.00854,
+                                "end": 8.00615,
+                                "seconds": 0.99761,
+                                "bytes": 151974912,
+                                "bits_per_second": 1218710000.0,
+                                "omitted": false
+                            }
+                        ],
+                        "sum": {
+                            "start": 7.00854,
+                            "end": 8.00615,
+                            "seconds": 0.99761,
+                            "bytes": 151974912,
+                            "bits_per_second": 1218710000.0,
+                            "omitted": false
+                        }
+                    },
+                    {
+                        "streams": [
+                            {
+                                "socket": 4,
+                                "start": 8.00615,
+                                "end": 9.0004,
+                                "seconds": 0.994253,
+                                "bytes": 131858432,
+                                "bits_per_second": 1060960000.0,
+                                "omitted": false
+                            }
+                        ],
+                        "sum": {
+                            "start": 8.00615,
+                            "end": 9.0004,
+                            "seconds": 0.994253,
+                            "bytes": 131858432,
+                            "bits_per_second": 1060960000.0,
+                            "omitted": false
+                        }
+                    },
+                    {
+                        "streams": [
+                            {
+                                "socket": 4,
+                                "start": 9.0004,
+                                "end": 10.012,
+                                "seconds": 1.01156,
+                                "bytes": 83482624,
+                                "bits_per_second": 660227000.0,
+                                "omitted": false
+                            }
+                        ],
+                        "sum": {
+                            "start": 9.0004,
+                            "end": 10.012,
+                            "seconds": 1.01156,
+                            "bytes": 83482624,
+                            "bits_per_second": 660227000.0,
+                            "omitted": false
+                        }
+                    }
+                ],
+                "end": {
+                    "streams": [
+                        {
+                            "sender": {
+                                "socket": 4,
+                                "start": 0,
+                                "end": 10.012,
+                                "seconds": 10.012,
+                                "bytes": 1360414720,
+                                "bits_per_second": 1087030000.0
+                            },
+                            "receiver": {
+                                "socket": 4,
+                                "start": 0,
+                                "end": 10.012,
+                                "seconds": 10.012,
+                                "bytes": 1360414720,
+                                "bits_per_second": 1087030000.0
+                            }
+                        }
+                    ],
+                    "sum_sent": {
+                        "start": 0,
+                        "end": 10.012,
+                        "seconds": 10.012,
+                        "bytes": 1360414720,
+                        "bits_per_second": 1087030000.0
+                    },
+                    "sum_received": {
+                        "start": 0,
+                        "end": 10.012,
+                        "seconds": 10.012,
+                        "bytes": 1360414720,
+                        "bits_per_second": 1087030000.0
+                    },
+                    "cpu_utilization_percent": {
+                        "host_total": 30.2454,
+                        "host_user": 1.407,
+                        "host_system": 28.8384,
+                        "remote_total": 0.826993,
+                        "remote_user": 0.277278,
+                        "remote_system": 0.549715
+                    }
+                }
+            }
+        }
+    }
+]
