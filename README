@@ -1,0 +1,308 @@
+# Integrated WiFi Analysis & Heatmap System
+
+## Overview
+
+This system combines all your WiFi analysis needs:
+- **WiFi Scanning**: Detects all visible networks
+- **Network Testing**: Ping, speedtest, iperf3, traceroute
+- **Persistent Heatmaps**: Individual AP and composite heatmaps
+- **Performance Tracking**: Tests and tracks network performance over time
+
+## Installation
+
+### 1. Install Python Dependencies
+
+```bash
+pip install numpy matplotlib
+```
+
+### 2. Install Network Testing Tools
+
+#### iPerf3 (for throughput testing)
+- Download: https://iperf.fr/iperf-download.php
+- Extract to: `C:\iperf3\`
+- Update path in code if different
+
+#### Speedtest CLI (for internet speed testing)
+- Download: https://www.speedtest.net/apps/cli
+- Place `speedtest.exe` in: `C:\Users\Usuario\`
+- Update path in code if different
+
+### 3. Setup Project
+
+Create project directory and save these files:
+- `integrated_wifi_system.py` - Main system code
+- `main.py` - Launcher script
+
+## Configuration
+
+Edit the `Config` class in `integrated_wifi_system.py`:
+
+```python
+class Config:
+    # Tool paths
+    IPERF_PATH = "C:\\iperf3\\iperf3.exe\\iperf3.exe"
+    SPEEDTEST_PATH = "C:\\Users\\Usuario\\speedtest.exe"
+    
+    # House dimensions (meters)
+    HOUSE_WIDTH = 15
+    HOUSE_LENGTH = 20
+    
+    # Server settings
+    IPERF_SERVER = "127.0.0.1"  # Local server
+    SPEEDTEST_SERVER_ID = 40741  # ANTEL server
+```
+
+## Usage
+
+### Quick Start
+
+1. Run the main script:
+   ```bash
+   python main_integrated.py
+   ```
+
+2. Start iPerf3 server (if using local testing):
+   - The system will prompt to start it automatically
+   - Or manually: `iperf3.exe -s`
+
+3. From the main menu, choose:
+   - **Option 1**: Single measurement with full tests
+   - **Option 2**: Test all networks at a location
+   - **Option 7**: Continuous monitoring (recommended)
+
+### Menu Options Explained
+
+1. **Collect measurement with tests**
+   - Takes WiFi scan at specified location
+   - Optionally runs ping/speedtest/iperf on current connection
+   - Saves all data persistently
+
+2. **Test all networks at location**
+   - Connects to each available network
+   - Runs performance tests on each
+   - Useful for comparing networks
+
+3. **Auto-collect measurements**
+   - Automatically collects measurements at random locations
+   - Can enable/disable network tests
+   - Good for coverage mapping
+
+4. **Generate individual AP heatmaps**
+   - Creates heatmap for each detected AP
+   - Shows both signal strength and performance (if tested)
+   - Files saved as: `heatmap_[SSID]_[BSSID].png`
+
+5. **Generate composite heatmap**
+   - Creates 4-panel overview:
+     - Maximum signal strength
+     - AP density
+     - Best performance
+     - Channel congestion
+   - Saved as: `composite_heatmap.png`
+
+6. **View statistics**
+   - Shows all collected data statistics
+   - Network test summaries
+   - AP rankings
+
+7. **Continuous monitoring**
+   - Runs automatically:
+     - Basic scan every 30 seconds
+     - Full network tests every 5 minutes
+     - Heatmap updates every 10 minutes
+   - Best for long-term data collection
+
+8. **Network diagnostics**
+   - Run immediate tests on current connection
+   - Includes ping, traceroute, speedtest, iperf
+   - Useful for troubleshooting
+
+## Best Practices
+
+### For Accurate Heatmaps
+
+1. **Coverage**: Take measurements throughout your house
+   - Living areas, bedrooms, bathrooms
+   - Near walls and in corners
+   - Multiple floors if applicable
+
+2. **Density**: More measurements = better accuracy
+   - Aim for at least 50-100 measurements
+   - Use continuous monitoring overnight
+
+3. **Testing**: Performance tests take time
+   - Run basic scans frequently
+   - Run full tests periodically
+   - Focus tests on your main networks
+
+### Recommended Workflow
+
+1. **Initial Setup** (Day 1)
+   - Define your house layout/rooms
+   - Run option 3 to collect 50+ basic measurements
+   - Generate initial heatmaps
+
+2. **Network Testing** (Day 2)
+   - Use option 2 at key locations
+   - Test all available networks
+   - Identify best performers
+
+3. **Continuous Monitoring** (Ongoing)
+   - Run option 7 for extended periods
+   - Let it collect data overnight/while away
+   - Builds comprehensive performance history
+
+## Output Files
+
+All files are saved in `heatmap_data/` directory:
+
+### Data Files
+- `heatmap_data.json` - All measurements and test results
+
+### Heatmap Images
+- `heatmap_[SSID]_[BSSID].png` - Individual AP heatmaps
+- `composite_heatmap.png` - 4-panel overview
+
+### Heatmap Interpretation
+
+#### Signal Strength Colors
+- **Green** (80-100%): Excellent signal
+- **Yellow** (40-80%): Good signal  
+- **Red** (0-40%): Poor signal
+
+#### Performance Score
+- Combines ping time and download speed
+- **Green**: Excellent performance
+- **Yellow**: Acceptable performance
+- **Red**: Poor performance
+
+#### AP Density
+- Shows how many networks are available
+- **Red areas**: High interference potential
+- **Yellow/Green**: Normal coverage
+
+#### Channel Congestion
+- Identifies overused WiFi channels
+- **Red**: High congestion
+- **Clear**: Low congestion
+
+## Troubleshooting
+
+### Common Issues
+
+1. **"No networks found"**
+   - Ensure WiFi adapter is enabled
+   - Run as Administrator on Windows
+   - Check if `netsh wlan show networks` works
+
+2. **"iperf3 not found"**
+   - Verify path in Config class
+   - Ensure iperf3.exe is downloaded
+   - Check file permissions
+
+3. **"speedtest failed"**
+   - Verify speedtest.exe path
+   - Check internet connection
+   - Try different server ID
+
+4. **Empty heatmaps**
+   - Need minimum 3 measurements per AP
+   - Check if data is being saved
+   - Verify measurements have valid coordinates
+
+### Performance Tips
+
+1. **Faster Measurements**
+   - Disable network tests for basic scanning
+   - Reduce speedtest frequency
+   - Use shorter iperf duration
+
+2. **Better Coverage**
+   - Create measurement grid pattern
+   - Focus on problem areas
+   - Test at different times of day
+
+3. **Network Testing**
+   - Start iperf server before testing
+   - Use wired connection for iperf server
+   - Close bandwidth-heavy applications
+
+## Advanced Usage
+
+### Custom Room Layout
+
+Edit the `setup_default_layout()` method:
+
+```python
+def setup_default_layout(self):
+    # Clear existing rooms
+    self.rooms = {}
+    
+    # Add your rooms
+    self.define_room("office", 0, 0, 4, 4)
+    self.define_room("living", 4, 0, 6, 5)
+    self.define_room("kitchen", 10, 0, 5, 5)
+    # ... add more rooms
+```
+
+### Automation Script
+
+Create a script for automated collection:
+
+```python
+from integrated_wifi_system import HeatmapManager
+
+# Initialize
+manager = HeatmapManager(house_width=20, house_length=15)
+manager.setup_default_layout()
+
+# Collect grid measurements
+for x in range(0, 20, 2):  # Every 2 meters
+    for y in range(0, 15, 2):
+        manager.collect_measurement_with_tests(x, y, run_tests=False)
+        time.sleep(5)
+
+# Generate all heatmaps
+for ap in manager.ap_data.keys():
+    manager.create_ap_heatmap(ap)
+manager.create_composite_heatmap()
+```
+
+### Data Analysis
+
+Access raw data for custom analysis:
+
+```python
+import json
+
+# Load data
+with open('heatmap_data/heatmap_data.json', 'r') as f:
+    data = json.load(f)
+
+# Analyze measurements
+measurements = data['measurements']
+print(f"Total measurements: {len(measurements)}")
+
+# Find best AP by average signal
+ap_data = data['ap_data']
+for ap_name, readings in ap_data.items():
+    avg_signal = sum(r['signal'] for r in readings) / len(readings)
+    print(f"{ap_name}: {avg_signal:.1f}% average")
+```
+
+## Safety & Privacy
+
+- All data is stored locally
+- No data is sent to external servers
+- Network passwords are not stored
+- Only tests saved/open networks
+
+## Support
+
+For issues or questions:
+1. Check troubleshooting section
+2. Verify all paths and dependencies
+3. Run network diagnostics (option 8)
+4. Check Windows Firewall settings
+
