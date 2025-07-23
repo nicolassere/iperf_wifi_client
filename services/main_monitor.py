@@ -6,6 +6,7 @@ from services.utils import save_result
 from services.iperf_manager import diagnose_iperf3, start_iperf_server, run_iperf_external
 from services.network_tests import run_ping, run_traceroute, run_speedtest
 from services.wifi_interface import display_wifi_summary 
+from services.house_heatmap import setup_and_run_enhanced_heatmap
 
 def main_loop():
     """Bucle principal de monitoreo - CONECTA A TODAS LAS REDES DISPONIBLES."""
@@ -196,6 +197,11 @@ def main_loop():
         for i, network in enumerate(wifi_summary['networks'][:3], 1):
             status = "🟢" if network.get('is_current') else "🔓" if network.get('is_open') else "🔒"
             print(f"  {status} {i}. {network.get('ssid', 'Sin nombre')} - {network.get('signal_percentage', 0)}%")
+
+        # Llamar a funcion de heatmap
+        print(f"\n🗺️  === INICIANDO ANÁLISIS DE HEATMAP AUTOMÁTICO ===")
+        setup_and_run_enhanced_heatmap()
+              
         
         # Guardar resultado
         save_result(result, f"all_networks_test_{datetime.now().strftime('%Y%m%d')}.json")
