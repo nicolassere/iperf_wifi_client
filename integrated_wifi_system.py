@@ -178,7 +178,7 @@ class NetworkTester:
             # 1. TCP bidirectional test to measure maximum bandwidth
             print(f"  Running TCP bidirectional test...")
             tcp_result = subprocess.run(
-                [Config.IPERF_PATH, "-c", self.iperf_server, "-J", "-t", str(duration), "--bidir"],
+                [Config.IPERF_PATH, "-c", self.iperf_server, "-J", "-t", str(duration)],
                 capture_output=True,
                 text=True,
                 timeout=duration + 10
@@ -200,12 +200,11 @@ class NetworkTester:
                 
                 # 2. UDP download test at measured bandwidth
                 if download_bps > 0:
-                    target_bandwidth = int(download_bps * 0.9)  # 90% of TCP bandwidth
-                    print(f"  Running UDP download test at {target_bandwidth/1_000_000:.1f} Mbps...")
-                    
+                    print(f"  Running UDP download test at {download_bps/1_000_000:.1f} Mbps...")
+
                     udp_down_result = subprocess.run(
-                        [Config.IPERF_PATH, "-c", self.iperf_server, "-u", "-b", str(target_bandwidth), 
-                        "-t", str(duration), "-J", "-R"],  # -R for reverse (download)
+                        [Config.IPERF_PATH, "-c", self.iperf_server, "-u", "-b", str(download_bps), 
+                        "-t", str(duration),"--get-server-output", "-J"],  # -R for reverse (download) client receives server sends
                         capture_output=True,
                         text=True,
                         timeout=duration + 10
@@ -215,7 +214,7 @@ class NetworkTester:
                         udp_down_data = json.loads(udp_down_result.stdout)
                         
                         results["tests"]["udp_download"] = {
-                            "target_mbps": target_bandwidth / 1_000_000,
+                            "target_mbps": download_bps / 1_000_000,
                             "actual_mbps": udp_down_data.get("end", {}).get("sum", {}).get("bits_per_second", 0) / 1_000_000,
                             "jitter_ms": udp_down_data.get("end", {}).get("sum", {}).get("jitter_ms", 0),
                             "lost_packets": udp_down_data.get("end", {}).get("sum", {}).get("lost_packets", 0),
@@ -225,14 +224,20 @@ class NetworkTester:
                         print(f"    ✓ UDP Download: {results['tests']['udp_download']['actual_mbps']:.1f} Mbps, "
                             f"Loss: {results['tests']['udp_download']['lost_percent']:.1f}%, "
                             f"Jitter: {results['tests']['udp_download']['jitter_ms']:.1f}ms")
-                
+                    else:
+                        results["tests"]["udp_download"] = {
+                            "error": "UDP download test failed",
+                            "details": udp_down_result.stderr or "No details available"
+                        }
+                        print(f"    ✗ UDP Download: {results['tests']['udp_download']['error']}")
+                        print(f"      Details: {results['tests']['udp_download']['details']}")
+
                 # 3. UDP upload test at measured bandwidth
                 if upload_bps > 0:
-                    target_bandwidth = int(upload_bps * 0.9)  # 90% of TCP bandwidth
-                    print(f"  Running UDP upload test at {target_bandwidth/1_000_000:.1f} Mbps...")
-                    
+                    print(f"  Running UDP upload test at {upload_bps/1_000_000:.1f} Mbps...")
+
                     udp_up_result = subprocess.run(
-                        [Config.IPERF_PATH, "-c", self.iperf_server, "-u", "-b", str(target_bandwidth), 
+                        [Config.IPERF_PATH, "-c", self.iperf_server, "-u", "-b", str(upload_bps), 
                         "-t", str(duration), "-J"],  # No -R for upload
                         capture_output=True,
                         text=True,
@@ -243,7 +248,7 @@ class NetworkTester:
                         udp_up_data = json.loads(udp_up_result.stdout)
                         
                         results["tests"]["udp_upload"] = {
-                            "target_mbps": target_bandwidth / 1_000_000,
+                            "target_mbps": upload_bps / 1_000_000,
                             "actual_mbps": udp_up_data.get("end", {}).get("sum", {}).get("bits_per_second", 0) / 1_000_000,
                             "jitter_ms": udp_up_data.get("end", {}).get("sum", {}).get("jitter_ms", 0),
                             "lost_packets": udp_up_data.get("end", {}).get("sum", {}).get("lost_packets", 0),
@@ -327,12 +332,7 @@ class WiFiScanner:
         self.tested_networks = set()
     
     def scan_networks(self, force_refresh=False) -> List[Dict]:
-        """Scan all visible WiFi networks with detailed information."""
-        current_time = time.time()
-        
-        if not force_refresh and (current_time - self.last_scan) < 30:
-            return self.cached_networks
-        
+        """Scan WiFi networks with enhanced signal information."""
         try:
             # Force refresh
             subprocess.run(["netsh", "wlan", "refresh"], capture_output=True, timeout=10)
@@ -353,6 +353,8 @@ class WiFiScanner:
                 
                 if line.startswith("SSID") and ":" in line:
                     if current_network.get("ssid"):
+                        # Calculate additional metrics before saving
+                        self._calculate_signal_metrics(current_network)
                         networks.append(current_network.copy())
                     
                     ssid = line.split(":", 1)[1].strip()
@@ -363,12 +365,14 @@ class WiFiScanner:
                         "signal_dbm": None,
                         "noise_dbm": None,
                         "snr_db": None,
+                        "signal_quality": "Unknown",
                         "channel": 0,
                         "channel_width": "Unknown",
                         "band": "Unknown",
                         "authentication": "Unknown",
                         "encryption": "Unknown",
                         "phy_type": "Unknown",
+                        "max_rate_mbps": None,
                         "is_open": False,
                         "is_saved": False,
                         "timestamp": datetime.now().isoformat()
@@ -383,18 +387,17 @@ class WiFiScanner:
                         current_network["bssid"] = value
                     elif any(term in key for term in ["signal", "señal", "senal", "se¤al"]):
                         current_network["signal_strength"] = value
-                        # Extract numeric percentage
+                        # Extract percentage
                         match = re.search(r'(\d+)%', value)
                         if match:
                             current_network["signal_percentage"] = int(match.group(1))
-                            # Estimate dBm from percentage (rough approximation)
-                            # 100% = -30dBm, 0% = -90dBm
-                            current_network["signal_dbm"] = -90 + (current_network["signal_percentage"] * 0.6)
+                            # Calculate dBm more accurately
+                            current_network["signal_dbm"] = self._percentage_to_dbm(current_network["signal_percentage"])
                     elif any(term in key for term in ["channel", "canal"]):
                         match = re.search(r'(\d+)', value)
                         if match:
                             current_network["channel"] = int(match.group(1))
-                            # Determine band from channel
+                            # Determine band
                             if current_network["channel"] <= 14:
                                 current_network["band"] = "2.4GHz"
                             else:
@@ -407,39 +410,76 @@ class WiFiScanner:
                         current_network["encryption"] = value
                     elif any(term in key for term in ["radio type", "tipo de radio"]):
                         current_network["phy_type"] = value
-                        # Try to determine channel width from PHY type
+                        # Determine channel width and max rate
                         if "802.11n" in value:
                             current_network["channel_width"] = "20/40 MHz"
+                            current_network["max_rate_mbps"] = 300
                         elif "802.11ac" in value:
                             current_network["channel_width"] = "20/40/80 MHz"
+                            current_network["max_rate_mbps"] = 866
                         elif "802.11ax" in value:
                             current_network["channel_width"] = "20/40/80/160 MHz"
+                            current_network["max_rate_mbps"] = 1200
+                        elif "802.11g" in value:
+                            current_network["channel_width"] = "20 MHz"
+                            current_network["max_rate_mbps"] = 54
             
             if current_network.get("ssid"):
+                self._calculate_signal_metrics(current_network)
                 networks.append(current_network)
             
-            # Check which networks are saved and get additional info
+            # Check saved networks
             for network in networks:
                 network["is_saved"] = self._is_network_saved(network["ssid"])
-                
-                # Calculate SNR if we have signal (noise floor assumption)
-                if network["signal_dbm"] is not None:
-                    # Assume noise floor of -95 dBm for 2.4GHz, -100 dBm for 5GHz
-                    if network["band"] == "2.4GHz":
-                        network["noise_dbm"] = -95
-                    else:
-                        network["noise_dbm"] = -100
-                    network["snr_db"] = network["signal_dbm"] - network["noise_dbm"]
             
             self.cached_networks = networks
-            self.last_scan = current_time
-            
             return networks
             
         except Exception as e:
             print(f"Error scanning networks: {e}")
             return []
-
+    
+    def _percentage_to_dbm(self, percentage: int) -> float:
+        """Convert signal percentage to dBm with better accuracy."""
+        # More accurate conversion based on common WiFi adapter mappings
+        if percentage >= 100:
+            return -30
+        elif percentage >= 90:
+            return -30 - (100 - percentage) * 0.5
+        elif percentage >= 75:
+            return -35 - (90 - percentage) * 1.0
+        elif percentage >= 50:
+            return -50 - (75 - percentage) * 0.6
+        elif percentage >= 25:
+            return -65 - (50 - percentage) * 0.6
+        elif percentage >= 10:
+            return -80 - (25 - percentage) * 0.7
+        else:
+            return -90 - (10 - percentage) * 1.0
+    
+    def _calculate_signal_metrics(self, network: Dict):
+        """Calculate SNR and signal quality metrics."""
+        if network["signal_dbm"] is not None:
+            # Estimate noise floor based on band
+            if network["band"] == "2.4GHz":
+                network["noise_dbm"] = -95  # Typical noise floor for 2.4GHz
+            else:
+                network["noise_dbm"] = -100  # Typical noise floor for 5GHz
+            
+            # Calculate SNR
+            network["snr_db"] = network["signal_dbm"] - network["noise_dbm"]
+            
+            # Determine signal quality based on SNR
+            if network["snr_db"] >= 40:
+                network["signal_quality"] = "Excellent"
+            elif network["snr_db"] >= 30:
+                network["signal_quality"] = "Very Good"
+            elif network["snr_db"] >= 20:
+                network["signal_quality"] = "Good"
+            elif network["snr_db"] >= 15:
+                network["signal_quality"] = "Fair"
+            else:
+                network["signal_quality"] = "Poor"
     def display_network_details(self, network: Dict):
         """Display detailed network information."""
         print(f"\n📡 {network['ssid']} ({network['bssid']})")
@@ -630,12 +670,20 @@ class HeatmapManager:
                     'ssid': network['ssid'],
                     'bssid': network['bssid'],
                     'signal': network['signal_percentage'],
+                    'signal_dbm': network.get('signal_dbm'),  # Añadir
+                    'snr_db': network.get('snr_db'),         # Añadir
+                    'signal_quality': network.get('signal_quality'),  # Añadir
                     'channel': network['channel'],
+                    'band': network.get('band'),             # Añadir
                     'authentication': network['authentication']
                 }
                 measurement['networks'].append(net_data)
-                print(f"  📡 {network['ssid']} - Signal: {network['signal_percentage']}%")
-        
+                
+                # Mostrar más información
+                print(f"  📡 {network['ssid']} - Signal: {network['signal_percentage']}% "
+                    f"({network.get('signal_dbm', 'N/A'):.1f} dBm) "
+                    f"SNR: {network.get('snr_db', 'N/A'):.1f} dB "
+                    f"[{network.get('signal_quality', 'Unknown')}]")
         # Run network tests if connected
         if run_tests:
             current_conn = self.scanner.get_current_connection_info()
@@ -838,16 +886,24 @@ class HeatmapManager:
                     'ssid': network['ssid'],
                     'bssid': network['bssid'],
                     'signal': network['signal_percentage'],
+                    'signal_dbm': network.get('signal_dbm'),  # Añadir
+                    'snr_db': network.get('snr_db'),         # Añadir
+                    'signal_quality': network.get('signal_quality'),  # Añadir
                     'channel': network['channel'],
+                    'band': network.get('band'),             # Añadir
                     'authentication': network['authentication']
                 }
                 measurement['networks'].append(net_data)
+                
+
         
         # Test each connectable network
         for network in connectable:
             ssid = network['ssid']
-            print(f"\n🔗 Testing: {ssid}")
-            print(f"   Signal: {network['signal_percentage']}%")
+            print(f"  📡 {network['ssid']} - Signal: {network['signal_percentage']}% "
+                  f"({network.get('signal_dbm', 'N/A'):.1f} dBm) "
+                  f"SNR: {network.get('snr_db', 'N/A'):.1f} dB "
+                  f"[{network.get('signal_quality', 'Unknown')}]")
             
             # Connect
             conn_result = self.scanner.connect_to_network(ssid)
@@ -1479,6 +1535,20 @@ class HeatmapManager:
             stats['test_summary']['avg_throughput'] = None
         
         return stats
+    
+    def show_current_snr(manager):
+        """Mostrar SNR de la conexión actual."""
+        scanner = manager.scanner
+        current = scanner.get_current_connection_snr()
+        
+        if 'error' not in current and 'ssid' in current:
+            print(f"\n📡 CONEXIÓN ACTUAL - {current.get('ssid', 'Unknown')}")
+            print(f"   Signal: {current.get('signal_percentage', 'N/A')}% ({current.get('signal_dbm', 'N/A'):.1f} dBm)")
+            print(f"   SNR: {current.get('snr_db', 'N/A'):.1f} dB")
+            print(f"   Calidad: {current.get('signal_quality', 'Unknown')}")
+            print(f"   Ruido estimado: {current.get('noise_dbm', 'N/A')} dBm")
+        else:
+            print("No conectado a WiFi")
 
 
 # Main execution function

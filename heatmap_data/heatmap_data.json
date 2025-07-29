@@ -44,102 +44,9 @@
   "measurements": [
     {
       "id": 1,
-      "timestamp": "2025-07-29T00:19:17.877500",
-      "location": {
-        "x": 1.0,
-        "y": 1.0
-      },
+      "timestamp": "2025-07-29T17:17:15.472301",
+      "location": null,
       "networks": [
-        {
-          "ssid": "Pumita",
-          "bssid": "b8:dd:71:e3:9c:3c",
-          "signal": 85,
-          "channel": 149,
-          "authentication": "Unknown"
-        },
-        {
-          "ssid": "Puma",
-          "bssid": "b8:dd:71:e3:9c:3a",
-          "signal": 99,
-          "channel": 1,
-          "authentication": "Unknown"
-        },
-        {
-          "ssid": "CasaM",
-          "bssid": "d8:47:32:50:7d:5b",
-          "signal": 30,
-          "channel": 40,
-          "authentication": "Unknown"
-        },
-        {
-          "ssid": "CasaM_EXT",
-          "bssid": "62:61:b4:05:92:54",
-          "signal": 56,
-          "channel": 3,
-          "authentication": "Unknown"
-        }
-      ],
-      "tests": {},
-      "all_network_tests": [
-        {
-          "ssid": "Pumita",
-          "bssid": "b8:dd:71:e3:9c:3c",
-          "signal": 85,
-          "timestamp": "2025-07-29T00:19:25.846820",
-          "tests": {
-            "ping": {
-              "success": true,
-              "avg_time": 16.5,
-              "min_time": 15,
-              "max_time": 19,
-              "packet_loss": "0%",
-              "raw_times": [
-                19,
-                15,
-                15,
-                17
-              ]
-            }
-          }
-        },
-        {
-          "ssid": "Puma",
-          "bssid": "b8:dd:71:e3:9c:3a",
-          "signal": 99,
-          "timestamp": "2025-07-29T00:19:38.716151",
-          "tests": {
-            "ping": {
-              "success": true,
-              "avg_time": 16,
-              "min_time": 15,
-              "max_time": 18,
-              "packet_loss": "0%",
-              "raw_times": [
-                15,
-                16,
-                15,
-                18
-              ]
-            }
-          }
-        }
-      ]
-    },
-    {
-      "id": 2,
-      "timestamp": "2025-07-29T00:19:52.711083",
-      "location": {
-        "x": 15.0,
-        "y": 15.0
-      },
-      "networks": [
-        {
-          "ssid": "Pumita",
-          "bssid": "b8:dd:71:e3:9c:3c",
-          "signal": 83,
-          "channel": 149,
-          "authentication": "Unknown"
-        },
         {
           "ssid": "Puma",
           "bssid": "b8:dd:71:e3:9c:3a",
@@ -155,1825 +62,76 @@
           "authentication": "Unknown"
         },
         {
-          "ssid": "CasaM",
-          "bssid": "d8:47:32:50:7d:5b",
-          "signal": 31,
-          "channel": 40,
-          "authentication": "Unknown"
-        }
-      ],
-      "tests": {},
-      "all_network_tests": [
-        {
           "ssid": "Pumita",
           "bssid": "b8:dd:71:e3:9c:3c",
-          "signal": 83,
-          "timestamp": "2025-07-29T00:20:00.786835",
-          "tests": {
-            "ping": {
-              "success": true,
-              "avg_time": 16.25,
-              "min_time": 15,
-              "max_time": 18,
-              "packet_loss": "0%",
-              "raw_times": [
-                18,
-                16,
-                15,
-                16
-              ]
-            },
-            "speedtest": {
-              "success": true,
-              "download_mbps": 47.409488,
-              "upload_mbps": 5.230796,
-              "ping_ms": 3.728,
-              "server": "Antel",
-              "raw_data": {
-                "type": "result",
-                "timestamp": "2025-07-29T03:20:30Z",
-                "ping": {
-                  "jitter": 0.243,
-                  "latency": 3.728,
-                  "low": 3.533,
-                  "high": 3.989
-                },
-                "download": {
-                  "bandwidth": 47409488,
-                  "bytes": 341763522,
-                  "elapsed": 7223,
-                  "latency": {
-                    "iqm": 77.779,
-                    "low": 7.316,
-                    "high": 348.555,
-                    "jitter": 17.18
-                  }
-                },
-                "upload": {
-                  "bandwidth": 5230796,
-                  "bytes": 18980517,
-                  "elapsed": 3630,
-                  "latency": {
-                    "iqm": 276.234,
-                    "low": 21.465,
-                    "high": 493.169,
-                    "jitter": 80.854
-                  }
-                },
-                "packetLoss": 0,
-                "isp": "Antel Uruguay",
-                "interface": {
-                  "internalIp": "2800:a4:1d5a:6600:2813:a258:4852:df62",
-                  "name": "",
-                  "macAddr": "D8:FC:93:BC:E1:16",
-                  "isVpn": false,
-                  "externalIp": "2800:a4:1d5a:6600:2813:a258:4852:df62"
-                },
-                "server": {
-                  "id": 40741,
-                  "host": "testdevelocidad.com.uy",
-                  "port": 8080,
-                  "name": "Antel",
-                  "location": "Montevideo",
-                  "country": "Uruguay",
-                  "ip": "2800:a0:1:c828:1e00:1800:0:8"
-                },
-                "result": {
-                  "id": "db0f9c6c-1ca0-4267-b1a5-d4e033bfd188",
-                  "url": "https://www.speedtest.net/result/c/db0f9c6c-1ca0-4267-b1a5-d4e033bfd188",
-                  "persisted": true
-                }
-              }
-            },
-            "iperf": {
-              "success": true,
-              "throughput_mbps": 4.37838,
-              "duration": 10,
-              "server": "iperf.he.net",
-              "raw_data": {
-                "start": {
-                  "connected": [
-                    {
-                      "socket": 4,
-                      "local_host": "2800:a4:1d5a:6600:2813:a258:4852:df62",
-                      "local_port": 49351,
-                      "remote_host": "2001:470:0:236::2",
-                      "remote_port": 5201
-                    }
-                  ],
-                  "version": "iperf 3.1.1",
-                  "system_info": "CYGWIN_NT-10.0-WOW PC-587b00 2.3.1(0.291/5/3) 2015-11-14 12:42 i686",
-                  "timestamp": {
-                    "time": "Tue, 29 Jul 2025 03:20:34 GMT",
-                    "timesecs": 1753759234
-                  },
-                  "connecting_to": {
-                    "host": "iperf.he.net",
-                    "port": 5201
-                  },
-                  "cookie": "PC-587b00.1753759232.670825.112494fe",
-                  "tcp_mss_default": 0,
-                  "test_start": {
-                    "protocol": "TCP",
-                    "num_streams": 1,
-                    "blksize": 131072,
-                    "omit": 0,
-                    "duration": 10,
-                    "bytes": 0,
-                    "blocks": 0,
-                    "reverse": 0
-                  }
-                },
-                "intervals": [
-                  {
-                    "streams": [
-                      {
-                        "socket": 4,
-                        "start": 0,
-                        "end": 1.00493,
-                        "seconds": 1.00494,
-                        "bytes": 193536,
-                        "bits_per_second": 1540680.0,
-                        "omitted": false
-                      }
-                    ],
-                    "sum": {
-                      "start": 0,
-                      "end": 1.00493,
-                      "seconds": 1.00494,
-                      "bytes": 193536,
-                      "bits_per_second": 1540680.0,
-                      "omitted": false
-                    }
-                  },
-                  {
-                    "streams": [
-                      {
-                        "socket": 4,
-                        "start": 1.00493,
-                        "end": 2.00286,
-                        "seconds": 0.997924,
-                        "bytes": 645120,
-                        "bits_per_second": 5171700.0,
-                        "omitted": false
-                      }
-                    ],
-                    "sum": {
-                      "start": 1.00493,
-                      "end": 2.00286,
-                      "seconds": 0.997924,
-                      "bytes": 645120,
-                      "bits_per_second": 5171700.0,
-                      "omitted": false
-                    }
-                  },
-                  {
-                    "streams": [
-                      {
-                        "socket": 4,
-                        "start": 2.00286,
-                        "end": 3.00107,
-                        "seconds": 0.998207,
-                        "bytes": 516096,
-                        "bits_per_second": 4136180.0,
-                        "omitted": false
-                      }
-                    ],
-                    "sum": {
-                      "start": 2.00286,
-                      "end": 3.00107,
-                      "seconds": 0.998207,
-                      "bytes": 516096,
-                      "bits_per_second": 4136180.0,
-                      "omitted": false
-                    }
-                  },
-                  {
-                    "streams": [
-                      {
-                        "socket": 4,
-                        "start": 3.00107,
-                        "end": 4.01155,
-                        "seconds": 1.01049,
-                        "bytes": 645120,
-                        "bits_per_second": 5107390.0,
-                        "omitted": false
-                      }
-                    ],
-                    "sum": {
-                      "start": 3.00107,
-                      "end": 4.01155,
-                      "seconds": 1.01049,
-                      "bytes": 645120,
-                      "bits_per_second": 5107390.0,
-                      "omitted": false
-                    }
-                  },
-                  {
-                    "streams": [
-                      {
-                        "socket": 4,
-                        "start": 4.01155,
-                        "end": 5.01036,
-                        "seconds": 0.998801,
-                        "bytes": 645120,
-                        "bits_per_second": 5167160.0,
-                        "omitted": false
-                      }
-                    ],
-                    "sum": {
-                      "start": 4.01155,
-                      "end": 5.01036,
-                      "seconds": 0.998801,
-                      "bytes": 645120,
-                      "bits_per_second": 5167160.0,
-                      "omitted": false
-                    }
-                  },
-                  {
-                    "streams": [
-                      {
-                        "socket": 4,
-                        "start": 5.01036,
-                        "end": 6.00793,
-                        "seconds": 0.99757,
-                        "bytes": 516096,
-                        "bits_per_second": 4138830.0,
-                        "omitted": false
-                      }
-                    ],
-                    "sum": {
-                      "start": 5.01036,
-                      "end": 6.00793,
-                      "seconds": 0.99757,
-                      "bytes": 516096,
-                      "bits_per_second": 4138830.0,
-                      "omitted": false
-                    }
-                  },
-                  {
-                    "streams": [
-                      {
-                        "socket": 4,
-                        "start": 6.00793,
-                        "end": 7.00486,
-                        "seconds": 0.996934,
-                        "bytes": 516096,
-                        "bits_per_second": 4141470.0,
-                        "omitted": false
-                      }
-                    ],
-                    "sum": {
-                      "start": 6.00793,
-                      "end": 7.00486,
-                      "seconds": 0.996934,
-                      "bytes": 516096,
-                      "bits_per_second": 4141470.0,
-                      "omitted": false
-                    }
-                  },
-                  {
-                    "streams": [
-                      {
-                        "socket": 4,
-                        "start": 7.00486,
-                        "end": 8.00237,
-                        "seconds": 0.997514,
-                        "bytes": 516096,
-                        "bits_per_second": 4139060.0,
-                        "omitted": false
-                      }
-                    ],
-                    "sum": {
-                      "start": 7.00486,
-                      "end": 8.00237,
-                      "seconds": 0.997514,
-                      "bytes": 516096,
-                      "bits_per_second": 4139060.0,
-                      "omitted": false
-                    }
-                  },
-                  {
-                    "streams": [
-                      {
-                        "socket": 4,
-                        "start": 8.00237,
-                        "end": 9.00211,
-                        "seconds": 0.999741,
-                        "bytes": 645120,
-                        "bits_per_second": 5162300.0,
-                        "omitted": false
-                      }
-                    ],
-                    "sum": {
-                      "start": 8.00237,
-                      "end": 9.00211,
-                      "seconds": 0.999741,
-                      "bytes": 645120,
-                      "bits_per_second": 5162300.0,
-                      "omitted": false
-                    }
-                  },
-                  {
-                    "streams": [
-                      {
-                        "socket": 4,
-                        "start": 9.00211,
-                        "end": 10.0087,
-                        "seconds": 1.00656,
-                        "bytes": 645120,
-                        "bits_per_second": 5127320.0,
-                        "omitted": false
-                      }
-                    ],
-                    "sum": {
-                      "start": 9.00211,
-                      "end": 10.0087,
-                      "seconds": 1.00656,
-                      "bytes": 645120,
-                      "bits_per_second": 5127320.0,
-                      "omitted": false
-                    }
-                  }
-                ],
-                "end": {
-                  "streams": [
-                    {
-                      "sender": {
-                        "socket": 4,
-                        "start": 0,
-                        "end": 10.0087,
-                        "seconds": 10.0087,
-                        "bytes": 5483520,
-                        "bits_per_second": 4383010.0
-                      },
-                      "receiver": {
-                        "socket": 4,
-                        "start": 0,
-                        "end": 10.0087,
-                        "seconds": 10.0087,
-                        "bytes": 5477720,
-                        "bits_per_second": 4378380.0
-                      }
-                    }
-                  ],
-                  "sum_sent": {
-                    "start": 0,
-                    "end": 10.0087,
-                    "seconds": 10.0087,
-                    "bytes": 5483520,
-                    "bits_per_second": 4383010.0
-                  },
-                  "sum_received": {
-                    "start": 0,
-                    "end": 10.0087,
-                    "seconds": 10.0087,
-                    "bytes": 5477720,
-                    "bits_per_second": 4378380.0
-                  },
-                  "cpu_utilization_percent": {
-                    "host_total": 7.07038,
-                    "host_user": 1.69978,
-                    "host_system": 5.3706,
-                    "remote_total": 0.994848,
-                    "remote_user": 0.223905,
-                    "remote_system": 0.770951
-                  }
-                }
-              }
-            }
-          }
-        },
-        {
-          "ssid": "Puma",
-          "bssid": "b8:dd:71:e3:9c:3a",
           "signal": 99,
-          "timestamp": "2025-07-29T00:20:53.647003",
-          "tests": {
-            "ping": {
-              "success": true,
-              "avg_time": 15.25,
-              "min_time": 14,
-              "max_time": 16,
-              "packet_loss": "0%",
-              "raw_times": [
-                16,
-                16,
-                15,
-                14
-              ]
-            },
-            "speedtest": {
-              "success": true,
-              "download_mbps": 3.369601,
-              "upload_mbps": 1.934875,
-              "ping_ms": 3.888,
-              "server": "Antel",
-              "raw_data": {
-                "type": "result",
-                "timestamp": "2025-07-29T03:21:18Z",
-                "ping": {
-                  "jitter": 1.131,
-                  "latency": 3.888,
-                  "low": 2.895,
-                  "high": 5.833
-                },
-                "download": {
-                  "bandwidth": 3369601,
-                  "bytes": 31214761,
-                  "elapsed": 9421,
-                  "latency": {
-                    "iqm": 325.239,
-                    "low": 11.182,
-                    "high": 669.018,
-                    "jitter": 69.228
-                  }
-                },
-                "upload": {
-                  "bandwidth": 1934875,
-                  "bytes": 17271177,
-                  "elapsed": 9218,
-                  "latency": {
-                    "iqm": 6.54,
-                    "low": 2.682,
-                    "high": 29.064,
-                    "jitter": 5.163
-                  }
-                },
-                "packetLoss": 0,
-                "isp": "Antel Uruguay",
-                "interface": {
-                  "internalIp": "2800:a4:1d5a:6600:2813:a258:4852:df62",
-                  "name": "",
-                  "macAddr": "D8:FC:93:BC:E1:16",
-                  "isVpn": false,
-                  "externalIp": "2800:a4:1d5a:6600:2813:a258:4852:df62"
-                },
-                "server": {
-                  "id": 40741,
-                  "host": "testdevelocidad.com.uy",
-                  "port": 8080,
-                  "name": "Antel",
-                  "location": "Montevideo",
-                  "country": "Uruguay",
-                  "ip": "2800:a0:1:c828:1e00:1800:0:8"
-                },
-                "result": {
-                  "id": "28101b65-b859-4cdf-a0d5-199489acbfd2",
-                  "url": "https://www.speedtest.net/result/c/28101b65-b859-4cdf-a0d5-199489acbfd2",
-                  "persisted": true
-                }
-              }
-            }
-          }
-        }
-      ]
-    },
-    {
-      "id": 3,
-      "timestamp": "2025-07-29T00:21:39.336805",
-      "location": {
-        "x": 10.0,
-        "y": 15.0
-      },
-      "networks": [
-        {
-          "ssid": "Pumita",
-          "bssid": "b8:dd:71:e3:9c:3c",
-          "signal": 81,
           "channel": 149,
           "authentication": "Unknown"
         },
         {
-          "ssid": "Puma",
-          "bssid": "b8:dd:71:e3:9c:3a",
-          "signal": 99,
-          "channel": 1,
-          "authentication": "Unknown"
-        },
-        {
-          "ssid": "CasaM_EXT",
-          "bssid": "62:61:b4:05:92:54",
-          "signal": 58,
-          "channel": 3,
-          "authentication": "Unknown"
-        },
-        {
           "ssid": "CasaM",
-          "bssid": "d8:47:32:50:7d:5a",
-          "signal": 46,
-          "channel": 3,
-          "authentication": "Unknown"
-        }
-      ],
-      "tests": {},
-      "all_network_tests": [
-        {
-          "ssid": "Pumita",
-          "bssid": "b8:dd:71:e3:9c:3c",
-          "signal": 81,
-          "timestamp": "2025-07-29T00:21:47.165998",
-          "tests": {
-            "ping": {
-              "success": true,
-              "avg_time": 15.25,
-              "min_time": 15,
-              "max_time": 16,
-              "packet_loss": "0%",
-              "raw_times": [
-                15,
-                16,
-                15,
-                15
-              ]
-            },
-            "speedtest": {
-              "success": true,
-              "download_mbps": 43.253325,
-              "upload_mbps": 5.233506,
-              "ping_ms": 3.624,
-              "server": "Antel",
-              "raw_data": {
-                "type": "result",
-                "timestamp": "2025-07-29T03:22:02Z",
-                "ping": {
-                  "jitter": 0.576,
-                  "latency": 3.624,
-                  "low": 3.255,
-                  "high": 4.308
-                },
-                "download": {
-                  "bandwidth": 43253325,
-                  "bytes": 198331496,
-                  "elapsed": 4529,
-                  "latency": {
-                    "iqm": 106.31,
-                    "low": 3.828,
-                    "high": 224.508,
-                    "jitter": 25.874
-                  }
-                },
-                "upload": {
-                  "bandwidth": 5233506,
-                  "bytes": 18992832,
-                  "elapsed": 3629,
-                  "latency": {
-                    "iqm": 283.07,
-                    "low": 37.839,
-                    "high": 523.068,
-                    "jitter": 80.298
-                  }
-                },
-                "packetLoss": 0,
-                "isp": "Antel Uruguay",
-                "interface": {
-                  "internalIp": "2800:a4:1d5a:6600:2813:a258:4852:df62",
-                  "name": "",
-                  "macAddr": "D8:FC:93:BC:E1:16",
-                  "isVpn": false,
-                  "externalIp": "2800:a4:1d5a:6600:2813:a258:4852:df62"
-                },
-                "server": {
-                  "id": 40741,
-                  "host": "testdevelocidad.com.uy",
-                  "port": 8080,
-                  "name": "Antel",
-                  "location": "Montevideo",
-                  "country": "Uruguay",
-                  "ip": "2800:a0:1:c828:1e00:1800:0:8"
-                },
-                "result": {
-                  "id": "949168db-4510-480a-9533-629fdef8f1f9",
-                  "url": "https://www.speedtest.net/result/c/949168db-4510-480a-9533-629fdef8f1f9",
-                  "persisted": true
-                }
-              }
-            },
-            "iperf": {
-              "success": true,
-              "throughput_mbps": 4.48978,
-              "duration": 10,
-              "server": "iperf.he.net",
-              "raw_data": {
-                "start": {
-                  "connected": [
-                    {
-                      "socket": 4,
-                      "local_host": "2800:a4:1d5a:6600:2813:a258:4852:df62",
-                      "local_port": 49517,
-                      "remote_host": "2001:470:0:236::2",
-                      "remote_port": 5201
-                    }
-                  ],
-                  "version": "iperf 3.1.1",
-                  "system_info": "CYGWIN_NT-10.0-WOW PC-587b00 2.3.1(0.291/5/3) 2015-11-14 12:42 i686",
-                  "timestamp": {
-                    "time": "Tue, 29 Jul 2025 03:22:04 GMT",
-                    "timesecs": 1753759324
-                  },
-                  "connecting_to": {
-                    "host": "iperf.he.net",
-                    "port": 5201
-                  },
-                  "cookie": "PC-587b00.1753759324.237587.5b799353",
-                  "tcp_mss_default": 0,
-                  "test_start": {
-                    "protocol": "TCP",
-                    "num_streams": 1,
-                    "blksize": 131072,
-                    "omit": 0,
-                    "duration": 10,
-                    "bytes": 0,
-                    "blocks": 0,
-                    "reverse": 0
-                  }
-                },
-                "intervals": [
-                  {
-                    "streams": [
-                      {
-                        "socket": 4,
-                        "start": 0,
-                        "end": 1.00491,
-                        "seconds": 1.00491,
-                        "bytes": 193536,
-                        "bits_per_second": 1540720.0,
-                        "omitted": false
-                      }
-                    ],
-                    "sum": {
-                      "start": 0,
-                      "end": 1.00491,
-                      "seconds": 1.00491,
-                      "bytes": 193536,
-                      "bits_per_second": 1540720.0,
-                      "omitted": false
-                    }
-                  },
-                  {
-                    "streams": [
-                      {
-                        "socket": 4,
-                        "start": 1.00491,
-                        "end": 2.00093,
-                        "seconds": 0.996017,
-                        "bytes": 645120,
-                        "bits_per_second": 5181600.0,
-                        "omitted": false
-                      }
-                    ],
-                    "sum": {
-                      "start": 1.00491,
-                      "end": 2.00093,
-                      "seconds": 0.996017,
-                      "bytes": 645120,
-                      "bits_per_second": 5181600.0,
-                      "omitted": false
-                    }
-                  },
-                  {
-                    "streams": [
-                      {
-                        "socket": 4,
-                        "start": 2.00093,
-                        "end": 3.00939,
-                        "seconds": 1.00846,
-                        "bytes": 580608,
-                        "bits_per_second": 4605880.0,
-                        "omitted": false
-                      }
-                    ],
-                    "sum": {
-                      "start": 2.00093,
-                      "end": 3.00939,
-                      "seconds": 1.00846,
-                      "bytes": 580608,
-                      "bits_per_second": 4605880.0,
-                      "omitted": false
-                    }
-                  },
-                  {
-                    "streams": [
-                      {
-                        "socket": 4,
-                        "start": 3.00939,
-                        "end": 4.00928,
-                        "seconds": 0.999888,
-                        "bytes": 580608,
-                        "bits_per_second": 4645380.0,
-                        "omitted": false
-                      }
-                    ],
-                    "sum": {
-                      "start": 3.00939,
-                      "end": 4.00928,
-                      "seconds": 0.999888,
-                      "bytes": 580608,
-                      "bits_per_second": 4645380.0,
-                      "omitted": false
-                    }
-                  },
-                  {
-                    "streams": [
-                      {
-                        "socket": 4,
-                        "start": 4.00928,
-                        "end": 5.00184,
-                        "seconds": 0.992561,
-                        "bytes": 645120,
-                        "bits_per_second": 5199640.0,
-                        "omitted": false
-                      }
-                    ],
-                    "sum": {
-                      "start": 4.00928,
-                      "end": 5.00184,
-                      "seconds": 0.992561,
-                      "bytes": 645120,
-                      "bits_per_second": 5199640.0,
-                      "omitted": false
-                    }
-                  },
-                  {
-                    "streams": [
-                      {
-                        "socket": 4,
-                        "start": 5.00184,
-                        "end": 6.00183,
-                        "seconds": 0.999984,
-                        "bytes": 516096,
-                        "bits_per_second": 4128830.0,
-                        "omitted": false
-                      }
-                    ],
-                    "sum": {
-                      "start": 5.00184,
-                      "end": 6.00183,
-                      "seconds": 0.999984,
-                      "bytes": 516096,
-                      "bits_per_second": 4128830.0,
-                      "omitted": false
-                    }
-                  },
-                  {
-                    "streams": [
-                      {
-                        "socket": 4,
-                        "start": 6.00183,
-                        "end": 7.01174,
-                        "seconds": 1.00992,
-                        "bytes": 645120,
-                        "bits_per_second": 5110280.0,
-                        "omitted": false
-                      }
-                    ],
-                    "sum": {
-                      "start": 6.00183,
-                      "end": 7.01174,
-                      "seconds": 1.00992,
-                      "bytes": 645120,
-                      "bits_per_second": 5110280.0,
-                      "omitted": false
-                    }
-                  },
-                  {
-                    "streams": [
-                      {
-                        "socket": 4,
-                        "start": 7.01174,
-                        "end": 8.00905,
-                        "seconds": 0.997307,
-                        "bytes": 645120,
-                        "bits_per_second": 5174900.0,
-                        "omitted": false
-                      }
-                    ],
-                    "sum": {
-                      "start": 7.01174,
-                      "end": 8.00905,
-                      "seconds": 0.997307,
-                      "bytes": 645120,
-                      "bits_per_second": 5174900.0,
-                      "omitted": false
-                    }
-                  },
-                  {
-                    "streams": [
-                      {
-                        "socket": 4,
-                        "start": 8.00905,
-                        "end": 9.00636,
-                        "seconds": 0.997305,
-                        "bytes": 516096,
-                        "bits_per_second": 4139930.0,
-                        "omitted": false
-                      }
-                    ],
-                    "sum": {
-                      "start": 8.00905,
-                      "end": 9.00636,
-                      "seconds": 0.997305,
-                      "bytes": 516096,
-                      "bits_per_second": 4139930.0,
-                      "omitted": false
-                    }
-                  },
-                  {
-                    "streams": [
-                      {
-                        "socket": 4,
-                        "start": 9.00636,
-                        "end": 10.0006,
-                        "seconds": 0.994211,
-                        "bytes": 645120,
-                        "bits_per_second": 5191010.0,
-                        "omitted": false
-                      }
-                    ],
-                    "sum": {
-                      "start": 9.00636,
-                      "end": 10.0006,
-                      "seconds": 0.994211,
-                      "bytes": 645120,
-                      "bits_per_second": 5191010.0,
-                      "omitted": false
-                    }
-                  }
-                ],
-                "end": {
-                  "streams": [
-                    {
-                      "sender": {
-                        "socket": 4,
-                        "start": 0,
-                        "end": 10.0006,
-                        "seconds": 10.0006,
-                        "bytes": 5612544,
-                        "bits_per_second": 4489780.0
-                      },
-                      "receiver": {
-                        "socket": 4,
-                        "start": 0,
-                        "end": 10.0006,
-                        "seconds": 10.0006,
-                        "bytes": 5612544,
-                        "bits_per_second": 4489780.0
-                      }
-                    }
-                  ],
-                  "sum_sent": {
-                    "start": 0,
-                    "end": 10.0006,
-                    "seconds": 10.0006,
-                    "bytes": 5612544,
-                    "bits_per_second": 4489780.0
-                  },
-                  "sum_received": {
-                    "start": 0,
-                    "end": 10.0006,
-                    "seconds": 10.0006,
-                    "bytes": 5612544,
-                    "bits_per_second": 4489780.0
-                  },
-                  "cpu_utilization_percent": {
-                    "host_total": 7.3554,
-                    "host_user": 1.70088,
-                    "host_system": 5.65452,
-                    "remote_total": 0.366898,
-                    "remote_user": 0.0419923,
-                    "remote_system": 0.324902
-                  }
-                }
-              }
-            }
-          }
-        },
-        {
-          "ssid": "Puma",
-          "bssid": "b8:dd:71:e3:9c:3a",
-          "signal": 99,
-          "timestamp": "2025-07-29T00:22:24.178016",
-          "tests": {
-            "ping": {
-              "success": true,
-              "avg_time": 15.5,
-              "min_time": 15,
-              "max_time": 16,
-              "packet_loss": "0%",
-              "raw_times": [
-                16,
-                15,
-                16,
-                15
-              ]
-            },
-            "speedtest": {
-              "success": true,
-              "download_mbps": 3.451691,
-              "upload_mbps": 2.816186,
-              "ping_ms": 3.792,
-              "server": "Antel",
-              "raw_data": {
-                "type": "result",
-                "timestamp": "2025-07-29T03:22:42Z",
-                "ping": {
-                  "jitter": 0.638,
-                  "latency": 3.792,
-                  "low": 3.234,
-                  "high": 4.51
-                },
-                "download": {
-                  "bandwidth": 3451691,
-                  "bytes": 12425379,
-                  "elapsed": 3608,
-                  "latency": {
-                    "iqm": 164.797,
-                    "low": 84.215,
-                    "high": 277.227,
-                    "jitter": 56.214
-                  }
-                },
-                "upload": {
-                  "bandwidth": 2816186,
-                  "bytes": 17432307,
-                  "elapsed": 6231,
-                  "latency": {
-                    "iqm": 450.459,
-                    "low": 18.991,
-                    "high": 731.986,
-                    "jitter": 88.515
-                  }
-                },
-                "packetLoss": 0,
-                "isp": "Antel Uruguay",
-                "interface": {
-                  "internalIp": "2800:a4:1d5a:6600:2813:a258:4852:df62",
-                  "name": "",
-                  "macAddr": "D8:FC:93:BC:E1:16",
-                  "isVpn": false,
-                  "externalIp": "2800:a4:1d5a:6600:2813:a258:4852:df62"
-                },
-                "server": {
-                  "id": 40741,
-                  "host": "testdevelocidad.com.uy",
-                  "port": 8080,
-                  "name": "Antel",
-                  "location": "Montevideo",
-                  "country": "Uruguay",
-                  "ip": "2800:a0:1:c828:1e00:1800:0:8"
-                },
-                "result": {
-                  "id": "d2e9396c-4fa7-4b12-93eb-7cc04802c47d",
-                  "url": "https://www.speedtest.net/result/c/d2e9396c-4fa7-4b12-93eb-7cc04802c47d",
-                  "persisted": true
-                }
-              }
-            },
-            "iperf": {
-              "success": true,
-              "throughput_mbps": 3.92215,
-              "duration": 10,
-              "server": "iperf.he.net",
-              "raw_data": {
-                "start": {
-                  "connected": [
-                    {
-                      "socket": 4,
-                      "local_host": "2800:a4:1d5a:6600:2813:a258:4852:df62",
-                      "local_port": 49593,
-                      "remote_host": "2001:470:0:236::2",
-                      "remote_port": 5201
-                    }
-                  ],
-                  "version": "iperf 3.1.1",
-                  "system_info": "CYGWIN_NT-10.0-WOW PC-587b00 2.3.1(0.291/5/3) 2015-11-14 12:42 i686",
-                  "timestamp": {
-                    "time": "Tue, 29 Jul 2025 03:22:44 GMT",
-                    "timesecs": 1753759364
-                  },
-                  "connecting_to": {
-                    "host": "iperf.he.net",
-                    "port": 5201
-                  },
-                  "cookie": "PC-587b00.1753759363.769770.7d5a2339",
-                  "tcp_mss_default": 0,
-                  "test_start": {
-                    "protocol": "TCP",
-                    "num_streams": 1,
-                    "blksize": 131072,
-                    "omit": 0,
-                    "duration": 10,
-                    "bytes": 0,
-                    "blocks": 0,
-                    "reverse": 0
-                  }
-                },
-                "intervals": [
-                  {
-                    "streams": [
-                      {
-                        "socket": 4,
-                        "start": 0,
-                        "end": 1.0043,
-                        "seconds": 1.0043,
-                        "bytes": 193536,
-                        "bits_per_second": 1541660.0,
-                        "omitted": false
-                      }
-                    ],
-                    "sum": {
-                      "start": 0,
-                      "end": 1.0043,
-                      "seconds": 1.0043,
-                      "bytes": 193536,
-                      "bits_per_second": 1541660.0,
-                      "omitted": false
-                    }
-                  },
-                  {
-                    "streams": [
-                      {
-                        "socket": 4,
-                        "start": 1.0043,
-                        "end": 2.01469,
-                        "seconds": 1.01039,
-                        "bytes": 451584,
-                        "bits_per_second": 3575520.0,
-                        "omitted": false
-                      }
-                    ],
-                    "sum": {
-                      "start": 1.0043,
-                      "end": 2.01469,
-                      "seconds": 1.01039,
-                      "bytes": 451584,
-                      "bits_per_second": 3575520.0,
-                      "omitted": false
-                    }
-                  },
-                  {
-                    "streams": [
-                      {
-                        "socket": 4,
-                        "start": 2.01469,
-                        "end": 3.01415,
-                        "seconds": 0.999465,
-                        "bytes": 516096,
-                        "bits_per_second": 4130980.0,
-                        "omitted": false
-                      }
-                    ],
-                    "sum": {
-                      "start": 2.01469,
-                      "end": 3.01415,
-                      "seconds": 0.999465,
-                      "bytes": 516096,
-                      "bits_per_second": 4130980.0,
-                      "omitted": false
-                    }
-                  },
-                  {
-                    "streams": [
-                      {
-                        "socket": 4,
-                        "start": 3.01415,
-                        "end": 4.0037,
-                        "seconds": 0.989545,
-                        "bytes": 580608,
-                        "bits_per_second": 4693940.0,
-                        "omitted": false
-                      }
-                    ],
-                    "sum": {
-                      "start": 3.01415,
-                      "end": 4.0037,
-                      "seconds": 0.989545,
-                      "bytes": 580608,
-                      "bits_per_second": 4693940.0,
-                      "omitted": false
-                    }
-                  },
-                  {
-                    "streams": [
-                      {
-                        "socket": 4,
-                        "start": 4.0037,
-                        "end": 5.00068,
-                        "seconds": 0.996985,
-                        "bytes": 580608,
-                        "bits_per_second": 4658910.0,
-                        "omitted": false
-                      }
-                    ],
-                    "sum": {
-                      "start": 4.0037,
-                      "end": 5.00068,
-                      "seconds": 0.996985,
-                      "bytes": 580608,
-                      "bits_per_second": 4658910.0,
-                      "omitted": false
-                    }
-                  },
-                  {
-                    "streams": [
-                      {
-                        "socket": 4,
-                        "start": 5.00068,
-                        "end": 6.00182,
-                        "seconds": 1.00113,
-                        "bytes": 516096,
-                        "bits_per_second": 4124090.0,
-                        "omitted": false
-                      }
-                    ],
-                    "sum": {
-                      "start": 5.00068,
-                      "end": 6.00182,
-                      "seconds": 1.00113,
-                      "bytes": 516096,
-                      "bits_per_second": 4124090.0,
-                      "omitted": false
-                    }
-                  },
-                  {
-                    "streams": [
-                      {
-                        "socket": 4,
-                        "start": 6.00182,
-                        "end": 7.01323,
-                        "seconds": 1.01141,
-                        "bytes": 516096,
-                        "bits_per_second": 4082190.0,
-                        "omitted": false
-                      }
-                    ],
-                    "sum": {
-                      "start": 6.00182,
-                      "end": 7.01323,
-                      "seconds": 1.01141,
-                      "bytes": 516096,
-                      "bits_per_second": 4082190.0,
-                      "omitted": false
-                    }
-                  },
-                  {
-                    "streams": [
-                      {
-                        "socket": 4,
-                        "start": 7.01323,
-                        "end": 8.01524,
-                        "seconds": 1.00201,
-                        "bytes": 516096,
-                        "bits_per_second": 4120490.0,
-                        "omitted": false
-                      }
-                    ],
-                    "sum": {
-                      "start": 7.01323,
-                      "end": 8.01524,
-                      "seconds": 1.00201,
-                      "bytes": 516096,
-                      "bits_per_second": 4120490.0,
-                      "omitted": false
-                    }
-                  },
-                  {
-                    "streams": [
-                      {
-                        "socket": 4,
-                        "start": 8.01524,
-                        "end": 9.00071,
-                        "seconds": 0.985468,
-                        "bytes": 516096,
-                        "bits_per_second": 4189650.0,
-                        "omitted": false
-                      }
-                    ],
-                    "sum": {
-                      "start": 8.01524,
-                      "end": 9.00071,
-                      "seconds": 0.985468,
-                      "bytes": 516096,
-                      "bits_per_second": 4189650.0,
-                      "omitted": false
-                    }
-                  },
-                  {
-                    "streams": [
-                      {
-                        "socket": 4,
-                        "start": 9.00071,
-                        "end": 10.0004,
-                        "seconds": 0.999742,
-                        "bytes": 516096,
-                        "bits_per_second": 4129830.0,
-                        "omitted": false
-                      }
-                    ],
-                    "sum": {
-                      "start": 9.00071,
-                      "end": 10.0004,
-                      "seconds": 0.999742,
-                      "bytes": 516096,
-                      "bits_per_second": 4129830.0,
-                      "omitted": false
-                    }
-                  }
-                ],
-                "end": {
-                  "streams": [
-                    {
-                      "sender": {
-                        "socket": 4,
-                        "start": 0,
-                        "end": 10.0004,
-                        "seconds": 10.0004,
-                        "bytes": 4902912,
-                        "bits_per_second": 3922150.0
-                      },
-                      "receiver": {
-                        "socket": 4,
-                        "start": 0,
-                        "end": 10.0004,
-                        "seconds": 10.0004,
-                        "bytes": 4902912,
-                        "bits_per_second": 3922150.0
-                      }
-                    }
-                  ],
-                  "sum_sent": {
-                    "start": 0,
-                    "end": 10.0004,
-                    "seconds": 10.0004,
-                    "bytes": 4902912,
-                    "bits_per_second": 3922150.0
-                  },
-                  "sum_received": {
-                    "start": 0,
-                    "end": 10.0004,
-                    "seconds": 10.0004,
-                    "bytes": 4902912,
-                    "bits_per_second": 3922150.0
-                  },
-                  "cpu_utilization_percent": {
-                    "host_total": 6.35738,
-                    "host_user": 1.83577,
-                    "host_system": 4.52161,
-                    "remote_total": 0.463965,
-                    "remote_user": 0.0833223,
-                    "remote_system": 0.380648
-                  }
-                }
-              }
-            }
-          }
-        }
-      ]
-    },
-    {
-      "id": 4,
-      "timestamp": "2025-07-29T00:25:55.819431",
-      "location": {
-        "x": 12.0,
-        "y": 12.0
-      },
-      "networks": [
-        {
-          "ssid": "Pumita",
-          "bssid": "b8:dd:71:e3:9c:3c",
-          "signal": 83,
-          "channel": 149,
-          "authentication": "Unknown"
-        },
-        {
-          "ssid": "Puma",
-          "bssid": "b8:dd:71:e3:9c:3a",
-          "signal": 99,
-          "channel": 1,
-          "authentication": "Unknown"
-        },
-        {
-          "ssid": "CasaM_EXT",
-          "bssid": "62:61:b4:05:92:54",
-          "signal": 58,
-          "channel": 3,
-          "authentication": "Unknown"
-        },
-        {
-          "ssid": "CasaM",
-          "bssid": "d8:47:32:50:7d:5a",
-          "signal": 46,
+          "bssid": "40:ae:30:f3:9e:da",
+          "signal": 56,
           "channel": 3,
           "authentication": "Unknown"
         },
         {
           "ssid": "HP-Print-2A-Deskjet 3540 series",
           "bssid": "a0:48:1c:5b:fd:2a",
-          "signal": 50,
+          "signal": 38,
           "channel": 3,
+          "authentication": "Unknown"
+        },
+        {
+          "ssid": "ABEL-5GHz",
+          "bssid": "cc:29:bd:59:7e:09",
+          "signal": 16,
+          "channel": 60,
+          "authentication": "Unknown"
+        },
+        {
+          "ssid": "SSID8",
+          "bssid": "ce:29:bd:89:7e:09",
+          "signal": 20,
+          "channel": 60,
           "authentication": "Unknown"
         }
       ],
       "tests": {
         "ping": {
           "success": true,
-          "avg_time": 15.25,
-          "min_time": 15,
-          "max_time": 16,
+          "avg_time": 12.5,
+          "min_time": 12,
+          "max_time": 13,
           "packet_loss": "0%",
           "raw_times": [
-            15,
-            16,
-            15,
-            15
-          ]
-        },
-        "speedtest": {
-          "success": true,
-          "download_mbps": 3.409301,
-          "upload_mbps": 2.917928,
-          "ping_ms": 4.393,
-          "server": "Antel",
-          "raw_data": {
-            "type": "result",
-            "timestamp": "2025-07-29T03:26:16Z",
-            "ping": {
-              "jitter": 2.578,
-              "latency": 4.393,
-              "low": 3.443,
-              "high": 7.893
-            },
-            "download": {
-              "bandwidth": 3409301,
-              "bytes": 21147041,
-              "elapsed": 6222,
-              "latency": {
-                "iqm": 259.504,
-                "low": 10.539,
-                "high": 524.866,
-                "jitter": 73.99
-              }
-            },
-            "upload": {
-              "bandwidth": 2917928,
-              "bytes": 18232061,
-              "elapsed": 6208,
-              "latency": {
-                "iqm": 900.392,
-                "low": 6.669,
-                "high": 1794.115,
-                "jitter": 1787.446
-              }
-            },
-            "packetLoss": 0,
-            "isp": "Antel Uruguay",
-            "interface": {
-              "internalIp": "2800:a4:1d5a:6600:2813:a258:4852:df62",
-              "name": "",
-              "macAddr": "D8:FC:93:BC:E1:16",
-              "isVpn": false,
-              "externalIp": "2800:a4:1d5a:6600:2813:a258:4852:df62"
-            },
-            "server": {
-              "id": 40741,
-              "host": "testdevelocidad.com.uy",
-              "port": 8080,
-              "name": "Antel",
-              "location": "Montevideo",
-              "country": "Uruguay",
-              "ip": "2800:a0:1:c828:1e00:1800:0:8"
-            },
-            "result": {
-              "id": "cb89b38e-591e-44dc-8865-72d46d749b8d",
-              "url": "https://www.speedtest.net/result/c/cb89b38e-591e-44dc-8865-72d46d749b8d",
-              "persisted": true
-            }
-          }
-        },
-        "iperf": {
-          "success": true,
-          "throughput_mbps": 4.07512,
-          "duration": 10,
-          "server": "iperf.he.net",
-          "raw_data": {
-            "start": {
-              "connected": [
-                {
-                  "socket": 4,
-                  "local_host": "2800:a4:1d5a:6600:2813:a258:4852:df62",
-                  "local_port": 49663,
-                  "remote_host": "2001:470:0:236::2",
-                  "remote_port": 5201
-                }
-              ],
-              "version": "iperf 3.1.1",
-              "system_info": "CYGWIN_NT-10.0-WOW PC-587b00 2.3.1(0.291/5/3) 2015-11-14 12:42 i686",
-              "timestamp": {
-                "time": "Tue, 29 Jul 2025 03:26:18 GMT",
-                "timesecs": 1753759578
-              },
-              "connecting_to": {
-                "host": "iperf.he.net",
-                "port": 5201
-              },
-              "cookie": "PC-587b00.1753759578.154869.44c1a615",
-              "tcp_mss_default": 0,
-              "test_start": {
-                "protocol": "TCP",
-                "num_streams": 1,
-                "blksize": 131072,
-                "omit": 0,
-                "duration": 10,
-                "bytes": 0,
-                "blocks": 0,
-                "reverse": 0
-              }
-            },
-            "intervals": [
-              {
-                "streams": [
-                  {
-                    "socket": 4,
-                    "start": 0,
-                    "end": 1.00224,
-                    "seconds": 1.00224,
-                    "bytes": 193536,
-                    "bits_per_second": 1544830.0,
-                    "omitted": false
-                  }
-                ],
-                "sum": {
-                  "start": 0,
-                  "end": 1.00224,
-                  "seconds": 1.00224,
-                  "bytes": 193536,
-                  "bits_per_second": 1544830.0,
-                  "omitted": false
-                }
-              },
-              {
-                "streams": [
-                  {
-                    "socket": 4,
-                    "start": 1.00224,
-                    "end": 2.01804,
-                    "seconds": 1.0158,
-                    "bytes": 580608,
-                    "bits_per_second": 4572630.0,
-                    "omitted": false
-                  }
-                ],
-                "sum": {
-                  "start": 1.00224,
-                  "end": 2.01804,
-                  "seconds": 1.0158,
-                  "bytes": 580608,
-                  "bits_per_second": 4572630.0,
-                  "omitted": false
-                }
-              },
-              {
-                "streams": [
-                  {
-                    "socket": 4,
-                    "start": 2.01804,
-                    "end": 3.00746,
-                    "seconds": 0.989426,
-                    "bytes": 580608,
-                    "bits_per_second": 4694500.0,
-                    "omitted": false
-                  }
-                ],
-                "sum": {
-                  "start": 2.01804,
-                  "end": 3.00746,
-                  "seconds": 0.989426,
-                  "bytes": 580608,
-                  "bits_per_second": 4694500.0,
-                  "omitted": false
-                }
-              },
-              {
-                "streams": [
-                  {
-                    "socket": 4,
-                    "start": 3.00746,
-                    "end": 4.00691,
-                    "seconds": 0.999446,
-                    "bytes": 516096,
-                    "bits_per_second": 4131060.0,
-                    "omitted": false
-                  }
-                ],
-                "sum": {
-                  "start": 3.00746,
-                  "end": 4.00691,
-                  "seconds": 0.999446,
-                  "bytes": 516096,
-                  "bits_per_second": 4131060.0,
-                  "omitted": false
-                }
-              },
-              {
-                "streams": [
-                  {
-                    "socket": 4,
-                    "start": 4.00691,
-                    "end": 5.00647,
-                    "seconds": 0.999558,
-                    "bytes": 516096,
-                    "bits_per_second": 4130590.0,
-                    "omitted": false
-                  }
-                ],
-                "sum": {
-                  "start": 4.00691,
-                  "end": 5.00647,
-                  "seconds": 0.999558,
-                  "bytes": 516096,
-                  "bits_per_second": 4130590.0,
-                  "omitted": false
-                }
-              },
-              {
-                "streams": [
-                  {
-                    "socket": 4,
-                    "start": 5.00647,
-                    "end": 6.002,
-                    "seconds": 0.995536,
-                    "bytes": 516096,
-                    "bits_per_second": 4147280.0,
-                    "omitted": false
-                  }
-                ],
-                "sum": {
-                  "start": 5.00647,
-                  "end": 6.002,
-                  "seconds": 0.995536,
-                  "bytes": 516096,
-                  "bits_per_second": 4147280.0,
-                  "omitted": false
-                }
-              },
-              {
-                "streams": [
-                  {
-                    "socket": 4,
-                    "start": 6.002,
-                    "end": 7.01221,
-                    "seconds": 1.01021,
-                    "bytes": 645120,
-                    "bits_per_second": 5108820.0,
-                    "omitted": false
-                  }
-                ],
-                "sum": {
-                  "start": 6.002,
-                  "end": 7.01221,
-                  "seconds": 1.01021,
-                  "bytes": 645120,
-                  "bits_per_second": 5108820.0,
-                  "omitted": false
-                }
-              },
-              {
-                "streams": [
-                  {
-                    "socket": 4,
-                    "start": 7.01221,
-                    "end": 8.01085,
-                    "seconds": 0.998642,
-                    "bytes": 516096,
-                    "bits_per_second": 4134380.0,
-                    "omitted": false
-                  }
-                ],
-                "sum": {
-                  "start": 7.01221,
-                  "end": 8.01085,
-                  "seconds": 0.998642,
-                  "bytes": 516096,
-                  "bits_per_second": 4134380.0,
-                  "omitted": false
-                }
-              },
-              {
-                "streams": [
-                  {
-                    "socket": 4,
-                    "start": 8.01085,
-                    "end": 9.01014,
-                    "seconds": 0.999291,
-                    "bytes": 516096,
-                    "bits_per_second": 4131700.0,
-                    "omitted": false
-                  }
-                ],
-                "sum": {
-                  "start": 8.01085,
-                  "end": 9.01014,
-                  "seconds": 0.999291,
-                  "bytes": 516096,
-                  "bits_per_second": 4131700.0,
-                  "omitted": false
-                }
-              },
-              {
-                "streams": [
-                  {
-                    "socket": 4,
-                    "start": 9.01014,
-                    "end": 10.005,
-                    "seconds": 0.994854,
-                    "bytes": 516096,
-                    "bits_per_second": 4150120.0,
-                    "omitted": false
-                  }
-                ],
-                "sum": {
-                  "start": 9.01014,
-                  "end": 10.005,
-                  "seconds": 0.994854,
-                  "bytes": 516096,
-                  "bits_per_second": 4150120.0,
-                  "omitted": false
-                }
-              }
-            ],
-            "end": {
-              "streams": [
-                {
-                  "sender": {
-                    "socket": 4,
-                    "start": 0,
-                    "end": 10.005,
-                    "seconds": 10.005,
-                    "bytes": 5096448,
-                    "bits_per_second": 4075120.0
-                  },
-                  "receiver": {
-                    "socket": 4,
-                    "start": 0,
-                    "end": 10.005,
-                    "seconds": 10.005,
-                    "bytes": 5096448,
-                    "bits_per_second": 4075120.0
-                  }
-                }
-              ],
-              "sum_sent": {
-                "start": 0,
-                "end": 10.005,
-                "seconds": 10.005,
-                "bytes": 5096448,
-                "bits_per_second": 4075120.0
-              },
-              "sum_received": {
-                "start": 0,
-                "end": 10.005,
-                "seconds": 10.005,
-                "bytes": 5096448,
-                "bits_per_second": 4075120.0
-              },
-              "cpu_utilization_percent": {
-                "host_total": 7.19321,
-                "host_user": 1.54527,
-                "host_system": 5.64793,
-                "remote_total": 0.128296,
-                "remote_user": 0.0218795,
-                "remote_system": 0.106417
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": 5,
-      "timestamp": "2025-07-29T00:26:46.047898",
-      "location": {
-        "x": 10.0,
-        "y": 10.0
-      },
-      "networks": [
-        {
-          "ssid": "Pumita",
-          "bssid": "b8:dd:71:e3:9c:3c",
-          "signal": 83,
-          "channel": 149,
-          "authentication": "Unknown"
-        },
-        {
-          "ssid": "Puma",
-          "bssid": "b8:dd:71:e3:9c:3a",
-          "signal": 99,
-          "channel": 1,
-          "authentication": "Unknown"
-        },
-        {
-          "ssid": "CasaM_EXT",
-          "bssid": "62:61:b4:05:92:54",
-          "signal": 58,
-          "channel": 3,
-          "authentication": "Unknown"
-        },
-        {
-          "ssid": "CasaM",
-          "bssid": "d8:47:32:50:7d:5a",
-          "signal": 46,
-          "channel": 3,
-          "authentication": "Unknown"
-        },
-        {
-          "ssid": "HP-Print-2A-Deskjet 3540 series",
-          "bssid": "a0:48:1c:5b:fd:2a",
-          "signal": 50,
-          "channel": 3,
-          "authentication": "Unknown"
-        }
-      ],
-      "tests": {
-        "ping": {
-          "success": true,
-          "avg_time": 15.25,
-          "min_time": 15,
-          "max_time": 16,
-          "packet_loss": "0%",
-          "raw_times": [
-            15,
-            16,
-            15,
-            15
+            13,
+            13,
+            12,
+            12
           ]
         }
       }
     },
     {
-      "id": 6,
-      "timestamp": "2025-07-29T00:27:00.511037",
-      "location": {
-        "x": 7.0,
-        "y": 8.0
-      },
-      "networks": [
-        {
-          "ssid": "Pumita",
-          "bssid": "b8:dd:71:e3:9c:3c",
-          "signal": 83,
-          "channel": 149,
-          "authentication": "Unknown"
-        },
-        {
-          "ssid": "Puma",
-          "bssid": "b8:dd:71:e3:9c:3a",
-          "signal": 99,
-          "channel": 1,
-          "authentication": "Unknown"
-        },
-        {
-          "ssid": "CasaM_EXT",
-          "bssid": "62:61:b4:05:92:54",
-          "signal": 58,
-          "channel": 3,
-          "authentication": "Unknown"
-        },
-        {
-          "ssid": "CasaM",
-          "bssid": "d8:47:32:50:7d:5a",
-          "signal": 46,
-          "channel": 3,
-          "authentication": "Unknown"
-        },
-        {
-          "ssid": "HP-Print-2A-Deskjet 3540 series",
-          "bssid": "a0:48:1c:5b:fd:2a",
-          "signal": 50,
-          "channel": 3,
-          "authentication": "Unknown"
-        }
-      ],
-      "tests": {
-        "ping": {
-          "success": true,
-          "avg_time": 16.75,
-          "min_time": 16,
-          "max_time": 19,
-          "packet_loss": "0%",
-          "raw_times": [
-            19,
-            16,
-            16,
-            16
-          ]
-        }
-      }
-    },
-    {
-      "id": 7,
-      "timestamp": "2025-07-29T09:07:57.139886",
+      "id": 2,
+      "timestamp": "2025-07-29T17:32:40.001586",
       "location": null,
       "networks": [
+        {
+          "ssid": "Puma",
+          "bssid": "b8:dd:71:e3:9c:3a",
+          "signal": 99,
+          "channel": 1,
+          "authentication": "Unknown"
+        },
+        {
+          "ssid": "CasaM_EXT",
+          "bssid": "62:61:b4:05:92:54",
+          "signal": 53,
+          "channel": 3,
+          "authentication": "Unknown"
+        },
         {
           "ssid": "Pumita",
           "bssid": "b8:dd:71:e3:9c:3c",
@@ -1984,39 +142,669 @@
         {
           "ssid": "CasaM",
           "bssid": "40:ae:30:f3:9e:da",
-          "signal": 58,
-          "channel": 3,
-          "authentication": "Unknown"
-        },
-        {
-          "ssid": "CasaM_EXT",
-          "bssid": "62:61:b4:05:92:54",
-          "signal": 63,
+          "signal": 56,
           "channel": 3,
           "authentication": "Unknown"
         },
         {
           "ssid": "HP-Print-2A-Deskjet 3540 series",
           "bssid": "a0:48:1c:5b:fd:2a",
-          "signal": 46,
+          "signal": 38,
           "channel": 3,
           "authentication": "Unknown"
         },
         {
+          "ssid": "ABEL-5GHz",
+          "bssid": "cc:29:bd:59:7e:09",
+          "signal": 16,
+          "channel": 60,
+          "authentication": "Unknown"
+        },
+        {
+          "ssid": "SSID8",
+          "bssid": "ce:29:bd:89:7e:09",
+          "signal": 20,
+          "channel": 60,
+          "authentication": "Unknown"
+        }
+      ],
+      "tests": {
+        "iperf_suite": {
+          "success": true,
+          "server": "iperf.he.net",
+          "tests": {
+            "tcp_bidirectional": {
+              "download_mbps": 4.1227,
+              "upload_mbps": 4.1227
+            },
+            "udp_download": {
+              "error": "UDP download test failed",
+              "details": ""
+            },
+            "udp_upload": {
+              "target_mbps": 4.1227,
+              "actual_mbps": 4.08304,
+              "jitter_ms": 6.52564,
+              "lost_packets": 0,
+              "lost_percent": 0
+            },
+            "udp_5mbps": {
+              "target_mbps": 5.0,
+              "actual_mbps": 4.96012,
+              "jitter_ms": 6.52136,
+              "lost_packets": 0,
+              "lost_percent": 0
+            }
+          }
+        }
+      },
+      "all_network_tests": [
+        {
           "ssid": "Puma",
           "bssid": "b8:dd:71:e3:9c:3a",
           "signal": 99,
+          "timestamp": "2025-07-29T17:32:48.039171",
+          "tests": {
+            "ping": {
+              "success": true,
+              "avg_time": 14.25,
+              "min_time": 13,
+              "max_time": 18,
+              "packet_loss": "0%",
+              "raw_times": [
+                18,
+                13,
+                13,
+                13
+              ]
+            },
+            "speedtest": {
+              "success": true,
+              "download_mbps": 3.034122,
+              "upload_mbps": 2.777506,
+              "ping_ms": 7.344,
+              "server": "Antel",
+              "raw_data": {
+                "type": "result",
+                "timestamp": "2025-07-29T20:33:13Z",
+                "ping": {
+                  "jitter": 7.91,
+                  "latency": 7.344,
+                  "low": 6.132,
+                  "high": 22.361
+                },
+                "download": {
+                  "bandwidth": 3034122,
+                  "bytes": 31943374,
+                  "elapsed": 10722,
+                  "latency": {
+                    "iqm": 221.761,
+                    "low": 26.135,
+                    "high": 341.597,
+                    "jitter": 69.818
+                  }
+                },
+                "upload": {
+                  "bandwidth": 2777506,
+                  "bytes": 11734164,
+                  "elapsed": 4208,
+                  "latency": {
+                    "iqm": 437.561,
+                    "low": 39.489,
+                    "high": 770.936,
+                    "jitter": 97.005
+                  }
+                },
+                "packetLoss": 0,
+                "isp": "Antel Uruguay",
+                "interface": {
+                  "internalIp": "2800:a4:1d37:9600:e909:7b42:3b8:d042",
+                  "name": "",
+                  "macAddr": "D8:FC:93:BC:E1:16",
+                  "isVpn": false,
+                  "externalIp": "2800:a4:1d37:9600:e909:7b42:3b8:d042"
+                },
+                "server": {
+                  "id": 40741,
+                  "host": "testdevelocidad.com.uy",
+                  "port": 8080,
+                  "name": "Antel",
+                  "location": "Montevideo",
+                  "country": "Uruguay",
+                  "ip": "2800:a0:1:c828:1e00:1800:0:8"
+                },
+                "result": {
+                  "id": "1aeaca52-1b73-464f-85e4-23f7f85995cb",
+                  "url": "https://www.speedtest.net/result/c/1aeaca52-1b73-464f-85e4-23f7f85995cb",
+                  "persisted": true
+                }
+              }
+            }
+          }
+        },
+        {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 99,
+          "timestamp": "2025-07-29T17:34:08.721741",
+          "tests": {
+            "ping": {
+              "success": true,
+              "avg_time": 17,
+              "min_time": 12,
+              "max_time": 27,
+              "packet_loss": "0%",
+              "raw_times": [
+                27,
+                12,
+                17,
+                12
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "timestamp": "2025-07-29T17:35:01.355845",
+      "location": null,
+      "networks": [
+        {
+          "ssid": "Puma",
+          "bssid": "b8:dd:71:e3:9c:3a",
+          "signal": 99,
+          "signal_dbm": -30.5,
+          "snr_db": 64.5,
+          "signal_quality": "Excellent",
           "channel": 1,
+          "band": "2.4GHz",
+          "authentication": "Unknown"
+        },
+        {
+          "ssid": "CasaM_EXT",
+          "bssid": "62:61:b4:05:92:54",
+          "signal": 60,
+          "signal_dbm": -59.0,
+          "snr_db": 36.0,
+          "signal_quality": "Very Good",
+          "channel": 3,
+          "band": "2.4GHz",
+          "authentication": "Unknown"
+        },
+        {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 99,
+          "signal_dbm": -30.5,
+          "snr_db": 69.5,
+          "signal_quality": "Excellent",
+          "channel": 149,
+          "band": "5GHz",
+          "authentication": "Unknown"
+        },
+        {
+          "ssid": "CasaM",
+          "bssid": "d8:47:32:50:7d:5a",
+          "signal": 41,
+          "signal_dbm": -70.4,
+          "snr_db": 24.599999999999994,
+          "signal_quality": "Good",
+          "channel": 3,
+          "band": "2.4GHz",
+          "authentication": "Unknown"
+        },
+        {
+          "ssid": "HP-Print-2A-Deskjet 3540 series",
+          "bssid": "a0:48:1c:5b:fd:2a",
+          "signal": 48,
+          "signal_dbm": -66.2,
+          "snr_db": 28.799999999999997,
+          "signal_quality": "Good",
+          "channel": 3,
+          "band": "2.4GHz",
+          "authentication": "Unknown"
+        }
+      ],
+      "tests": {
+        "iperf_suite": {
+          "success": true,
+          "server": "iperf.he.net",
+          "tests": {
+            "tcp_bidirectional": {
+              "download_mbps": 4.17947,
+              "upload_mbps": 4.22527
+            },
+            "udp_download": {
+              "error": "UDP download test failed",
+              "details": ""
+            },
+            "udp_upload": {
+              "target_mbps": 4.22527,
+              "actual_mbps": 4.18261,
+              "jitter_ms": 5.22825,
+              "lost_packets": 0,
+              "lost_percent": 0
+            },
+            "udp_5mbps": {
+              "target_mbps": 5.0,
+              "actual_mbps": 4.95468,
+              "jitter_ms": 5.77819,
+              "lost_packets": 0,
+              "lost_percent": 0
+            }
+          }
+        }
+      },
+      "all_network_tests": [
+        {
+          "ssid": "Puma",
+          "bssid": "b8:dd:71:e3:9c:3a",
+          "signal": 99,
+          "timestamp": "2025-07-29T17:35:09.383754",
+          "tests": {
+            "ping": {
+              "success": true,
+              "avg_time": 17.25,
+              "min_time": 12,
+              "max_time": 23,
+              "packet_loss": "0%",
+              "raw_times": [
+                16,
+                23,
+                12,
+                18
+              ]
+            }
+          }
+        },
+        {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 99,
+          "timestamp": "2025-07-29T17:36:33.635993",
+          "tests": {
+            "ping": {
+              "success": true,
+              "avg_time": 12.25,
+              "min_time": 12,
+              "max_time": 13,
+              "packet_loss": "0%",
+              "raw_times": [
+                12,
+                13,
+                12,
+                12
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "timestamp": "2025-07-29T17:37:40.834015",
+      "location": null,
+      "networks": [
+        {
+          "ssid": "Puma",
+          "bssid": "b8:dd:71:e3:9c:3a",
+          "signal": 99,
+          "signal_dbm": -30.5,
+          "snr_db": 64.5,
+          "signal_quality": "Excellent",
+          "channel": 1,
+          "band": "2.4GHz",
+          "authentication": "Unknown"
+        },
+        {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 99,
+          "signal_dbm": -30.5,
+          "snr_db": 69.5,
+          "signal_quality": "Excellent",
+          "channel": 149,
+          "band": "5GHz",
+          "authentication": "Unknown"
+        },
+        {
+          "ssid": "SSID8",
+          "bssid": "ce:29:bd:89:7e:09",
+          "signal": 21,
+          "signal_dbm": -82.8,
+          "snr_db": 17.200000000000003,
+          "signal_quality": "Fair",
+          "channel": 60,
+          "band": "5GHz",
+          "authentication": "Unknown"
+        },
+        {
+          "ssid": "ABEL-5GHz",
+          "bssid": "cc:29:bd:59:7e:09",
+          "signal": 21,
+          "signal_dbm": -82.8,
+          "snr_db": 17.200000000000003,
+          "signal_quality": "Fair",
+          "channel": 60,
+          "band": "5GHz",
+          "authentication": "Unknown"
+        }
+      ],
+      "tests": {
+        "iperf_suite": {
+          "success": true,
+          "server": "iperf.he.net",
+          "tests": {
+            "tcp_bidirectional": {
+              "download_mbps": 4.12348,
+              "upload_mbps": 4.12348
+            },
+            "udp_download": {
+              "error": "UDP download test failed",
+              "details": ""
+            },
+            "udp_upload": {
+              "target_mbps": 4.12348,
+              "actual_mbps": 4.08884,
+              "jitter_ms": 8.91074,
+              "lost_packets": 0,
+              "lost_percent": 0
+            },
+            "udp_5mbps": {
+              "target_mbps": 5.0,
+              "actual_mbps": 4.94761,
+              "jitter_ms": 3.54471,
+              "lost_packets": 0,
+              "lost_percent": 0
+            }
+          }
+        }
+      },
+      "all_network_tests": [
+        {
+          "ssid": "Puma",
+          "bssid": "b8:dd:71:e3:9c:3a",
+          "signal": 99,
+          "timestamp": "2025-07-29T17:37:48.729236",
+          "tests": {
+            "ping": {
+              "success": true,
+              "avg_time": 15.5,
+              "min_time": 12,
+              "max_time": 19,
+              "packet_loss": "0%",
+              "raw_times": [
+                17,
+                14,
+                12,
+                19
+              ]
+            }
+          }
+        },
+        {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 99,
+          "timestamp": "2025-07-29T17:39:43.220522",
+          "tests": {
+            "ping": {
+              "success": true,
+              "avg_time": 12.666666666666666,
+              "min_time": 12,
+              "max_time": 14,
+              "packet_loss": "25%",
+              "raw_times": [
+                14,
+                12,
+                12
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "timestamp": "2025-07-29T17:40:14.160523",
+      "location": null,
+      "networks": [
+        {
+          "ssid": "Puma",
+          "bssid": "b8:dd:71:e3:9c:3a",
+          "signal": 99,
+          "signal_dbm": -30.5,
+          "snr_db": 64.5,
+          "signal_quality": "Excellent",
+          "channel": 1,
+          "band": "2.4GHz",
+          "authentication": "Unknown"
+        },
+        {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 99,
+          "signal_dbm": -30.5,
+          "snr_db": 69.5,
+          "signal_quality": "Excellent",
+          "channel": 149,
+          "band": "5GHz",
+          "authentication": "Unknown"
+        },
+        {
+          "ssid": "SSID8",
+          "bssid": "ce:29:bd:89:7e:09",
+          "signal": 18,
+          "signal_dbm": -84.9,
+          "snr_db": 15.099999999999994,
+          "signal_quality": "Fair",
+          "channel": 60,
+          "band": "5GHz",
+          "authentication": "Unknown"
+        },
+        {
+          "ssid": "ABEL-5GHz",
+          "bssid": "cc:29:bd:59:7e:09",
+          "signal": 21,
+          "signal_dbm": -82.8,
+          "snr_db": 17.200000000000003,
+          "signal_quality": "Fair",
+          "channel": 60,
+          "band": "5GHz",
+          "authentication": "Unknown"
+        },
+        {
+          "ssid": "HP-Print-2A-Deskjet 3540 series",
+          "bssid": "a0:48:1c:5b:fd:2a",
+          "signal": 55,
+          "signal_dbm": -62.0,
+          "snr_db": 33.0,
+          "signal_quality": "Very Good",
+          "channel": 3,
+          "band": "2.4GHz",
+          "authentication": "Unknown"
+        },
+        {
+          "ssid": "CasaM",
+          "bssid": "d8:47:32:50:7d:3a",
+          "signal": 40,
+          "signal_dbm": -71.0,
+          "snr_db": 24.0,
+          "signal_quality": "Good",
+          "channel": 3,
+          "band": "2.4GHz",
+          "authentication": "Unknown"
+        },
+        {
+          "ssid": "CasaM_EXT",
+          "bssid": "62:61:b4:05:92:54",
+          "signal": 55,
+          "signal_dbm": -62.0,
+          "snr_db": 33.0,
+          "signal_quality": "Very Good",
+          "channel": 3,
+          "band": "2.4GHz",
           "authentication": "Unknown"
         }
       ],
       "tests": {},
       "all_network_tests": [
         {
+          "ssid": "Puma",
+          "bssid": "b8:dd:71:e3:9c:3a",
+          "signal": 99,
+          "timestamp": "2025-07-29T17:40:22.409246",
+          "tests": {
+            "ping": {
+              "success": true,
+              "avg_time": 13,
+              "min_time": 12,
+              "max_time": 15,
+              "packet_loss": "0%",
+              "raw_times": [
+                15,
+                13,
+                12,
+                12
+              ]
+            }
+          }
+        },
+        {
           "ssid": "Pumita",
           "bssid": "b8:dd:71:e3:9c:3c",
           "signal": 99,
-          "timestamp": "2025-07-29T09:08:07.678184",
+          "timestamp": "2025-07-29T17:41:01.012700",
+          "tests": {
+            "ping": {
+              "success": true,
+              "avg_time": 12.5,
+              "min_time": 12,
+              "max_time": 14,
+              "packet_loss": "0%",
+              "raw_times": [
+                12,
+                12,
+                14,
+                12
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "timestamp": "2025-07-29T17:41:37.830714",
+      "location": null,
+      "networks": [
+        {
+          "ssid": "Puma",
+          "bssid": "b8:dd:71:e3:9c:3a",
+          "signal": 99,
+          "signal_dbm": -30.5,
+          "snr_db": 64.5,
+          "signal_quality": "Excellent",
+          "channel": 1,
+          "band": "2.4GHz",
+          "authentication": "Unknown"
+        },
+        {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 99,
+          "signal_dbm": -30.5,
+          "snr_db": 69.5,
+          "signal_quality": "Excellent",
+          "channel": 149,
+          "band": "5GHz",
+          "authentication": "Unknown"
+        },
+        {
+          "ssid": "SSID8",
+          "bssid": "ce:29:bd:89:7e:09",
+          "signal": 21,
+          "signal_dbm": -82.8,
+          "snr_db": 17.200000000000003,
+          "signal_quality": "Fair",
+          "channel": 60,
+          "band": "5GHz",
+          "authentication": "Unknown"
+        },
+        {
+          "ssid": "ABEL-5GHz",
+          "bssid": "cc:29:bd:59:7e:09",
+          "signal": 21,
+          "signal_dbm": -82.8,
+          "snr_db": 17.200000000000003,
+          "signal_quality": "Fair",
+          "channel": 60,
+          "band": "5GHz",
+          "authentication": "Unknown"
+        },
+        {
+          "ssid": "HP-Print-2A-Deskjet 3540 series",
+          "bssid": "a0:48:1c:5b:fd:2a",
+          "signal": 55,
+          "signal_dbm": -62.0,
+          "snr_db": 33.0,
+          "signal_quality": "Very Good",
+          "channel": 3,
+          "band": "2.4GHz",
+          "authentication": "Unknown"
+        },
+        {
+          "ssid": "CasaM",
+          "bssid": "d8:47:32:50:7d:5a",
+          "signal": 41,
+          "signal_dbm": -70.4,
+          "snr_db": 24.599999999999994,
+          "signal_quality": "Good",
+          "channel": 3,
+          "band": "2.4GHz",
+          "authentication": "Unknown"
+        },
+        {
+          "ssid": "CasaM_EXT",
+          "bssid": "62:61:b4:05:92:54",
+          "signal": 55,
+          "signal_dbm": -62.0,
+          "snr_db": 33.0,
+          "signal_quality": "Very Good",
+          "channel": 3,
+          "band": "2.4GHz",
+          "authentication": "Unknown"
+        }
+      ],
+      "tests": {},
+      "all_network_tests": [
+        {
+          "ssid": "Puma",
+          "bssid": "b8:dd:71:e3:9c:3a",
+          "signal": 99,
+          "timestamp": "2025-07-29T17:41:45.564015",
+          "tests": {
+            "ping": {
+              "success": true,
+              "avg_time": 17.75,
+              "min_time": 14,
+              "max_time": 23,
+              "packet_loss": "0%",
+              "raw_times": [
+                15,
+                23,
+                19,
+                14
+              ]
+            }
+          }
+        },
+        {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 99,
+          "timestamp": "2025-07-29T17:42:25.709310",
           "tests": {
             "ping": {
               "success": true,
@@ -2025,437 +813,218 @@
               "max_time": 14,
               "packet_loss": "0%",
               "raw_times": [
-                12,
-                14,
                 13,
-                12
+                12,
+                12,
+                14
               ]
-            },
-            "speedtest": {
-              "success": true,
-              "download_mbps": 47.820448,
-              "upload_mbps": 5.19993,
-              "ping_ms": 3.467,
-              "server": "Antel",
-              "raw_data": {
-                "type": "result",
-                "timestamp": "2025-07-29T12:09:33Z",
-                "ping": {
-                  "jitter": 0.098,
-                  "latency": 3.467,
-                  "low": 3.431,
-                  "high": 3.758
-                },
-                "download": {
-                  "bandwidth": 47820448,
-                  "bytes": 673702132,
-                  "elapsed": 15007,
-                  "latency": {
-                    "iqm": 35.117,
-                    "low": 3.729,
-                    "high": 371.994,
-                    "jitter": 20.225
-                  }
-                },
-                "upload": {
-                  "bandwidth": 5199930,
-                  "bytes": 18784503,
-                  "elapsed": 3613,
-                  "latency": {
-                    "iqm": 324.108,
-                    "low": 13.509,
-                    "high": 559.5,
-                    "jitter": 71.551
-                  }
-                },
-                "packetLoss": 0,
-                "isp": "Antel Uruguay",
-                "interface": {
-                  "internalIp": "2800:a4:1d37:9600:547a:8c5e:e216:9543",
-                  "name": "",
-                  "macAddr": "D8:FC:93:BC:E1:16",
-                  "isVpn": false,
-                  "externalIp": "2800:a4:1d37:9600:547a:8c5e:e216:9543"
-                },
-                "server": {
-                  "id": 40741,
-                  "host": "testdevelocidad.com.uy",
-                  "port": 8080,
-                  "name": "Antel",
-                  "location": "Montevideo",
-                  "country": "Uruguay",
-                  "ip": "2800:a0:1:c828:1e00:1800:0:8"
-                },
-                "result": {
-                  "id": "31418640-a260-4ad8-805f-f898f7148e0b",
-                  "url": "https://www.speedtest.net/result/c/31418640-a260-4ad8-805f-f898f7148e0b",
-                  "persisted": true
-                }
-              }
-            },
-            "iperf": {
-              "success": true,
-              "throughput_mbps": 4.54096,
-              "duration": 10,
-              "server": "iperf.he.net",
-              "raw_data": {
-                "start": {
-                  "connected": [
-                    {
-                      "socket": 4,
-                      "local_host": "2800:a4:1d37:9600:547a:8c5e:e216:9543",
-                      "local_port": 52893,
-                      "remote_host": "2001:470:0:236::2",
-                      "remote_port": 5201
-                    }
-                  ],
-                  "version": "iperf 3.1.1",
-                  "system_info": "CYGWIN_NT-10.0-WOW PC-587b00 2.3.1(0.291/5/3) 2015-11-14 12:42 i686",
-                  "timestamp": {
-                    "time": "Tue, 29 Jul 2025 12:09:49 GMT",
-                    "timesecs": 1753790989
-                  },
-                  "connecting_to": {
-                    "host": "iperf.he.net",
-                    "port": 5201
-                  },
-                  "cookie": "PC-587b00.1753790988.538331.176e0a9b",
-                  "tcp_mss_default": 0,
-                  "test_start": {
-                    "protocol": "TCP",
-                    "num_streams": 1,
-                    "blksize": 131072,
-                    "omit": 0,
-                    "duration": 10,
-                    "bytes": 0,
-                    "blocks": 0,
-                    "reverse": 0
-                  }
-                },
-                "intervals": [
-                  {
-                    "streams": [
-                      {
-                        "socket": 4,
-                        "start": 0,
-                        "end": 1.00027,
-                        "seconds": 1.00027,
-                        "bytes": 193536,
-                        "bits_per_second": 1547870.0,
-                        "omitted": false
-                      }
-                    ],
-                    "sum": {
-                      "start": 0,
-                      "end": 1.00027,
-                      "seconds": 1.00027,
-                      "bytes": 193536,
-                      "bits_per_second": 1547870.0,
-                      "omitted": false
-                    }
-                  },
-                  {
-                    "streams": [
-                      {
-                        "socket": 4,
-                        "start": 1.00027,
-                        "end": 2.00128,
-                        "seconds": 1.001,
-                        "bytes": 645120,
-                        "bits_per_second": 5155790.0,
-                        "omitted": false
-                      }
-                    ],
-                    "sum": {
-                      "start": 1.00027,
-                      "end": 2.00128,
-                      "seconds": 1.001,
-                      "bytes": 645120,
-                      "bits_per_second": 5155790.0,
-                      "omitted": false
-                    }
-                  },
-                  {
-                    "streams": [
-                      {
-                        "socket": 4,
-                        "start": 2.00128,
-                        "end": 3.00067,
-                        "seconds": 0.999399,
-                        "bytes": 645120,
-                        "bits_per_second": 5164060.0,
-                        "omitted": false
-                      }
-                    ],
-                    "sum": {
-                      "start": 2.00128,
-                      "end": 3.00067,
-                      "seconds": 0.999399,
-                      "bytes": 645120,
-                      "bits_per_second": 5164060.0,
-                      "omitted": false
-                    }
-                  },
-                  {
-                    "streams": [
-                      {
-                        "socket": 4,
-                        "start": 3.00067,
-                        "end": 4.00069,
-                        "seconds": 1.00001,
-                        "bytes": 516096,
-                        "bits_per_second": 4128720.0,
-                        "omitted": false
-                      }
-                    ],
-                    "sum": {
-                      "start": 3.00067,
-                      "end": 4.00069,
-                      "seconds": 1.00001,
-                      "bytes": 516096,
-                      "bits_per_second": 4128720.0,
-                      "omitted": false
-                    }
-                  },
-                  {
-                    "streams": [
-                      {
-                        "socket": 4,
-                        "start": 4.00069,
-                        "end": 5.00091,
-                        "seconds": 1.00023,
-                        "bytes": 645120,
-                        "bits_per_second": 5159780.0,
-                        "omitted": false
-                      }
-                    ],
-                    "sum": {
-                      "start": 4.00069,
-                      "end": 5.00091,
-                      "seconds": 1.00023,
-                      "bytes": 645120,
-                      "bits_per_second": 5159780.0,
-                      "omitted": false
-                    }
-                  },
-                  {
-                    "streams": [
-                      {
-                        "socket": 4,
-                        "start": 5.00091,
-                        "end": 6.0005,
-                        "seconds": 0.999582,
-                        "bytes": 645120,
-                        "bits_per_second": 5163120.0,
-                        "omitted": false
-                      }
-                    ],
-                    "sum": {
-                      "start": 5.00091,
-                      "end": 6.0005,
-                      "seconds": 0.999582,
-                      "bytes": 645120,
-                      "bits_per_second": 5163120.0,
-                      "omitted": false
-                    }
-                  },
-                  {
-                    "streams": [
-                      {
-                        "socket": 4,
-                        "start": 6.0005,
-                        "end": 7.01236,
-                        "seconds": 1.01187,
-                        "bytes": 516096,
-                        "bits_per_second": 4080340.0,
-                        "omitted": false
-                      }
-                    ],
-                    "sum": {
-                      "start": 6.0005,
-                      "end": 7.01236,
-                      "seconds": 1.01187,
-                      "bytes": 516096,
-                      "bits_per_second": 4080340.0,
-                      "omitted": false
-                    }
-                  },
-                  {
-                    "streams": [
-                      {
-                        "socket": 4,
-                        "start": 7.01236,
-                        "end": 8.00064,
-                        "seconds": 0.988272,
-                        "bytes": 645120,
-                        "bits_per_second": 5222210.0,
-                        "omitted": false
-                      }
-                    ],
-                    "sum": {
-                      "start": 7.01236,
-                      "end": 8.00064,
-                      "seconds": 0.988272,
-                      "bytes": 645120,
-                      "bits_per_second": 5222210.0,
-                      "omitted": false
-                    }
-                  },
-                  {
-                    "streams": [
-                      {
-                        "socket": 4,
-                        "start": 8.00064,
-                        "end": 9.00063,
-                        "seconds": 0.999994,
-                        "bytes": 645120,
-                        "bits_per_second": 5160990.0,
-                        "omitted": false
-                      }
-                    ],
-                    "sum": {
-                      "start": 8.00064,
-                      "end": 9.00063,
-                      "seconds": 0.999994,
-                      "bytes": 645120,
-                      "bits_per_second": 5160990.0,
-                      "omitted": false
-                    }
-                  },
-                  {
-                    "streams": [
-                      {
-                        "socket": 4,
-                        "start": 9.00063,
-                        "end": 10.0015,
-                        "seconds": 1.00088,
-                        "bytes": 580608,
-                        "bits_per_second": 4640780.0,
-                        "omitted": false
-                      }
-                    ],
-                    "sum": {
-                      "start": 9.00063,
-                      "end": 10.0015,
-                      "seconds": 1.00088,
-                      "bytes": 580608,
-                      "bits_per_second": 4640780.0,
-                      "omitted": false
-                    }
-                  }
-                ],
-                "end": {
-                  "streams": [
-                    {
-                      "sender": {
-                        "socket": 4,
-                        "start": 0,
-                        "end": 10.0015,
-                        "seconds": 10.0015,
-                        "bytes": 5677056,
-                        "bits_per_second": 4540960.0
-                      },
-                      "receiver": {
-                        "socket": 4,
-                        "start": 0,
-                        "end": 10.0015,
-                        "seconds": 10.0015,
-                        "bytes": 5677056,
-                        "bits_per_second": 4540960.0
-                      }
-                    }
-                  ],
-                  "sum_sent": {
-                    "start": 0,
-                    "end": 10.0015,
-                    "seconds": 10.0015,
-                    "bytes": 5677056,
-                    "bits_per_second": 4540960.0
-                  },
-                  "sum_received": {
-                    "start": 0,
-                    "end": 10.0015,
-                    "seconds": 10.0015,
-                    "bytes": 5677056,
-                    "bits_per_second": 4540960.0
-                  },
-                  "cpu_utilization_percent": {
-                    "host_total": 5.64336,
-                    "host_user": 1.6912,
-                    "host_system": 3.95216,
-                    "remote_total": 0.0206871,
-                    "remote_user": 0.00248321,
-                    "remote_system": 0.0182041
-                  }
-                }
-              }
             }
           }
-        },
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "timestamp": "2025-07-29T17:45:49.088379",
+      "location": null,
+      "networks": [
         {
           "ssid": "Puma",
           "bssid": "b8:dd:71:e3:9c:3a",
           "signal": 99,
-          "timestamp": "2025-07-29T09:10:11.051597",
+          "signal_dbm": -30.5,
+          "snr_db": 64.5,
+          "signal_quality": "Excellent",
+          "channel": 1,
+          "band": "2.4GHz",
+          "authentication": "Unknown"
+        },
+        {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 99,
+          "signal_dbm": -30.5,
+          "snr_db": 69.5,
+          "signal_quality": "Excellent",
+          "channel": 149,
+          "band": "5GHz",
+          "authentication": "Unknown"
+        },
+        {
+          "ssid": "SSID8",
+          "bssid": "ce:29:bd:89:7e:09",
+          "signal": 21,
+          "signal_dbm": -82.8,
+          "snr_db": 17.200000000000003,
+          "signal_quality": "Fair",
+          "channel": 60,
+          "band": "5GHz",
+          "authentication": "Unknown"
+        },
+        {
+          "ssid": "ABEL-5GHz",
+          "bssid": "cc:29:bd:59:7e:09",
+          "signal": 18,
+          "signal_dbm": -84.9,
+          "snr_db": 15.099999999999994,
+          "signal_quality": "Fair",
+          "channel": 60,
+          "band": "5GHz",
+          "authentication": "Unknown"
+        },
+        {
+          "ssid": "HP-Print-2A-Deskjet 3540 series",
+          "bssid": "a0:48:1c:5b:fd:2a",
+          "signal": 40,
+          "signal_dbm": -71.0,
+          "snr_db": 24.0,
+          "signal_quality": "Good",
+          "channel": 3,
+          "band": "2.4GHz",
+          "authentication": "Unknown"
+        },
+        {
+          "ssid": "CasaM_EXT",
+          "bssid": "62:61:b4:05:92:54",
+          "signal": 56,
+          "signal_dbm": -61.4,
+          "snr_db": 33.6,
+          "signal_quality": "Very Good",
+          "channel": 3,
+          "band": "2.4GHz",
+          "authentication": "Unknown"
+        },
+        {
+          "ssid": "CasaM",
+          "bssid": "40:ae:30:f3:9e:da",
+          "signal": 63,
+          "signal_dbm": -57.2,
+          "snr_db": 37.8,
+          "signal_quality": "Very Good",
+          "channel": 3,
+          "band": "2.4GHz",
+          "authentication": "Unknown"
+        }
+      ],
+      "tests": {
+        "iperf_suite": {
+          "success": true,
+          "server": "iperf.he.net",
+          "tests": {
+            "tcp_bidirectional": {
+              "download_mbps": 4.48694,
+              "upload_mbps": 4.48694
+            },
+            "udp_download": {
+              "target_mbps": 4.48694,
+              "actual_mbps": 4.44415,
+              "jitter_ms": 1.13173,
+              "lost_packets": 0,
+              "lost_percent": 0
+            },
+            "udp_upload": {
+              "target_mbps": 4.48694,
+              "actual_mbps": 4.44311,
+              "jitter_ms": 1.53986,
+              "lost_packets": 0,
+              "lost_percent": 0
+            },
+            "udp_5mbps": {
+              "target_mbps": 5.0,
+              "actual_mbps": 4.95378,
+              "jitter_ms": 1.25267,
+              "lost_packets": 0,
+              "lost_percent": 0
+            }
+          }
+        }
+      },
+      "all_network_tests": [
+        {
+          "ssid": "Puma",
+          "bssid": "b8:dd:71:e3:9c:3a",
+          "signal": 99,
+          "timestamp": "2025-07-29T17:45:57.070558",
           "tests": {
             "ping": {
               "success": true,
-              "avg_time": 24.25,
+              "avg_time": 12.5,
+              "min_time": 11,
+              "max_time": 14,
+              "packet_loss": "0%",
+              "raw_times": [
+                14,
+                11,
+                13,
+                12
+              ]
+            }
+          }
+        },
+        {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 99,
+          "timestamp": "2025-07-29T17:47:01.089077",
+          "tests": {
+            "ping": {
+              "success": true,
+              "avg_time": 12.25,
               "min_time": 12,
-              "max_time": 53,
+              "max_time": 13,
               "packet_loss": "0%",
               "raw_times": [
                 12,
-                53,
-                20,
-                12
+                12,
+                12,
+                13
               ]
             },
             "speedtest": {
               "success": true,
-              "download_mbps": 2.995525,
-              "upload_mbps": 1.460508,
-              "ping_ms": 3.419,
+              "download_mbps": 52.488682,
+              "upload_mbps": 5.193205,
+              "ping_ms": 3.459,
               "server": "Antel",
               "raw_data": {
                 "type": "result",
-                "timestamp": "2025-07-29T12:10:35Z",
+                "timestamp": "2025-07-29T20:47:24Z",
                 "ping": {
-                  "jitter": 0.532,
-                  "latency": 3.419,
-                  "low": 3.065,
-                  "high": 3.988
+                  "jitter": 0.103,
+                  "latency": 3.459,
+                  "low": 3.264,
+                  "high": 3.541
                 },
                 "download": {
-                  "bandwidth": 2995525,
-                  "bytes": 11399982,
-                  "elapsed": 3816,
+                  "bandwidth": 52488682,
+                  "bytes": 573048787,
+                  "elapsed": 11319,
                   "latency": {
-                    "iqm": 291.301,
-                    "low": 39.151,
-                    "high": 744.499,
-                    "jitter": 65.985
+                    "iqm": 164.762,
+                    "low": 3.682,
+                    "high": 335.347,
+                    "jitter": 49.724
                   }
                 },
                 "upload": {
-                  "bandwidth": 1460508,
-                  "bytes": 8947045,
-                  "elapsed": 6102,
+                  "bandwidth": 5193205,
+                  "bytes": 20809376,
+                  "elapsed": 4015,
                   "latency": {
-                    "iqm": 8.723,
-                    "low": 2.895,
-                    "high": 57.875,
-                    "jitter": 6.046
+                    "iqm": 124.402,
+                    "low": 16.872,
+                    "high": 495.855,
+                    "jitter": 42.886
                   }
                 },
                 "packetLoss": 0,
                 "isp": "Antel Uruguay",
                 "interface": {
-                  "internalIp": "2800:a4:1d37:9600:547a:8c5e:e216:9543",
+                  "internalIp": "2800:a4:1d37:9600:bc6f:c756:d694:5607",
                   "name": "",
                   "macAddr": "D8:FC:93:BC:E1:16",
                   "isVpn": false,
-                  "externalIp": "2800:a4:1d37:9600:547a:8c5e:e216:9543"
+                  "externalIp": "2800:a4:1d37:9600:bc6f:c756:d694:5607"
                 },
                 "server": {
                   "id": 40741,
@@ -2467,1925 +1036,108 @@
                   "ip": "2800:a0:1:c828:1e00:1800:0:8"
                 },
                 "result": {
-                  "id": "b448c989-d394-4092-af08-28fcf8bb9ebb",
-                  "url": "https://www.speedtest.net/result/c/b448c989-d394-4092-af08-28fcf8bb9ebb",
+                  "id": "05aa438d-9919-4d4e-99c0-b77f85ed001a",
+                  "url": "https://www.speedtest.net/result/c/05aa438d-9919-4d4e-99c0-b77f85ed001a",
                   "persisted": true
-                }
-              }
-            },
-            "iperf": {
-              "success": true,
-              "throughput_mbps": 3.4577,
-              "duration": 10,
-              "server": "iperf.he.net",
-              "raw_data": {
-                "start": {
-                  "connected": [
-                    {
-                      "socket": 4,
-                      "local_host": "2800:a4:1d37:9600:547a:8c5e:e216:9543",
-                      "local_port": 52991,
-                      "remote_host": "2001:470:0:236::2",
-                      "remote_port": 5201
-                    }
-                  ],
-                  "version": "iperf 3.1.1",
-                  "system_info": "CYGWIN_NT-10.0-WOW PC-587b00 2.3.1(0.291/5/3) 2015-11-14 12:42 i686",
-                  "timestamp": {
-                    "time": "Tue, 29 Jul 2025 12:10:38 GMT",
-                    "timesecs": 1753791038
-                  },
-                  "connecting_to": {
-                    "host": "iperf.he.net",
-                    "port": 5201
-                  },
-                  "cookie": "PC-587b00.1753791038.299490.031f27b7",
-                  "tcp_mss_default": 0,
-                  "test_start": {
-                    "protocol": "TCP",
-                    "num_streams": 1,
-                    "blksize": 131072,
-                    "omit": 0,
-                    "duration": 10,
-                    "bytes": 0,
-                    "blocks": 0,
-                    "reverse": 0
-                  }
-                },
-                "intervals": [
-                  {
-                    "streams": [
-                      {
-                        "socket": 4,
-                        "start": 0,
-                        "end": 1.00173,
-                        "seconds": 1.00173,
-                        "bytes": 129024,
-                        "bits_per_second": 1030410.0,
-                        "omitted": false
-                      }
-                    ],
-                    "sum": {
-                      "start": 0,
-                      "end": 1.00173,
-                      "seconds": 1.00173,
-                      "bytes": 129024,
-                      "bits_per_second": 1030410.0,
-                      "omitted": false
-                    }
-                  },
-                  {
-                    "streams": [
-                      {
-                        "socket": 4,
-                        "start": 1.00173,
-                        "end": 2.00176,
-                        "seconds": 1.00004,
-                        "bytes": 193536,
-                        "bits_per_second": 1548230.0,
-                        "omitted": false
-                      }
-                    ],
-                    "sum": {
-                      "start": 1.00173,
-                      "end": 2.00176,
-                      "seconds": 1.00004,
-                      "bytes": 193536,
-                      "bits_per_second": 1548230.0,
-                      "omitted": false
-                    }
-                  },
-                  {
-                    "streams": [
-                      {
-                        "socket": 4,
-                        "start": 2.00176,
-                        "end": 3.00005,
-                        "seconds": 0.998285,
-                        "bytes": 322560,
-                        "bits_per_second": 2584910.0,
-                        "omitted": false
-                      }
-                    ],
-                    "sum": {
-                      "start": 2.00176,
-                      "end": 3.00005,
-                      "seconds": 0.998285,
-                      "bytes": 322560,
-                      "bits_per_second": 2584910.0,
-                      "omitted": false
-                    }
-                  },
-                  {
-                    "streams": [
-                      {
-                        "socket": 4,
-                        "start": 3.00005,
-                        "end": 4.00106,
-                        "seconds": 1.00101,
-                        "bytes": 580608,
-                        "bits_per_second": 4640160.0,
-                        "omitted": false
-                      }
-                    ],
-                    "sum": {
-                      "start": 3.00005,
-                      "end": 4.00106,
-                      "seconds": 1.00101,
-                      "bytes": 580608,
-                      "bits_per_second": 4640160.0,
-                      "omitted": false
-                    }
-                  },
-                  {
-                    "streams": [
-                      {
-                        "socket": 4,
-                        "start": 4.00106,
-                        "end": 5.00072,
-                        "seconds": 0.999661,
-                        "bytes": 516096,
-                        "bits_per_second": 4130170.0,
-                        "omitted": false
-                      }
-                    ],
-                    "sum": {
-                      "start": 4.00106,
-                      "end": 5.00072,
-                      "seconds": 0.999661,
-                      "bytes": 516096,
-                      "bits_per_second": 4130170.0,
-                      "omitted": false
-                    }
-                  },
-                  {
-                    "streams": [
-                      {
-                        "socket": 4,
-                        "start": 5.00072,
-                        "end": 6.00073,
-                        "seconds": 1.00001,
-                        "bytes": 516096,
-                        "bits_per_second": 4128730.0,
-                        "omitted": false
-                      }
-                    ],
-                    "sum": {
-                      "start": 5.00072,
-                      "end": 6.00073,
-                      "seconds": 1.00001,
-                      "bytes": 516096,
-                      "bits_per_second": 4128730.0,
-                      "omitted": false
-                    }
-                  },
-                  {
-                    "streams": [
-                      {
-                        "socket": 4,
-                        "start": 6.00073,
-                        "end": 7.00038,
-                        "seconds": 0.999648,
-                        "bytes": 516096,
-                        "bits_per_second": 4130220.0,
-                        "omitted": false
-                      }
-                    ],
-                    "sum": {
-                      "start": 6.00073,
-                      "end": 7.00038,
-                      "seconds": 0.999648,
-                      "bytes": 516096,
-                      "bits_per_second": 4130220.0,
-                      "omitted": false
-                    }
-                  },
-                  {
-                    "streams": [
-                      {
-                        "socket": 4,
-                        "start": 7.00038,
-                        "end": 8.00138,
-                        "seconds": 1.001,
-                        "bytes": 516096,
-                        "bits_per_second": 4124640.0,
-                        "omitted": false
-                      }
-                    ],
-                    "sum": {
-                      "start": 7.00038,
-                      "end": 8.00138,
-                      "seconds": 1.001,
-                      "bytes": 516096,
-                      "bits_per_second": 4124640.0,
-                      "omitted": false
-                    }
-                  },
-                  {
-                    "streams": [
-                      {
-                        "socket": 4,
-                        "start": 8.00138,
-                        "end": 9.00074,
-                        "seconds": 0.999357,
-                        "bytes": 516096,
-                        "bits_per_second": 4131420.0,
-                        "omitted": false
-                      }
-                    ],
-                    "sum": {
-                      "start": 8.00138,
-                      "end": 9.00074,
-                      "seconds": 0.999357,
-                      "bytes": 516096,
-                      "bits_per_second": 4131420.0,
-                      "omitted": false
-                    }
-                  },
-                  {
-                    "streams": [
-                      {
-                        "socket": 4,
-                        "start": 9.00074,
-                        "end": 10.0004,
-                        "seconds": 0.999666,
-                        "bytes": 516096,
-                        "bits_per_second": 4130150.0,
-                        "omitted": false
-                      }
-                    ],
-                    "sum": {
-                      "start": 9.00074,
-                      "end": 10.0004,
-                      "seconds": 0.999666,
-                      "bytes": 516096,
-                      "bits_per_second": 4130150.0,
-                      "omitted": false
-                    }
-                  }
-                ],
-                "end": {
-                  "streams": [
-                    {
-                      "sender": {
-                        "socket": 4,
-                        "start": 0,
-                        "end": 10.0004,
-                        "seconds": 10.0004,
-                        "bytes": 4322304,
-                        "bits_per_second": 3457700.0
-                      },
-                      "receiver": {
-                        "socket": 4,
-                        "start": 0,
-                        "end": 10.0004,
-                        "seconds": 10.0004,
-                        "bytes": 4322304,
-                        "bits_per_second": 3457700.0
-                      }
-                    }
-                  ],
-                  "sum_sent": {
-                    "start": 0,
-                    "end": 10.0004,
-                    "seconds": 10.0004,
-                    "bytes": 4322304,
-                    "bits_per_second": 3457700.0
-                  },
-                  "sum_received": {
-                    "start": 0,
-                    "end": 10.0004,
-                    "seconds": 10.0004,
-                    "bytes": 4322304,
-                    "bits_per_second": 3457700.0
-                  },
-                  "cpu_utilization_percent": {
-                    "host_total": 6.38854,
-                    "host_user": 1.94589,
-                    "host_system": 4.44266,
-                    "remote_total": 0.288569,
-                    "remote_user": 0.0431337,
-                    "remote_system": 0.245437
-                  }
                 }
               }
             }
           }
         }
       ]
+    },
+    {
+      "id": 8,
+      "timestamp": "2025-07-29T17:59:47.070650",
+      "location": null,
+      "networks": [
+        {
+          "ssid": "Puma",
+          "bssid": "b8:dd:71:e3:9c:3a",
+          "signal": 99,
+          "signal_dbm": -30.5,
+          "snr_db": 64.5,
+          "signal_quality": "Excellent",
+          "channel": 1,
+          "band": "2.4GHz",
+          "authentication": "Unknown"
+        },
+        {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 99,
+          "signal_dbm": -30.5,
+          "snr_db": 69.5,
+          "signal_quality": "Excellent",
+          "channel": 149,
+          "band": "5GHz",
+          "authentication": "Unknown"
+        },
+        {
+          "ssid": "ABEL-5GHz",
+          "bssid": "cc:29:bd:59:7e:09",
+          "signal": 18,
+          "signal_dbm": -84.9,
+          "snr_db": 15.099999999999994,
+          "signal_quality": "Fair",
+          "channel": 60,
+          "band": "5GHz",
+          "authentication": "Unknown"
+        },
+        {
+          "ssid": "HP-Print-2A-Deskjet 3540 series",
+          "bssid": "a0:48:1c:5b:fd:2a",
+          "signal": 58,
+          "signal_dbm": -60.2,
+          "snr_db": 34.8,
+          "signal_quality": "Very Good",
+          "channel": 3,
+          "band": "2.4GHz",
+          "authentication": "Unknown"
+        },
+        {
+          "ssid": "CasaM_EXT",
+          "bssid": "62:61:b4:05:92:54",
+          "signal": 61,
+          "signal_dbm": -58.4,
+          "snr_db": 36.6,
+          "signal_quality": "Very Good",
+          "channel": 3,
+          "band": "2.4GHz",
+          "authentication": "Unknown"
+        },
+        {
+          "ssid": "CasaM",
+          "bssid": "d8:47:32:50:7d:62",
+          "signal": 26,
+          "signal_dbm": -79.4,
+          "snr_db": 15.599999999999994,
+          "signal_quality": "Fair",
+          "channel": 3,
+          "band": "2.4GHz",
+          "authentication": "Unknown"
+        }
+      ],
+      "tests": {
+        "ping": {
+          "success": true,
+          "avg_time": 12.75,
+          "min_time": 12,
+          "max_time": 13,
+          "packet_loss": "0%",
+          "raw_times": [
+            13,
+            13,
+            13,
+            12
+          ]
+        }
+      }
     }
   ],
-  "ap_data": {
-    "Pumita_b8:dd:71:e3:9c:3c": [
-      {
-        "location": {
-          "x": 1.0,
-          "y": 1.0
-        },
-        "signal": 85,
-        "timestamp": "2025-07-29T00:19:17.877500"
-      },
-      {
-        "location": {
-          "x": 1.0,
-          "y": 1.0
-        },
-        "signal": 85,
-        "timestamp": "2025-07-29T00:19:25.846820"
-      },
-      {
-        "location": {
-          "x": 15.0,
-          "y": 15.0
-        },
-        "signal": 83,
-        "timestamp": "2025-07-29T00:19:52.711083"
-      },
-      {
-        "location": {
-          "x": 15.0,
-          "y": 15.0
-        },
-        "signal": 83,
-        "timestamp": "2025-07-29T00:20:00.786835"
-      },
-      {
-        "location": {
-          "x": 10.0,
-          "y": 15.0
-        },
-        "signal": 81,
-        "timestamp": "2025-07-29T00:21:39.336805"
-      },
-      {
-        "location": {
-          "x": 10.0,
-          "y": 15.0
-        },
-        "signal": 81,
-        "timestamp": "2025-07-29T00:21:47.165998"
-      },
-      {
-        "location": {
-          "x": 12.0,
-          "y": 12.0
-        },
-        "signal": 83,
-        "timestamp": "2025-07-29T00:25:55.819431"
-      },
-      {
-        "location": {
-          "x": 10.0,
-          "y": 10.0
-        },
-        "signal": 83,
-        "timestamp": "2025-07-29T00:26:46.047898"
-      },
-      {
-        "location": {
-          "x": 7.0,
-          "y": 8.0
-        },
-        "signal": 83,
-        "timestamp": "2025-07-29T00:27:00.511037"
-      }
-    ],
-    "Puma_b8:dd:71:e3:9c:3a": [
-      {
-        "location": {
-          "x": 1.0,
-          "y": 1.0
-        },
-        "signal": 99,
-        "timestamp": "2025-07-29T00:19:17.877500"
-      },
-      {
-        "location": {
-          "x": 1.0,
-          "y": 1.0
-        },
-        "signal": 99,
-        "timestamp": "2025-07-29T00:19:38.716151"
-      },
-      {
-        "location": {
-          "x": 15.0,
-          "y": 15.0
-        },
-        "signal": 99,
-        "timestamp": "2025-07-29T00:19:52.711083"
-      },
-      {
-        "location": {
-          "x": 15.0,
-          "y": 15.0
-        },
-        "signal": 99,
-        "timestamp": "2025-07-29T00:20:53.647003"
-      },
-      {
-        "location": {
-          "x": 10.0,
-          "y": 15.0
-        },
-        "signal": 99,
-        "timestamp": "2025-07-29T00:21:39.336805"
-      },
-      {
-        "location": {
-          "x": 10.0,
-          "y": 15.0
-        },
-        "signal": 99,
-        "timestamp": "2025-07-29T00:22:24.178016"
-      },
-      {
-        "location": {
-          "x": 12.0,
-          "y": 12.0
-        },
-        "signal": 99,
-        "timestamp": "2025-07-29T00:25:55.819431"
-      },
-      {
-        "location": {
-          "x": 10.0,
-          "y": 10.0
-        },
-        "signal": 99,
-        "timestamp": "2025-07-29T00:26:46.047898"
-      },
-      {
-        "location": {
-          "x": 7.0,
-          "y": 8.0
-        },
-        "signal": 99,
-        "timestamp": "2025-07-29T00:27:00.511037"
-      }
-    ],
-    "CasaM_d8:47:32:50:7d:5b": [
-      {
-        "location": {
-          "x": 1.0,
-          "y": 1.0
-        },
-        "signal": 30,
-        "timestamp": "2025-07-29T00:19:17.877500"
-      },
-      {
-        "location": {
-          "x": 15.0,
-          "y": 15.0
-        },
-        "signal": 31,
-        "timestamp": "2025-07-29T00:19:52.711083"
-      }
-    ],
-    "CasaM_EXT_62:61:b4:05:92:54": [
-      {
-        "location": {
-          "x": 1.0,
-          "y": 1.0
-        },
-        "signal": 56,
-        "timestamp": "2025-07-29T00:19:17.877500"
-      },
-      {
-        "location": {
-          "x": 15.0,
-          "y": 15.0
-        },
-        "signal": 53,
-        "timestamp": "2025-07-29T00:19:52.711083"
-      },
-      {
-        "location": {
-          "x": 10.0,
-          "y": 15.0
-        },
-        "signal": 58,
-        "timestamp": "2025-07-29T00:21:39.336805"
-      },
-      {
-        "location": {
-          "x": 12.0,
-          "y": 12.0
-        },
-        "signal": 58,
-        "timestamp": "2025-07-29T00:25:55.819431"
-      },
-      {
-        "location": {
-          "x": 10.0,
-          "y": 10.0
-        },
-        "signal": 58,
-        "timestamp": "2025-07-29T00:26:46.047898"
-      },
-      {
-        "location": {
-          "x": 7.0,
-          "y": 8.0
-        },
-        "signal": 58,
-        "timestamp": "2025-07-29T00:27:00.511037"
-      }
-    ],
-    "CasaM_d8:47:32:50:7d:5a": [
-      {
-        "location": {
-          "x": 10.0,
-          "y": 15.0
-        },
-        "signal": 46,
-        "timestamp": "2025-07-29T00:21:39.336805"
-      },
-      {
-        "location": {
-          "x": 12.0,
-          "y": 12.0
-        },
-        "signal": 46,
-        "timestamp": "2025-07-29T00:25:55.819431"
-      },
-      {
-        "location": {
-          "x": 10.0,
-          "y": 10.0
-        },
-        "signal": 46,
-        "timestamp": "2025-07-29T00:26:46.047898"
-      },
-      {
-        "location": {
-          "x": 7.0,
-          "y": 8.0
-        },
-        "signal": 46,
-        "timestamp": "2025-07-29T00:27:00.511037"
-      }
-    ],
-    "HP-Print-2A-Deskjet 3540 series_a0:48:1c:5b:fd:2a": [
-      {
-        "location": {
-          "x": 12.0,
-          "y": 12.0
-        },
-        "signal": 50,
-        "timestamp": "2025-07-29T00:25:55.819431"
-      },
-      {
-        "location": {
-          "x": 10.0,
-          "y": 10.0
-        },
-        "signal": 50,
-        "timestamp": "2025-07-29T00:26:46.047898"
-      },
-      {
-        "location": {
-          "x": 7.0,
-          "y": 8.0
-        },
-        "signal": 50,
-        "timestamp": "2025-07-29T00:27:00.511037"
-      }
-    ]
-  },
-  "network_test_results": {
-    "Pumita_b8:dd:71:e3:9c:3c": [
-      {
-        "location": {
-          "x": 1.0,
-          "y": 1.0
-        },
-        "network": {
-          "ssid": "Pumita",
-          "bssid": "b8:dd:71:e3:9c:3c",
-          "signal_percentage": 85
-        },
-        "timestamp": "2025-07-29T00:19:25.846820",
-        "tests": {
-          "ping": {
-            "success": true,
-            "avg_time": 16.5,
-            "min_time": 15,
-            "max_time": 19,
-            "packet_loss": "0%",
-            "raw_times": [
-              19,
-              15,
-              15,
-              17
-            ]
-          }
-        }
-      },
-      {
-        "location": {
-          "x": 15.0,
-          "y": 15.0
-        },
-        "network": {
-          "ssid": "Pumita",
-          "bssid": "b8:dd:71:e3:9c:3c",
-          "signal_percentage": 83
-        },
-        "timestamp": "2025-07-29T00:20:00.786835",
-        "tests": {
-          "ping": {
-            "success": true,
-            "avg_time": 16.25,
-            "min_time": 15,
-            "max_time": 18,
-            "packet_loss": "0%",
-            "raw_times": [
-              18,
-              16,
-              15,
-              16
-            ]
-          },
-          "speedtest": {
-            "success": true,
-            "download_mbps": 47.409488,
-            "upload_mbps": 5.230796,
-            "ping_ms": 3.728,
-            "server": "Antel",
-            "raw_data": {
-              "type": "result",
-              "timestamp": "2025-07-29T03:20:30Z",
-              "ping": {
-                "jitter": 0.243,
-                "latency": 3.728,
-                "low": 3.533,
-                "high": 3.989
-              },
-              "download": {
-                "bandwidth": 47409488,
-                "bytes": 341763522,
-                "elapsed": 7223,
-                "latency": {
-                  "iqm": 77.779,
-                  "low": 7.316,
-                  "high": 348.555,
-                  "jitter": 17.18
-                }
-              },
-              "upload": {
-                "bandwidth": 5230796,
-                "bytes": 18980517,
-                "elapsed": 3630,
-                "latency": {
-                  "iqm": 276.234,
-                  "low": 21.465,
-                  "high": 493.169,
-                  "jitter": 80.854
-                }
-              },
-              "packetLoss": 0,
-              "isp": "Antel Uruguay",
-              "interface": {
-                "internalIp": "2800:a4:1d5a:6600:2813:a258:4852:df62",
-                "name": "",
-                "macAddr": "D8:FC:93:BC:E1:16",
-                "isVpn": false,
-                "externalIp": "2800:a4:1d5a:6600:2813:a258:4852:df62"
-              },
-              "server": {
-                "id": 40741,
-                "host": "testdevelocidad.com.uy",
-                "port": 8080,
-                "name": "Antel",
-                "location": "Montevideo",
-                "country": "Uruguay",
-                "ip": "2800:a0:1:c828:1e00:1800:0:8"
-              },
-              "result": {
-                "id": "db0f9c6c-1ca0-4267-b1a5-d4e033bfd188",
-                "url": "https://www.speedtest.net/result/c/db0f9c6c-1ca0-4267-b1a5-d4e033bfd188",
-                "persisted": true
-              }
-            }
-          },
-          "iperf": {
-            "success": true,
-            "throughput_mbps": 4.37838,
-            "duration": 10,
-            "server": "iperf.he.net",
-            "raw_data": {
-              "start": {
-                "connected": [
-                  {
-                    "socket": 4,
-                    "local_host": "2800:a4:1d5a:6600:2813:a258:4852:df62",
-                    "local_port": 49351,
-                    "remote_host": "2001:470:0:236::2",
-                    "remote_port": 5201
-                  }
-                ],
-                "version": "iperf 3.1.1",
-                "system_info": "CYGWIN_NT-10.0-WOW PC-587b00 2.3.1(0.291/5/3) 2015-11-14 12:42 i686",
-                "timestamp": {
-                  "time": "Tue, 29 Jul 2025 03:20:34 GMT",
-                  "timesecs": 1753759234
-                },
-                "connecting_to": {
-                  "host": "iperf.he.net",
-                  "port": 5201
-                },
-                "cookie": "PC-587b00.1753759232.670825.112494fe",
-                "tcp_mss_default": 0,
-                "test_start": {
-                  "protocol": "TCP",
-                  "num_streams": 1,
-                  "blksize": 131072,
-                  "omit": 0,
-                  "duration": 10,
-                  "bytes": 0,
-                  "blocks": 0,
-                  "reverse": 0
-                }
-              },
-              "intervals": [
-                {
-                  "streams": [
-                    {
-                      "socket": 4,
-                      "start": 0,
-                      "end": 1.00493,
-                      "seconds": 1.00494,
-                      "bytes": 193536,
-                      "bits_per_second": 1540680.0,
-                      "omitted": false
-                    }
-                  ],
-                  "sum": {
-                    "start": 0,
-                    "end": 1.00493,
-                    "seconds": 1.00494,
-                    "bytes": 193536,
-                    "bits_per_second": 1540680.0,
-                    "omitted": false
-                  }
-                },
-                {
-                  "streams": [
-                    {
-                      "socket": 4,
-                      "start": 1.00493,
-                      "end": 2.00286,
-                      "seconds": 0.997924,
-                      "bytes": 645120,
-                      "bits_per_second": 5171700.0,
-                      "omitted": false
-                    }
-                  ],
-                  "sum": {
-                    "start": 1.00493,
-                    "end": 2.00286,
-                    "seconds": 0.997924,
-                    "bytes": 645120,
-                    "bits_per_second": 5171700.0,
-                    "omitted": false
-                  }
-                },
-                {
-                  "streams": [
-                    {
-                      "socket": 4,
-                      "start": 2.00286,
-                      "end": 3.00107,
-                      "seconds": 0.998207,
-                      "bytes": 516096,
-                      "bits_per_second": 4136180.0,
-                      "omitted": false
-                    }
-                  ],
-                  "sum": {
-                    "start": 2.00286,
-                    "end": 3.00107,
-                    "seconds": 0.998207,
-                    "bytes": 516096,
-                    "bits_per_second": 4136180.0,
-                    "omitted": false
-                  }
-                },
-                {
-                  "streams": [
-                    {
-                      "socket": 4,
-                      "start": 3.00107,
-                      "end": 4.01155,
-                      "seconds": 1.01049,
-                      "bytes": 645120,
-                      "bits_per_second": 5107390.0,
-                      "omitted": false
-                    }
-                  ],
-                  "sum": {
-                    "start": 3.00107,
-                    "end": 4.01155,
-                    "seconds": 1.01049,
-                    "bytes": 645120,
-                    "bits_per_second": 5107390.0,
-                    "omitted": false
-                  }
-                },
-                {
-                  "streams": [
-                    {
-                      "socket": 4,
-                      "start": 4.01155,
-                      "end": 5.01036,
-                      "seconds": 0.998801,
-                      "bytes": 645120,
-                      "bits_per_second": 5167160.0,
-                      "omitted": false
-                    }
-                  ],
-                  "sum": {
-                    "start": 4.01155,
-                    "end": 5.01036,
-                    "seconds": 0.998801,
-                    "bytes": 645120,
-                    "bits_per_second": 5167160.0,
-                    "omitted": false
-                  }
-                },
-                {
-                  "streams": [
-                    {
-                      "socket": 4,
-                      "start": 5.01036,
-                      "end": 6.00793,
-                      "seconds": 0.99757,
-                      "bytes": 516096,
-                      "bits_per_second": 4138830.0,
-                      "omitted": false
-                    }
-                  ],
-                  "sum": {
-                    "start": 5.01036,
-                    "end": 6.00793,
-                    "seconds": 0.99757,
-                    "bytes": 516096,
-                    "bits_per_second": 4138830.0,
-                    "omitted": false
-                  }
-                },
-                {
-                  "streams": [
-                    {
-                      "socket": 4,
-                      "start": 6.00793,
-                      "end": 7.00486,
-                      "seconds": 0.996934,
-                      "bytes": 516096,
-                      "bits_per_second": 4141470.0,
-                      "omitted": false
-                    }
-                  ],
-                  "sum": {
-                    "start": 6.00793,
-                    "end": 7.00486,
-                    "seconds": 0.996934,
-                    "bytes": 516096,
-                    "bits_per_second": 4141470.0,
-                    "omitted": false
-                  }
-                },
-                {
-                  "streams": [
-                    {
-                      "socket": 4,
-                      "start": 7.00486,
-                      "end": 8.00237,
-                      "seconds": 0.997514,
-                      "bytes": 516096,
-                      "bits_per_second": 4139060.0,
-                      "omitted": false
-                    }
-                  ],
-                  "sum": {
-                    "start": 7.00486,
-                    "end": 8.00237,
-                    "seconds": 0.997514,
-                    "bytes": 516096,
-                    "bits_per_second": 4139060.0,
-                    "omitted": false
-                  }
-                },
-                {
-                  "streams": [
-                    {
-                      "socket": 4,
-                      "start": 8.00237,
-                      "end": 9.00211,
-                      "seconds": 0.999741,
-                      "bytes": 645120,
-                      "bits_per_second": 5162300.0,
-                      "omitted": false
-                    }
-                  ],
-                  "sum": {
-                    "start": 8.00237,
-                    "end": 9.00211,
-                    "seconds": 0.999741,
-                    "bytes": 645120,
-                    "bits_per_second": 5162300.0,
-                    "omitted": false
-                  }
-                },
-                {
-                  "streams": [
-                    {
-                      "socket": 4,
-                      "start": 9.00211,
-                      "end": 10.0087,
-                      "seconds": 1.00656,
-                      "bytes": 645120,
-                      "bits_per_second": 5127320.0,
-                      "omitted": false
-                    }
-                  ],
-                  "sum": {
-                    "start": 9.00211,
-                    "end": 10.0087,
-                    "seconds": 1.00656,
-                    "bytes": 645120,
-                    "bits_per_second": 5127320.0,
-                    "omitted": false
-                  }
-                }
-              ],
-              "end": {
-                "streams": [
-                  {
-                    "sender": {
-                      "socket": 4,
-                      "start": 0,
-                      "end": 10.0087,
-                      "seconds": 10.0087,
-                      "bytes": 5483520,
-                      "bits_per_second": 4383010.0
-                    },
-                    "receiver": {
-                      "socket": 4,
-                      "start": 0,
-                      "end": 10.0087,
-                      "seconds": 10.0087,
-                      "bytes": 5477720,
-                      "bits_per_second": 4378380.0
-                    }
-                  }
-                ],
-                "sum_sent": {
-                  "start": 0,
-                  "end": 10.0087,
-                  "seconds": 10.0087,
-                  "bytes": 5483520,
-                  "bits_per_second": 4383010.0
-                },
-                "sum_received": {
-                  "start": 0,
-                  "end": 10.0087,
-                  "seconds": 10.0087,
-                  "bytes": 5477720,
-                  "bits_per_second": 4378380.0
-                },
-                "cpu_utilization_percent": {
-                  "host_total": 7.07038,
-                  "host_user": 1.69978,
-                  "host_system": 5.3706,
-                  "remote_total": 0.994848,
-                  "remote_user": 0.223905,
-                  "remote_system": 0.770951
-                }
-              }
-            }
-          }
-        }
-      },
-      {
-        "location": {
-          "x": 10.0,
-          "y": 15.0
-        },
-        "network": {
-          "ssid": "Pumita",
-          "bssid": "b8:dd:71:e3:9c:3c",
-          "signal_percentage": 81
-        },
-        "timestamp": "2025-07-29T00:21:47.165998",
-        "tests": {
-          "ping": {
-            "success": true,
-            "avg_time": 15.25,
-            "min_time": 15,
-            "max_time": 16,
-            "packet_loss": "0%",
-            "raw_times": [
-              15,
-              16,
-              15,
-              15
-            ]
-          },
-          "speedtest": {
-            "success": true,
-            "download_mbps": 43.253325,
-            "upload_mbps": 5.233506,
-            "ping_ms": 3.624,
-            "server": "Antel",
-            "raw_data": {
-              "type": "result",
-              "timestamp": "2025-07-29T03:22:02Z",
-              "ping": {
-                "jitter": 0.576,
-                "latency": 3.624,
-                "low": 3.255,
-                "high": 4.308
-              },
-              "download": {
-                "bandwidth": 43253325,
-                "bytes": 198331496,
-                "elapsed": 4529,
-                "latency": {
-                  "iqm": 106.31,
-                  "low": 3.828,
-                  "high": 224.508,
-                  "jitter": 25.874
-                }
-              },
-              "upload": {
-                "bandwidth": 5233506,
-                "bytes": 18992832,
-                "elapsed": 3629,
-                "latency": {
-                  "iqm": 283.07,
-                  "low": 37.839,
-                  "high": 523.068,
-                  "jitter": 80.298
-                }
-              },
-              "packetLoss": 0,
-              "isp": "Antel Uruguay",
-              "interface": {
-                "internalIp": "2800:a4:1d5a:6600:2813:a258:4852:df62",
-                "name": "",
-                "macAddr": "D8:FC:93:BC:E1:16",
-                "isVpn": false,
-                "externalIp": "2800:a4:1d5a:6600:2813:a258:4852:df62"
-              },
-              "server": {
-                "id": 40741,
-                "host": "testdevelocidad.com.uy",
-                "port": 8080,
-                "name": "Antel",
-                "location": "Montevideo",
-                "country": "Uruguay",
-                "ip": "2800:a0:1:c828:1e00:1800:0:8"
-              },
-              "result": {
-                "id": "949168db-4510-480a-9533-629fdef8f1f9",
-                "url": "https://www.speedtest.net/result/c/949168db-4510-480a-9533-629fdef8f1f9",
-                "persisted": true
-              }
-            }
-          },
-          "iperf": {
-            "success": true,
-            "throughput_mbps": 4.48978,
-            "duration": 10,
-            "server": "iperf.he.net",
-            "raw_data": {
-              "start": {
-                "connected": [
-                  {
-                    "socket": 4,
-                    "local_host": "2800:a4:1d5a:6600:2813:a258:4852:df62",
-                    "local_port": 49517,
-                    "remote_host": "2001:470:0:236::2",
-                    "remote_port": 5201
-                  }
-                ],
-                "version": "iperf 3.1.1",
-                "system_info": "CYGWIN_NT-10.0-WOW PC-587b00 2.3.1(0.291/5/3) 2015-11-14 12:42 i686",
-                "timestamp": {
-                  "time": "Tue, 29 Jul 2025 03:22:04 GMT",
-                  "timesecs": 1753759324
-                },
-                "connecting_to": {
-                  "host": "iperf.he.net",
-                  "port": 5201
-                },
-                "cookie": "PC-587b00.1753759324.237587.5b799353",
-                "tcp_mss_default": 0,
-                "test_start": {
-                  "protocol": "TCP",
-                  "num_streams": 1,
-                  "blksize": 131072,
-                  "omit": 0,
-                  "duration": 10,
-                  "bytes": 0,
-                  "blocks": 0,
-                  "reverse": 0
-                }
-              },
-              "intervals": [
-                {
-                  "streams": [
-                    {
-                      "socket": 4,
-                      "start": 0,
-                      "end": 1.00491,
-                      "seconds": 1.00491,
-                      "bytes": 193536,
-                      "bits_per_second": 1540720.0,
-                      "omitted": false
-                    }
-                  ],
-                  "sum": {
-                    "start": 0,
-                    "end": 1.00491,
-                    "seconds": 1.00491,
-                    "bytes": 193536,
-                    "bits_per_second": 1540720.0,
-                    "omitted": false
-                  }
-                },
-                {
-                  "streams": [
-                    {
-                      "socket": 4,
-                      "start": 1.00491,
-                      "end": 2.00093,
-                      "seconds": 0.996017,
-                      "bytes": 645120,
-                      "bits_per_second": 5181600.0,
-                      "omitted": false
-                    }
-                  ],
-                  "sum": {
-                    "start": 1.00491,
-                    "end": 2.00093,
-                    "seconds": 0.996017,
-                    "bytes": 645120,
-                    "bits_per_second": 5181600.0,
-                    "omitted": false
-                  }
-                },
-                {
-                  "streams": [
-                    {
-                      "socket": 4,
-                      "start": 2.00093,
-                      "end": 3.00939,
-                      "seconds": 1.00846,
-                      "bytes": 580608,
-                      "bits_per_second": 4605880.0,
-                      "omitted": false
-                    }
-                  ],
-                  "sum": {
-                    "start": 2.00093,
-                    "end": 3.00939,
-                    "seconds": 1.00846,
-                    "bytes": 580608,
-                    "bits_per_second": 4605880.0,
-                    "omitted": false
-                  }
-                },
-                {
-                  "streams": [
-                    {
-                      "socket": 4,
-                      "start": 3.00939,
-                      "end": 4.00928,
-                      "seconds": 0.999888,
-                      "bytes": 580608,
-                      "bits_per_second": 4645380.0,
-                      "omitted": false
-                    }
-                  ],
-                  "sum": {
-                    "start": 3.00939,
-                    "end": 4.00928,
-                    "seconds": 0.999888,
-                    "bytes": 580608,
-                    "bits_per_second": 4645380.0,
-                    "omitted": false
-                  }
-                },
-                {
-                  "streams": [
-                    {
-                      "socket": 4,
-                      "start": 4.00928,
-                      "end": 5.00184,
-                      "seconds": 0.992561,
-                      "bytes": 645120,
-                      "bits_per_second": 5199640.0,
-                      "omitted": false
-                    }
-                  ],
-                  "sum": {
-                    "start": 4.00928,
-                    "end": 5.00184,
-                    "seconds": 0.992561,
-                    "bytes": 645120,
-                    "bits_per_second": 5199640.0,
-                    "omitted": false
-                  }
-                },
-                {
-                  "streams": [
-                    {
-                      "socket": 4,
-                      "start": 5.00184,
-                      "end": 6.00183,
-                      "seconds": 0.999984,
-                      "bytes": 516096,
-                      "bits_per_second": 4128830.0,
-                      "omitted": false
-                    }
-                  ],
-                  "sum": {
-                    "start": 5.00184,
-                    "end": 6.00183,
-                    "seconds": 0.999984,
-                    "bytes": 516096,
-                    "bits_per_second": 4128830.0,
-                    "omitted": false
-                  }
-                },
-                {
-                  "streams": [
-                    {
-                      "socket": 4,
-                      "start": 6.00183,
-                      "end": 7.01174,
-                      "seconds": 1.00992,
-                      "bytes": 645120,
-                      "bits_per_second": 5110280.0,
-                      "omitted": false
-                    }
-                  ],
-                  "sum": {
-                    "start": 6.00183,
-                    "end": 7.01174,
-                    "seconds": 1.00992,
-                    "bytes": 645120,
-                    "bits_per_second": 5110280.0,
-                    "omitted": false
-                  }
-                },
-                {
-                  "streams": [
-                    {
-                      "socket": 4,
-                      "start": 7.01174,
-                      "end": 8.00905,
-                      "seconds": 0.997307,
-                      "bytes": 645120,
-                      "bits_per_second": 5174900.0,
-                      "omitted": false
-                    }
-                  ],
-                  "sum": {
-                    "start": 7.01174,
-                    "end": 8.00905,
-                    "seconds": 0.997307,
-                    "bytes": 645120,
-                    "bits_per_second": 5174900.0,
-                    "omitted": false
-                  }
-                },
-                {
-                  "streams": [
-                    {
-                      "socket": 4,
-                      "start": 8.00905,
-                      "end": 9.00636,
-                      "seconds": 0.997305,
-                      "bytes": 516096,
-                      "bits_per_second": 4139930.0,
-                      "omitted": false
-                    }
-                  ],
-                  "sum": {
-                    "start": 8.00905,
-                    "end": 9.00636,
-                    "seconds": 0.997305,
-                    "bytes": 516096,
-                    "bits_per_second": 4139930.0,
-                    "omitted": false
-                  }
-                },
-                {
-                  "streams": [
-                    {
-                      "socket": 4,
-                      "start": 9.00636,
-                      "end": 10.0006,
-                      "seconds": 0.994211,
-                      "bytes": 645120,
-                      "bits_per_second": 5191010.0,
-                      "omitted": false
-                    }
-                  ],
-                  "sum": {
-                    "start": 9.00636,
-                    "end": 10.0006,
-                    "seconds": 0.994211,
-                    "bytes": 645120,
-                    "bits_per_second": 5191010.0,
-                    "omitted": false
-                  }
-                }
-              ],
-              "end": {
-                "streams": [
-                  {
-                    "sender": {
-                      "socket": 4,
-                      "start": 0,
-                      "end": 10.0006,
-                      "seconds": 10.0006,
-                      "bytes": 5612544,
-                      "bits_per_second": 4489780.0
-                    },
-                    "receiver": {
-                      "socket": 4,
-                      "start": 0,
-                      "end": 10.0006,
-                      "seconds": 10.0006,
-                      "bytes": 5612544,
-                      "bits_per_second": 4489780.0
-                    }
-                  }
-                ],
-                "sum_sent": {
-                  "start": 0,
-                  "end": 10.0006,
-                  "seconds": 10.0006,
-                  "bytes": 5612544,
-                  "bits_per_second": 4489780.0
-                },
-                "sum_received": {
-                  "start": 0,
-                  "end": 10.0006,
-                  "seconds": 10.0006,
-                  "bytes": 5612544,
-                  "bits_per_second": 4489780.0
-                },
-                "cpu_utilization_percent": {
-                  "host_total": 7.3554,
-                  "host_user": 1.70088,
-                  "host_system": 5.65452,
-                  "remote_total": 0.366898,
-                  "remote_user": 0.0419923,
-                  "remote_system": 0.324902
-                }
-              }
-            }
-          }
-        }
-      }
-    ],
-    "Puma_b8:dd:71:e3:9c:3a": [
-      {
-        "location": {
-          "x": 1.0,
-          "y": 1.0
-        },
-        "network": {
-          "ssid": "Puma",
-          "bssid": "b8:dd:71:e3:9c:3a",
-          "signal_percentage": 99
-        },
-        "timestamp": "2025-07-29T00:19:38.716151",
-        "tests": {
-          "ping": {
-            "success": true,
-            "avg_time": 16,
-            "min_time": 15,
-            "max_time": 18,
-            "packet_loss": "0%",
-            "raw_times": [
-              15,
-              16,
-              15,
-              18
-            ]
-          }
-        }
-      },
-      {
-        "location": {
-          "x": 15.0,
-          "y": 15.0
-        },
-        "network": {
-          "ssid": "Puma",
-          "bssid": "b8:dd:71:e3:9c:3a",
-          "signal_percentage": 99
-        },
-        "timestamp": "2025-07-29T00:20:53.647003",
-        "tests": {
-          "ping": {
-            "success": true,
-            "avg_time": 15.25,
-            "min_time": 14,
-            "max_time": 16,
-            "packet_loss": "0%",
-            "raw_times": [
-              16,
-              16,
-              15,
-              14
-            ]
-          },
-          "speedtest": {
-            "success": true,
-            "download_mbps": 3.369601,
-            "upload_mbps": 1.934875,
-            "ping_ms": 3.888,
-            "server": "Antel",
-            "raw_data": {
-              "type": "result",
-              "timestamp": "2025-07-29T03:21:18Z",
-              "ping": {
-                "jitter": 1.131,
-                "latency": 3.888,
-                "low": 2.895,
-                "high": 5.833
-              },
-              "download": {
-                "bandwidth": 3369601,
-                "bytes": 31214761,
-                "elapsed": 9421,
-                "latency": {
-                  "iqm": 325.239,
-                  "low": 11.182,
-                  "high": 669.018,
-                  "jitter": 69.228
-                }
-              },
-              "upload": {
-                "bandwidth": 1934875,
-                "bytes": 17271177,
-                "elapsed": 9218,
-                "latency": {
-                  "iqm": 6.54,
-                  "low": 2.682,
-                  "high": 29.064,
-                  "jitter": 5.163
-                }
-              },
-              "packetLoss": 0,
-              "isp": "Antel Uruguay",
-              "interface": {
-                "internalIp": "2800:a4:1d5a:6600:2813:a258:4852:df62",
-                "name": "",
-                "macAddr": "D8:FC:93:BC:E1:16",
-                "isVpn": false,
-                "externalIp": "2800:a4:1d5a:6600:2813:a258:4852:df62"
-              },
-              "server": {
-                "id": 40741,
-                "host": "testdevelocidad.com.uy",
-                "port": 8080,
-                "name": "Antel",
-                "location": "Montevideo",
-                "country": "Uruguay",
-                "ip": "2800:a0:1:c828:1e00:1800:0:8"
-              },
-              "result": {
-                "id": "28101b65-b859-4cdf-a0d5-199489acbfd2",
-                "url": "https://www.speedtest.net/result/c/28101b65-b859-4cdf-a0d5-199489acbfd2",
-                "persisted": true
-              }
-            }
-          }
-        }
-      },
-      {
-        "location": {
-          "x": 10.0,
-          "y": 15.0
-        },
-        "network": {
-          "ssid": "Puma",
-          "bssid": "b8:dd:71:e3:9c:3a",
-          "signal_percentage": 99
-        },
-        "timestamp": "2025-07-29T00:22:24.178016",
-        "tests": {
-          "ping": {
-            "success": true,
-            "avg_time": 15.5,
-            "min_time": 15,
-            "max_time": 16,
-            "packet_loss": "0%",
-            "raw_times": [
-              16,
-              15,
-              16,
-              15
-            ]
-          },
-          "speedtest": {
-            "success": true,
-            "download_mbps": 3.451691,
-            "upload_mbps": 2.816186,
-            "ping_ms": 3.792,
-            "server": "Antel",
-            "raw_data": {
-              "type": "result",
-              "timestamp": "2025-07-29T03:22:42Z",
-              "ping": {
-                "jitter": 0.638,
-                "latency": 3.792,
-                "low": 3.234,
-                "high": 4.51
-              },
-              "download": {
-                "bandwidth": 3451691,
-                "bytes": 12425379,
-                "elapsed": 3608,
-                "latency": {
-                  "iqm": 164.797,
-                  "low": 84.215,
-                  "high": 277.227,
-                  "jitter": 56.214
-                }
-              },
-              "upload": {
-                "bandwidth": 2816186,
-                "bytes": 17432307,
-                "elapsed": 6231,
-                "latency": {
-                  "iqm": 450.459,
-                  "low": 18.991,
-                  "high": 731.986,
-                  "jitter": 88.515
-                }
-              },
-              "packetLoss": 0,
-              "isp": "Antel Uruguay",
-              "interface": {
-                "internalIp": "2800:a4:1d5a:6600:2813:a258:4852:df62",
-                "name": "",
-                "macAddr": "D8:FC:93:BC:E1:16",
-                "isVpn": false,
-                "externalIp": "2800:a4:1d5a:6600:2813:a258:4852:df62"
-              },
-              "server": {
-                "id": 40741,
-                "host": "testdevelocidad.com.uy",
-                "port": 8080,
-                "name": "Antel",
-                "location": "Montevideo",
-                "country": "Uruguay",
-                "ip": "2800:a0:1:c828:1e00:1800:0:8"
-              },
-              "result": {
-                "id": "d2e9396c-4fa7-4b12-93eb-7cc04802c47d",
-                "url": "https://www.speedtest.net/result/c/d2e9396c-4fa7-4b12-93eb-7cc04802c47d",
-                "persisted": true
-              }
-            }
-          },
-          "iperf": {
-            "success": true,
-            "throughput_mbps": 3.92215,
-            "duration": 10,
-            "server": "iperf.he.net",
-            "raw_data": {
-              "start": {
-                "connected": [
-                  {
-                    "socket": 4,
-                    "local_host": "2800:a4:1d5a:6600:2813:a258:4852:df62",
-                    "local_port": 49593,
-                    "remote_host": "2001:470:0:236::2",
-                    "remote_port": 5201
-                  }
-                ],
-                "version": "iperf 3.1.1",
-                "system_info": "CYGWIN_NT-10.0-WOW PC-587b00 2.3.1(0.291/5/3) 2015-11-14 12:42 i686",
-                "timestamp": {
-                  "time": "Tue, 29 Jul 2025 03:22:44 GMT",
-                  "timesecs": 1753759364
-                },
-                "connecting_to": {
-                  "host": "iperf.he.net",
-                  "port": 5201
-                },
-                "cookie": "PC-587b00.1753759363.769770.7d5a2339",
-                "tcp_mss_default": 0,
-                "test_start": {
-                  "protocol": "TCP",
-                  "num_streams": 1,
-                  "blksize": 131072,
-                  "omit": 0,
-                  "duration": 10,
-                  "bytes": 0,
-                  "blocks": 0,
-                  "reverse": 0
-                }
-              },
-              "intervals": [
-                {
-                  "streams": [
-                    {
-                      "socket": 4,
-                      "start": 0,
-                      "end": 1.0043,
-                      "seconds": 1.0043,
-                      "bytes": 193536,
-                      "bits_per_second": 1541660.0,
-                      "omitted": false
-                    }
-                  ],
-                  "sum": {
-                    "start": 0,
-                    "end": 1.0043,
-                    "seconds": 1.0043,
-                    "bytes": 193536,
-                    "bits_per_second": 1541660.0,
-                    "omitted": false
-                  }
-                },
-                {
-                  "streams": [
-                    {
-                      "socket": 4,
-                      "start": 1.0043,
-                      "end": 2.01469,
-                      "seconds": 1.01039,
-                      "bytes": 451584,
-                      "bits_per_second": 3575520.0,
-                      "omitted": false
-                    }
-                  ],
-                  "sum": {
-                    "start": 1.0043,
-                    "end": 2.01469,
-                    "seconds": 1.01039,
-                    "bytes": 451584,
-                    "bits_per_second": 3575520.0,
-                    "omitted": false
-                  }
-                },
-                {
-                  "streams": [
-                    {
-                      "socket": 4,
-                      "start": 2.01469,
-                      "end": 3.01415,
-                      "seconds": 0.999465,
-                      "bytes": 516096,
-                      "bits_per_second": 4130980.0,
-                      "omitted": false
-                    }
-                  ],
-                  "sum": {
-                    "start": 2.01469,
-                    "end": 3.01415,
-                    "seconds": 0.999465,
-                    "bytes": 516096,
-                    "bits_per_second": 4130980.0,
-                    "omitted": false
-                  }
-                },
-                {
-                  "streams": [
-                    {
-                      "socket": 4,
-                      "start": 3.01415,
-                      "end": 4.0037,
-                      "seconds": 0.989545,
-                      "bytes": 580608,
-                      "bits_per_second": 4693940.0,
-                      "omitted": false
-                    }
-                  ],
-                  "sum": {
-                    "start": 3.01415,
-                    "end": 4.0037,
-                    "seconds": 0.989545,
-                    "bytes": 580608,
-                    "bits_per_second": 4693940.0,
-                    "omitted": false
-                  }
-                },
-                {
-                  "streams": [
-                    {
-                      "socket": 4,
-                      "start": 4.0037,
-                      "end": 5.00068,
-                      "seconds": 0.996985,
-                      "bytes": 580608,
-                      "bits_per_second": 4658910.0,
-                      "omitted": false
-                    }
-                  ],
-                  "sum": {
-                    "start": 4.0037,
-                    "end": 5.00068,
-                    "seconds": 0.996985,
-                    "bytes": 580608,
-                    "bits_per_second": 4658910.0,
-                    "omitted": false
-                  }
-                },
-                {
-                  "streams": [
-                    {
-                      "socket": 4,
-                      "start": 5.00068,
-                      "end": 6.00182,
-                      "seconds": 1.00113,
-                      "bytes": 516096,
-                      "bits_per_second": 4124090.0,
-                      "omitted": false
-                    }
-                  ],
-                  "sum": {
-                    "start": 5.00068,
-                    "end": 6.00182,
-                    "seconds": 1.00113,
-                    "bytes": 516096,
-                    "bits_per_second": 4124090.0,
-                    "omitted": false
-                  }
-                },
-                {
-                  "streams": [
-                    {
-                      "socket": 4,
-                      "start": 6.00182,
-                      "end": 7.01323,
-                      "seconds": 1.01141,
-                      "bytes": 516096,
-                      "bits_per_second": 4082190.0,
-                      "omitted": false
-                    }
-                  ],
-                  "sum": {
-                    "start": 6.00182,
-                    "end": 7.01323,
-                    "seconds": 1.01141,
-                    "bytes": 516096,
-                    "bits_per_second": 4082190.0,
-                    "omitted": false
-                  }
-                },
-                {
-                  "streams": [
-                    {
-                      "socket": 4,
-                      "start": 7.01323,
-                      "end": 8.01524,
-                      "seconds": 1.00201,
-                      "bytes": 516096,
-                      "bits_per_second": 4120490.0,
-                      "omitted": false
-                    }
-                  ],
-                  "sum": {
-                    "start": 7.01323,
-                    "end": 8.01524,
-                    "seconds": 1.00201,
-                    "bytes": 516096,
-                    "bits_per_second": 4120490.0,
-                    "omitted": false
-                  }
-                },
-                {
-                  "streams": [
-                    {
-                      "socket": 4,
-                      "start": 8.01524,
-                      "end": 9.00071,
-                      "seconds": 0.985468,
-                      "bytes": 516096,
-                      "bits_per_second": 4189650.0,
-                      "omitted": false
-                    }
-                  ],
-                  "sum": {
-                    "start": 8.01524,
-                    "end": 9.00071,
-                    "seconds": 0.985468,
-                    "bytes": 516096,
-                    "bits_per_second": 4189650.0,
-                    "omitted": false
-                  }
-                },
-                {
-                  "streams": [
-                    {
-                      "socket": 4,
-                      "start": 9.00071,
-                      "end": 10.0004,
-                      "seconds": 0.999742,
-                      "bytes": 516096,
-                      "bits_per_second": 4129830.0,
-                      "omitted": false
-                    }
-                  ],
-                  "sum": {
-                    "start": 9.00071,
-                    "end": 10.0004,
-                    "seconds": 0.999742,
-                    "bytes": 516096,
-                    "bits_per_second": 4129830.0,
-                    "omitted": false
-                  }
-                }
-              ],
-              "end": {
-                "streams": [
-                  {
-                    "sender": {
-                      "socket": 4,
-                      "start": 0,
-                      "end": 10.0004,
-                      "seconds": 10.0004,
-                      "bytes": 4902912,
-                      "bits_per_second": 3922150.0
-                    },
-                    "receiver": {
-                      "socket": 4,
-                      "start": 0,
-                      "end": 10.0004,
-                      "seconds": 10.0004,
-                      "bytes": 4902912,
-                      "bits_per_second": 3922150.0
-                    }
-                  }
-                ],
-                "sum_sent": {
-                  "start": 0,
-                  "end": 10.0004,
-                  "seconds": 10.0004,
-                  "bytes": 4902912,
-                  "bits_per_second": 3922150.0
-                },
-                "sum_received": {
-                  "start": 0,
-                  "end": 10.0004,
-                  "seconds": 10.0004,
-                  "bytes": 4902912,
-                  "bits_per_second": 3922150.0
-                },
-                "cpu_utilization_percent": {
-                  "host_total": 6.35738,
-                  "host_user": 1.83577,
-                  "host_system": 4.52161,
-                  "remote_total": 0.463965,
-                  "remote_user": 0.0833223,
-                  "remote_system": 0.380648
-                }
-              }
-            }
-          }
-        }
-      }
-    ]
-  },
-  "id_mapping": {
-    "1": {
-      "x": 1.0,
-      "y": 1.0
-    },
-    "2": {
-      "x": 15.0,
-      "y": 15.0
-    },
-    "3": {
-      "x": 10.0,
-      "y": 15.0
-    },
-    "4": {
-      "x": 12.0,
-      "y": 12.0
-    },
-    "5": {
-      "x": 10.0,
-      "y": 10.0
-    },
-    "6": {
-      "x": 7.0,
-      "y": 8.0
-    }
-  },
-  "next_measurement_id": 8,
-  "last_updated": "2025-07-29T09:10:50.699615"
+  "ap_data": {},
+  "network_test_results": {},
+  "id_mapping": {},
+  "next_measurement_id": 9,
+  "last_updated": "2025-07-29T18:01:34.605490"
 }
