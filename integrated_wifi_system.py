@@ -22,13 +22,12 @@ from scipy.interpolate import griddata
 import numpy as np
 
 
-
 # Configuration
 class Config:
     # Paths
     IPERF_PATH = "C:\\iperf3\\iperf3.exe\\iperf3.exe"
     SPEEDTEST_PATH = "C:\\Users\\Usuario\\speedtest.exe"
-    IPERF_SERVER = "127.0.0.1"
+    IPERF_SERVER = "iperf.he.net"  # Default public server
     
     # House dimensions
     HOUSE_WIDTH = 15
@@ -47,12 +46,22 @@ class Config:
     HEATMAP_DPI = 300
     MEASUREMENT_INTERVAL = 30
 
+
 class NetworkTester:
     """Handles all network testing functionality."""
     
+    def __init__(self):
+        # Allow dynamic server configuration
+        self.iperf_server = Config.IPERF_SERVER
+    
+    def set_iperf_server(self, server_ip: str):
+        """Update the iperf server IP."""
+        self.iperf_server = server_ip
+        print(f"✓ iPerf server set to: {server_ip}")
+    
     @staticmethod
     def check_iperf_server():
-        """Check if iperf3 server is running."""
+        """Check if LOCAL iperf3 server is running."""
         try:
             result = subprocess.run(
                 ["netstat", "-an"], 
@@ -66,13 +75,13 @@ class NetworkTester:
     
     @staticmethod
     def start_iperf_server():
-        """Start iperf3 server if not running."""
+        """Start LOCAL iperf3 server if not running."""
         if NetworkTester.check_iperf_server():
-            print("✓ iperf3 server already running")
+            print("✓ Local iperf3 server already running")
             return True
         
         try:
-            print("Starting iperf3 server...")
+            print("Starting local iperf3 server...")
             subprocess.Popen(
                 [Config.IPERF_PATH, "-s"], 
                 creationflags=subprocess.CREATE_NEW_CONSOLE
@@ -80,7 +89,7 @@ class NetworkTester:
             time.sleep(2)
             return NetworkTester.check_iperf_server()
         except Exception as e:
-            print(f"Error starting iperf3 server: {e}")
+            print(f"Error starting local iperf3 server: {e}")
             return False
     
     @staticmethod
@@ -154,36 +163,124 @@ class NetworkTester:
         except Exception as e:
             return {"success": False, "error": str(e)}
     
-    @staticmethod
-    def run_iperf(server=Config.IPERF_SERVER, duration=10):
-        """Run iperf3 test."""
+    def run_iperf_suite(self, duration=10):
+        """Run comprehensive iPerf test suite with TCP and UDP tests."""
         if not os.path.exists(Config.IPERF_PATH):
             return {"success": False, "error": "iperf3 not found"}
         
-        if not NetworkTester.check_iperf_server():
-            return {"success": False, "error": "No iperf3 server running"}
+        results = {
+            "success": True,
+            "server": self.iperf_server,
+            "tests": {}
+        }
         
         try:
-            result = subprocess.run(
-                [Config.IPERF_PATH, "-c", server, "-J", "-t", str(duration)],
+            # 1. TCP bidirectional test to measure maximum bandwidth
+            print(f"  Running TCP bidirectional test...")
+            tcp_result = subprocess.run(
+                [Config.IPERF_PATH, "-c", self.iperf_server, "-J", "-t", str(duration), "--bidir"],
                 capture_output=True,
                 text=True,
                 timeout=duration + 10
             )
             
-            if result.returncode == 0:
-                data = json.loads(result.stdout)
-                throughput = data.get("end", {}).get("sum_received", {}).get("bits_per_second", 0)
+            if tcp_result.returncode == 0:
+                tcp_data = json.loads(tcp_result.stdout)
                 
-                return {
-                    "success": True,
-                    "throughput_mbps": throughput / 1_000_000,
-                    "duration": duration,
-                    "raw_data": data
+                # Extract download and upload speeds
+                download_bps = tcp_data.get("end", {}).get("sum_received", {}).get("bits_per_second", 0)
+                upload_bps = tcp_data.get("end", {}).get("sum_sent", {}).get("bits_per_second", 0)
+                
+                results["tests"]["tcp_bidirectional"] = {
+                    "download_mbps": download_bps / 1_000_000,
+                    "upload_mbps": upload_bps / 1_000_000
                 }
-            else:
-                return {"success": False, "error": f"iperf3 failed: {result.stderr}"}
                 
+                print(f"    ✓ TCP: {results['tests']['tcp_bidirectional']['download_mbps']:.1f}↓ / {results['tests']['tcp_bidirectional']['upload_mbps']:.1f}↑ Mbps")
+                
+                # 2. UDP download test at measured bandwidth
+                if download_bps > 0:
+                    target_bandwidth = int(download_bps * 0.9)  # 90% of TCP bandwidth
+                    print(f"  Running UDP download test at {target_bandwidth/1_000_000:.1f} Mbps...")
+                    
+                    udp_down_result = subprocess.run(
+                        [Config.IPERF_PATH, "-c", self.iperf_server, "-u", "-b", str(target_bandwidth), 
+                        "-t", str(duration), "-J", "-R"],  # -R for reverse (download)
+                        capture_output=True,
+                        text=True,
+                        timeout=duration + 10
+                    )
+                    
+                    if udp_down_result.returncode == 0:
+                        udp_down_data = json.loads(udp_down_result.stdout)
+                        
+                        results["tests"]["udp_download"] = {
+                            "target_mbps": target_bandwidth / 1_000_000,
+                            "actual_mbps": udp_down_data.get("end", {}).get("sum", {}).get("bits_per_second", 0) / 1_000_000,
+                            "jitter_ms": udp_down_data.get("end", {}).get("sum", {}).get("jitter_ms", 0),
+                            "lost_packets": udp_down_data.get("end", {}).get("sum", {}).get("lost_packets", 0),
+                            "lost_percent": udp_down_data.get("end", {}).get("sum", {}).get("lost_percent", 0)
+                        }
+                        
+                        print(f"    ✓ UDP Download: {results['tests']['udp_download']['actual_mbps']:.1f} Mbps, "
+                            f"Loss: {results['tests']['udp_download']['lost_percent']:.1f}%, "
+                            f"Jitter: {results['tests']['udp_download']['jitter_ms']:.1f}ms")
+                
+                # 3. UDP upload test at measured bandwidth
+                if upload_bps > 0:
+                    target_bandwidth = int(upload_bps * 0.9)  # 90% of TCP bandwidth
+                    print(f"  Running UDP upload test at {target_bandwidth/1_000_000:.1f} Mbps...")
+                    
+                    udp_up_result = subprocess.run(
+                        [Config.IPERF_PATH, "-c", self.iperf_server, "-u", "-b", str(target_bandwidth), 
+                        "-t", str(duration), "-J"],  # No -R for upload
+                        capture_output=True,
+                        text=True,
+                        timeout=duration + 10
+                    )
+                    
+                    if udp_up_result.returncode == 0:
+                        udp_up_data = json.loads(udp_up_result.stdout)
+                        
+                        results["tests"]["udp_upload"] = {
+                            "target_mbps": target_bandwidth / 1_000_000,
+                            "actual_mbps": udp_up_data.get("end", {}).get("sum", {}).get("bits_per_second", 0) / 1_000_000,
+                            "jitter_ms": udp_up_data.get("end", {}).get("sum", {}).get("jitter_ms", 0),
+                            "lost_packets": udp_up_data.get("end", {}).get("sum", {}).get("lost_packets", 0),
+                            "lost_percent": udp_up_data.get("end", {}).get("sum", {}).get("lost_percent", 0)
+                        }
+                        
+                        print(f"    ✓ UDP Upload: {results['tests']['udp_upload']['actual_mbps']:.1f} Mbps, "
+                            f"Loss: {results['tests']['udp_upload']['lost_percent']:.1f}%, "
+                            f"Jitter: {results['tests']['udp_upload']['jitter_ms']:.1f}ms")
+            
+            # 4. UDP 5 Mbps stability test
+            print(f"  Running UDP 5 Mbps stability test...")
+            udp_5m_result = subprocess.run(
+                [Config.IPERF_PATH, "-c", self.iperf_server, "-u", "-b", "5M", 
+                "-t", str(duration), "-J"],
+                capture_output=True,
+                text=True,
+                timeout=duration + 10
+            )
+            
+            if udp_5m_result.returncode == 0:
+                udp_5m_data = json.loads(udp_5m_result.stdout)
+                
+                results["tests"]["udp_5mbps"] = {
+                    "target_mbps": 5.0,
+                    "actual_mbps": udp_5m_data.get("end", {}).get("sum", {}).get("bits_per_second", 0) / 1_000_000,
+                    "jitter_ms": udp_5m_data.get("end", {}).get("sum", {}).get("jitter_ms", 0),
+                    "lost_packets": udp_5m_data.get("end", {}).get("sum", {}).get("lost_packets", 0),
+                    "lost_percent": udp_5m_data.get("end", {}).get("sum", {}).get("lost_percent", 0)
+                }
+                
+                print(f"    ✓ UDP 5 Mbps: {results['tests']['udp_5mbps']['actual_mbps']:.1f} Mbps, "
+                    f"Loss: {results['tests']['udp_5mbps']['lost_percent']:.1f}%, "
+                    f"Jitter: {results['tests']['udp_5mbps']['jitter_ms']:.1f}ms")
+            
+            return results
+            
         except json.JSONDecodeError:
             return {"success": False, "error": "Invalid iperf3 output"}
         except Exception as e:
@@ -220,6 +317,7 @@ class NetworkTester:
         except Exception as e:
             return {"success": False, "error": str(e)}
 
+
 class WiFiScanner:
     """Enhanced WiFi scanner with connection capabilities."""
     
@@ -229,7 +327,7 @@ class WiFiScanner:
         self.tested_networks = set()
     
     def scan_networks(self, force_refresh=False) -> List[Dict]:
-        """Scan all visible WiFi networks."""
+        """Scan all visible WiFi networks with detailed information."""
         current_time = time.time()
         
         if not force_refresh and (current_time - self.last_scan) < 30:
@@ -262,8 +360,15 @@ class WiFiScanner:
                         "ssid": ssid,
                         "bssid": "Unknown",
                         "signal_percentage": 0,
+                        "signal_dbm": None,
+                        "noise_dbm": None,
+                        "snr_db": None,
                         "channel": 0,
+                        "channel_width": "Unknown",
+                        "band": "Unknown",
                         "authentication": "Unknown",
+                        "encryption": "Unknown",
+                        "phy_type": "Unknown",
                         "is_open": False,
                         "is_saved": False,
                         "timestamp": datetime.now().isoformat()
@@ -278,27 +383,53 @@ class WiFiScanner:
                         current_network["bssid"] = value
                     elif any(term in key for term in ["signal", "señal", "senal", "se¤al"]):
                         current_network["signal_strength"] = value
-                        # Extraer porcentaje numérico
+                        # Extract numeric percentage
                         match = re.search(r'(\d+)%', value)
                         if match:
                             current_network["signal_percentage"] = int(match.group(1))
-                    
-
+                            # Estimate dBm from percentage (rough approximation)
+                            # 100% = -30dBm, 0% = -90dBm
+                            current_network["signal_dbm"] = -90 + (current_network["signal_percentage"] * 0.6)
                     elif any(term in key for term in ["channel", "canal"]):
                         match = re.search(r'(\d+)', value)
                         if match:
                             current_network["channel"] = int(match.group(1))
+                            # Determine band from channel
+                            if current_network["channel"] <= 14:
+                                current_network["band"] = "2.4GHz"
+                            else:
+                                current_network["band"] = "5GHz"
                     elif any(term in key for term in ["authentication", "autenticación"]):
                         current_network["authentication"] = value
                         if "open" in value.lower() or "abierto" in value.lower():
                             current_network["is_open"] = True
+                    elif any(term in key for term in ["encryption", "cifrado"]):
+                        current_network["encryption"] = value
+                    elif any(term in key for term in ["radio type", "tipo de radio"]):
+                        current_network["phy_type"] = value
+                        # Try to determine channel width from PHY type
+                        if "802.11n" in value:
+                            current_network["channel_width"] = "20/40 MHz"
+                        elif "802.11ac" in value:
+                            current_network["channel_width"] = "20/40/80 MHz"
+                        elif "802.11ax" in value:
+                            current_network["channel_width"] = "20/40/80/160 MHz"
             
             if current_network.get("ssid"):
                 networks.append(current_network)
             
-            # Check which networks are saved
+            # Check which networks are saved and get additional info
             for network in networks:
                 network["is_saved"] = self._is_network_saved(network["ssid"])
+                
+                # Calculate SNR if we have signal (noise floor assumption)
+                if network["signal_dbm"] is not None:
+                    # Assume noise floor of -95 dBm for 2.4GHz, -100 dBm for 5GHz
+                    if network["band"] == "2.4GHz":
+                        network["noise_dbm"] = -95
+                    else:
+                        network["noise_dbm"] = -100
+                    network["snr_db"] = network["signal_dbm"] - network["noise_dbm"]
             
             self.cached_networks = networks
             self.last_scan = current_time
@@ -308,6 +439,17 @@ class WiFiScanner:
         except Exception as e:
             print(f"Error scanning networks: {e}")
             return []
+
+    def display_network_details(self, network: Dict):
+        """Display detailed network information."""
+        print(f"\n📡 {network['ssid']} ({network['bssid']})")
+        print(f"   Signal: {network['signal_percentage']}% ({network.get('signal_dbm', 'N/A'):.1f} dBm)")
+        print(f"   Channel: {network['channel']} ({network['band']})")
+        print(f"   Width: {network['channel_width']}")
+        print(f"   SNR: {network.get('snr_db', 'N/A'):.1f} dB")
+        print(f"   Auth: {network['authentication']}")
+        print(f"   Encryption: {network['encryption']}")
+        print(f"   PHY: {network['phy_type']}")
     
     def _is_network_saved(self, ssid: str) -> bool:
         """Check if a network profile exists."""
@@ -347,7 +489,7 @@ class WiFiScanner:
             return {"success": False, "error": str(e)}
     
     def get_current_connection_info(self) -> Dict:
-        """Obtiene información detallada de la conexión actual."""
+        """Get detailed information about current connection."""
         try:
             result = subprocess.run(
                 ["netsh", "wlan", "show", "interfaces"],
@@ -358,15 +500,20 @@ class WiFiScanner:
             )
             
             info = {}
-   
-            for line in result.stdout.splitlines():
+            lines = result.stdout.splitlines()
+            
+            # Check if we have any content
+            if not lines or len(result.stdout.strip()) < 50:
+                return {"error": "No WiFi connection detected"}
+            
+            for line in lines:
                 line = line.strip()
                 if ":" in line:
                     key, value = line.split(":", 1)
                     key = key.strip().lower()
                     value = value.strip()
                     
-                    if any(term in key for term in ["name", "nombre"]):
+                    if any(term in key for term in ["name", "nombre"]) and "ssid" not in key:
                         info["interface_name"] = value
                     elif any(term in key for term in ["description", "descripción", "descripcion", "descripci¢n"]):
                         info["adapter_description"] = value
@@ -399,21 +546,25 @@ class WiFiScanner:
                         info["transmit_rate"] = value
                     elif any(term in key for term in ["signal", "señal", "senal", "se¤al"]):
                         info["signal_strength"] = value
-                        # Extraer porcentaje numérico
+                        # Extract numeric percentage
                         match = re.search(r'(\d+)%', value)
                         if match:
                             info["signal_percentage"] = int(match.group(1))
                         else:
-                            # Si no tiene %, buscar solo números
+                            # If no %, look for numbers only
                             match = re.search(r'(\d+)', value)
                             if match:
                                 info["signal_percentage"] = int(match.group(1))
             
+            # Check if we got valid connection info
+            if 'ssid' not in info:
+                return {"error": "No active WiFi connection found"}
+            
             return info
             
         except Exception as e:
-            return {"error": f"Error obteniendo info de conexión: {str(e)}"}
-       
+            return {"error": f"Error getting connection info: {str(e)}"}
+
 
 class HeatmapManager:
     """Manages persistent heatmaps with network testing."""
@@ -430,6 +581,10 @@ class HeatmapManager:
         self.measurements = []
         self.ap_data = defaultdict(list)
         self.network_test_results = defaultdict(list)
+        
+        # New: ID to coordinates mapping
+        self.id_mapping = {}
+        self.next_measurement_id = 1
         
         # Load existing data
         self.load_data()
@@ -448,8 +603,146 @@ class HeatmapManager:
         self.define_room("bathroom", 10, 0, 3, 4)
         self.define_room("hallway", 5, 5, 5, 3)
     
+    def collect_measurement_by_id(self, measurement_id: int = None, run_tests: bool = True):
+        """Collect WiFi measurements using ID system for field work."""
+        if measurement_id is None:
+            measurement_id = self.next_measurement_id
+            self.next_measurement_id += 1
+        
+        networks = self.scanner.scan_networks(force_refresh=True)
+        
+        measurement = {
+            'id': measurement_id,
+            'timestamp': datetime.now().isoformat(),
+            'location': None,  # Will be mapped later
+            'networks': [],
+            'tests': {}
+        }
+        
+        print(f"\n📍 MEASUREMENT ID: {measurement_id}")
+        print(f"   Time: {datetime.now().strftime('%H:%M:%S')}")
+        print(f"   Networks found: {len(networks)}")
+        
+        # Store network data
+        for network in networks:
+            if network['bssid'] != "Unknown":
+                net_data = {
+                    'ssid': network['ssid'],
+                    'bssid': network['bssid'],
+                    'signal': network['signal_percentage'],
+                    'channel': network['channel'],
+                    'authentication': network['authentication']
+                }
+                measurement['networks'].append(net_data)
+                print(f"  📡 {network['ssid']} - Signal: {network['signal_percentage']}%")
+        
+        # Run network tests if connected
+        if run_tests:
+            current_conn = self.scanner.get_current_connection_info()
+            if 'ssid' in current_conn and 'error' not in current_conn:
+                print(f"\n  Running network tests on {current_conn['ssid']}...")
+                
+                # Ping test
+                ping_result = self.tester.run_ping()
+                if ping_result['success']:
+                    measurement['tests']['ping'] = ping_result
+                    print(f"    ✓ Ping: {ping_result['avg_time']:.1f}ms")
+                
+                # Speedtest (optional - takes time)
+                if input("    Run speedtest? (y/n): ").lower() == 'y':
+                    speed_result = self.tester.run_speedtest()
+                    if speed_result['success']:
+                        measurement['tests']['speedtest'] = speed_result
+                        print(f"    ✓ Speed: {speed_result['download_mbps']:.1f}↓/{speed_result['upload_mbps']:.1f}↑ Mbps")
+                
+                # iPerf test
+                if input("    Run iPerf test suite? (y/n): ").lower() == 'y':
+                        iperf_result = self.tester.run_iperf_suite()
+                        if iperf_result['success']:
+                            measurement['tests']['iperf_suite'] = iperf_result
+                        else:
+                            print(f"    ✗ iPerf: {iperf_result['error']}")
+                else:
+                    print(f"  ⚠️  No WiFi connection detected - skipping network tests")
+            
+        self.measurements.append(measurement)
+        self.save_data()
+        
+        print(f"\n✅ Measurement ID {measurement_id} saved successfully!")
+        print("   Remember to note this ID on your floor plan!")
+        
+        return measurement
+    
+    def map_id_to_coordinates(self, measurement_id: int, x: float, y: float):
+        """Map a measurement ID to coordinates after field work."""
+        self.id_mapping[measurement_id] = {'x': x, 'y': y}
+        
+        # Update the measurement with coordinates
+        for measurement in self.measurements:
+            if measurement.get('id') == measurement_id:
+                measurement['location'] = {'x': x, 'y': y}
+                
+                # Also update AP data
+                for network in measurement['networks']:
+                    ap_key = f"{network['ssid']}_{network['bssid']}"
+                    self.ap_data[ap_key].append({
+                        'location': {'x': x, 'y': y},
+                        'signal': network['signal'],
+                        'timestamp': measurement['timestamp']
+                    })
+                
+                break
+        
+        self.save_data()
+        print(f"✓ Measurement ID {measurement_id} mapped to coordinates ({x}, {y})")
+    
+    def batch_map_coordinates(self):
+        """Interactive batch mapping of IDs to coordinates."""
+        unmapped = [m for m in self.measurements if m.get('location') is None and 'id' in m]
+        
+        if not unmapped:
+            print("No unmapped measurements found!")
+            return
+        
+        print(f"\n🗺️  COORDINATE MAPPING")
+        print(f"   Found {len(unmapped)} unmapped measurements")
+        print("   Enter coordinates for each ID (or 'skip' to skip)")
+        
+        for measurement in unmapped:
+            print(f"\n   ID {measurement['id']} - {measurement['timestamp']}")
+            
+            # Check if it's a network test or regular measurement
+            if 'all_network_tests' in measurement:
+                print(f"   Type: Network Test")
+                print(f"   Networks tested: {len(measurement['all_network_tests'])}")
+                if measurement['all_network_tests']:
+                    print("   Tested networks:")
+                    for test in measurement['all_network_tests'][:5]:  # Show first 5
+                        print(f"     - {test['ssid']} ({test['signal']}%)")
+            else:
+                print(f"   Type: Regular Measurement")
+                print(f"   Networks found: {len(measurement['networks'])}")
+                if measurement['networks']:
+                    print(f"   Strongest: {measurement['networks'][0]['ssid']} ({measurement['networks'][0]['signal']}%)")
+            
+            coords = input("   Enter x,y coordinates (e.g., 5.5,3.2): ").strip()
+            
+            if coords.lower() == 'skip':
+                continue
+            
+            try:
+                x, y = map(float, coords.split(','))
+                
+                # Use appropriate mapping function
+                if 'all_network_tests' in measurement:
+                    self.map_network_test_id_to_coordinates(measurement['id'], x, y)
+                else:
+                    self.map_id_to_coordinates(measurement['id'], x, y)
+            except:
+                print("   Invalid format, skipping...")
+    
     def collect_measurement_with_tests(self, x: float, y: float, room: str = "", run_tests: bool = True):
-        """Collect WiFi measurements and optionally run network tests."""
+        """Original method - collect WiFi measurements with coordinates."""
         networks = self.scanner.scan_networks(force_refresh=True)
         
         measurement = {
@@ -466,7 +759,7 @@ class HeatmapManager:
                 net_data = {
                     'ssid': network['ssid'],
                     'bssid': network['bssid'],
-                    'signal': network['signal_strength'],
+                    'signal': network['signal_percentage'],
                     'channel': network['channel'],
                     'authentication': network['authentication']
                 }
@@ -477,14 +770,14 @@ class HeatmapManager:
                 print(f"  📡 {network['ssid']} ({network['bssid']}) - Signal: {network['signal_percentage']}%")
                 self.ap_data[ap_key].append({
                     'location': {'x': x, 'y': y},
-                    'signal': network['signal_strength'],
+                    'signal': network['signal_percentage'],
                     'timestamp': datetime.now().isoformat()
                 })
         
         # Run network tests if connected
         if run_tests:
             current_conn = self.scanner.get_current_connection_info()
-            if 'ssid' in current_conn:
+            if 'ssid' in current_conn and 'error' not in current_conn:
                 print(f"  Running network tests on {current_conn['ssid']}...")
                 
                 # Ping test
@@ -500,12 +793,13 @@ class HeatmapManager:
                         measurement['tests']['speedtest'] = speed_result
                         print(f"    Speed: {speed_result['download_mbps']:.1f}↓/{speed_result['upload_mbps']:.1f}↑ Mbps")
                 
-                # iPerf test (if server available)
-                if self.tester.check_iperf_server():
-                    iperf_result = self.tester.run_iperf()
-                    if iperf_result['success']:
-                        measurement['tests']['iperf'] = iperf_result
-                        print(f"    iPerf: {iperf_result['throughput_mbps']:.1f} Mbps")
+                # iPerf test
+            if input("    Run iPerf test suite? (y/n): ").lower() == 'y':
+                iperf_result = self.tester.run_iperf_suite()
+                if iperf_result['success']:
+                    measurement['tests']['iperf_suite'] = iperf_result
+                else:
+                    print(f"    ✗ iPerf: {iperf_result['error']}")
         
         self.measurements.append(measurement)
         self.save_data()
@@ -513,18 +807,45 @@ class HeatmapManager:
         print(f"📍 Measurement collected at ({x:.1f}, {y:.1f}) - {len(networks)} networks")
         return measurement
     
-    def test_all_networks(self, x: float, y: float, room: str = ""):
-        """Test all available networks at a location."""
+    def test_all_networks_by_id(self, measurement_id: int = None):
+        """Test all available networks at a location using ID system."""
+        if measurement_id is None:
+            measurement_id = self.next_measurement_id
+            self.next_measurement_id += 1
+        
         networks = self.scanner.scan_networks(force_refresh=True)
         connectable = [n for n in networks if n['is_open'] or n['is_saved']]
         
-        print(f"\n🔄 Testing {len(connectable)} connectable networks at ({x:.1f}, {y:.1f})")
+        print(f"\n🔄 TESTING ALL NETWORKS - ID: {measurement_id}")
+        print(f"   Time: {datetime.now().strftime('%H:%M:%S')}")
+        print(f"   Found {len(connectable)} connectable networks")
+        print("   Remember to note this ID on your floor plan!")
         
-        results = []
+        # Create base measurement
+        measurement = {
+            'id': measurement_id,
+            'timestamp': datetime.now().isoformat(),
+            'location': None,  # Will be mapped later
+            'networks': [],
+            'tests': {},
+            'all_network_tests': []  # Store tests for all networks
+        }
+        
+        # Store all visible networks info
+        for network in networks:
+            if network['bssid'] != "Unknown":
+                net_data = {
+                    'ssid': network['ssid'],
+                    'bssid': network['bssid'],
+                    'signal': network['signal_percentage'],
+                    'channel': network['channel'],
+                    'authentication': network['authentication']
+                }
+                measurement['networks'].append(net_data)
+        
+        # Test each connectable network
         for network in connectable:
             ssid = network['ssid']
-
-                
             print(f"\n🔗 Testing: {ssid}")
             print(f"   Signal: {network['signal_percentage']}%")
             
@@ -535,10 +856,10 @@ class HeatmapManager:
                 continue
             
             # Run tests
-            test_result = {
-                'location': {'x': x, 'y': y},
-                'room': room,
-                'network': network,
+            network_test = {
+                'ssid': ssid,
+                'bssid': network['bssid'],
+                'signal': network['signal_percentage'],
                 'timestamp': datetime.now().isoformat(),
                 'tests': {}
             }
@@ -546,32 +867,85 @@ class HeatmapManager:
             # Ping
             ping = self.tester.run_ping()
             if ping['success']:
-                test_result['tests']['ping'] = ping
-                print(f"   Ping: {ping['avg_time']:.1f}ms")
+                network_test['tests']['ping'] = ping
+                print(f"   ✓ Ping: {ping['avg_time']:.1f}ms")
             
-            # Speed (quick test)
-            if network['signal_percentage'] > 40:  # Only test decent signals
-                speed = self.tester.run_speedtest()
-                if speed['success']:
-                    test_result['tests']['speedtest'] = speed
-                    print(f"   Speed: {speed['download_mbps']:.1f}↓/{speed['upload_mbps']:.1f}↑ Mbps")
+            # Speed test for decent signals
+            if network['signal_percentage'] > 40:
+                if input("   Run speedtest? (y/n): ").lower() == 'y':
+                    speed = self.tester.run_speedtest()
+                    if speed['success']:
+                        network_test['tests']['speedtest'] = speed
+                        print(f"   ✓ Speed: {speed['download_mbps']:.1f}↓/{speed['upload_mbps']:.1f}↑ Mbps")
             
-            results.append(test_result)
+            # iPerf test
+            if input("    Run iPerf test suite? (y/n): ").lower() == 'y':
+                iperf_result = self.tester.run_iperf_suite()
+                if iperf_result['success']:
+                    measurement['tests']['iperf_suite'] = iperf_result
+                else:
+                    print(f"    ✗ iPerf: {iperf_result['error']}")
+            
+            measurement['all_network_tests'].append(network_test)
             self.scanner.tested_networks.add(ssid)
-
-            
-            # Store results
-            ap_key = f"{network['ssid']}_{network['bssid']}"
-            self.network_test_results[ap_key].append(test_result)
-             # Store in AP-specific data
-            self.ap_data[ap_key].append({
-                    'location': {'x': x, 'y': y},
-                    'signal': network['signal_strength'],
-                    'timestamp': datetime.now().isoformat()
-                })
+        
+        # Save measurement
+        self.measurements.append(measurement)
+        self.save_data()
+        
+        print(f"\n✅ Network testing completed for ID {measurement_id}")
+        print(f"   Tested {len(measurement['all_network_tests'])} networks")
+        
+        return measurement
+    
+    def map_network_test_id_to_coordinates(self, measurement_id: int, x: float, y: float):
+        """Map a network test ID to coordinates and update all related data."""
+        self.id_mapping[measurement_id] = {'x': x, 'y': y}
+        
+        # Find and update the measurement
+        for measurement in self.measurements:
+            if measurement.get('id') == measurement_id:
+                measurement['location'] = {'x': x, 'y': y}
+                
+                # Update AP data for all networks found
+                for network in measurement['networks']:
+                    ap_key = f"{network['ssid']}_{network['bssid']}"
+                    self.ap_data[ap_key].append({
+                        'location': {'x': x, 'y': y},
+                        'signal': network['signal'],
+                        'timestamp': measurement['timestamp']
+                    })
+                
+                # Update network test results if this was a network test
+                if 'all_network_tests' in measurement:
+                    for test in measurement['all_network_tests']:
+                        ap_key = f"{test['ssid']}_{test['bssid']}"
+                        
+                        # Add to AP data for heatmap (THIS IS THE KEY ADDITION)
+                        self.ap_data[ap_key].append({
+                            'location': {'x': x, 'y': y},
+                            'signal': test['signal'],
+                            'timestamp': test['timestamp']
+                        })
+                        
+                        # Also add to network test results for performance data
+                        test_result = {
+                            'location': {'x': x, 'y': y},
+                            'network': {
+                                'ssid': test['ssid'],
+                                'bssid': test['bssid'],
+                                'signal_percentage': test['signal']
+                            },
+                            'timestamp': test['timestamp'],
+                            'tests': test['tests']
+                        }
+                        self.network_test_results[ap_key].append(test_result)
+                
+                break
         
         self.save_data()
-        return results
+        print(f"✓ Network test ID {measurement_id} mapped to coordinates ({x}, {y})")
+        
     
     def create_ap_heatmap(self, ap_key: str, include_performance: bool = True):
         """Create heatmap for specific AP with optional performance overlay."""
@@ -580,12 +954,12 @@ class HeatmapManager:
             return None
         
         data = self.ap_data[ap_key]
-        data = self._normalize_signal_data(data)  
-
-
-        if len(data) < 3:
-            print(data)
-            print(f"Insufficient data points for {ap_key}")
+        
+        # Filter out data without locations
+        data_with_coords = [d for d in data if d.get('location') is not None]
+        
+        if len(data_with_coords) < 3:
+            print(f"Insufficient data points with coordinates for {ap_key} ({len(data_with_coords)} points)")
             return None
         
         # Create figure
@@ -594,7 +968,7 @@ class HeatmapManager:
             axes = [axes]
         
         # Signal strength heatmap
-        self._create_signal_heatmap(axes[0], data, ap_key)
+        self._create_signal_heatmap(axes[0], data_with_coords, ap_key)
         
         # Performance heatmap if available
         if include_performance and ap_key in self.network_test_results:
@@ -609,22 +983,6 @@ class HeatmapManager:
         print(f"✅ Heatmap saved: {output_file}")
         return str(output_file)
     
-    def _normalize_signal_data(self, data: List[Dict]) -> List[Dict]:
-        """Convierte '99%' en 99.0 (float) dentro del campo 'signal'."""
-        for entry in data:
-            signal = entry.get("signal", "")
-            if isinstance(signal, str) and signal.endswith("%"):
-                try:
-                    entry["signal"] = float(signal.strip('%'))
-                except ValueError:
-                    entry["signal"] = None
-            elif isinstance(signal, (int, float)):
-                entry["signal"] = float(signal)
-            else:
-                entry["signal"] = None
-        return [d for d in data if d["signal"] is not None]
-
-    
     def _create_signal_heatmap(self, ax, data, title):
         """Create signal strength heatmap."""
         # Grid
@@ -635,9 +993,6 @@ class HeatmapManager:
         # Interpolate
         points = np.array([(d['location']['x'], d['location']['y']) for d in data])
         values = np.array([d['signal'] for d in data])
-
-
-
         
         grid_signal = self._interpolate_grid(xx, yy, points, values)
         
@@ -741,33 +1096,22 @@ class HeatmapManager:
         
         # Colorbar
         plt.colorbar(im, ax=ax, label='Performance Score')
-
-
-
-
+    
     def _interpolate_grid(self, xx, yy, points, values):
-        """
-        Interpolación suave usando griddata, ideal para visualizar datos reales.
-        """
-        # Usamos griddata con el método 'cubic' para una interpolación suave.
-        # Esto crea una superficie continua y diferenciable que pasa por tus puntos.
-        # Es perfecto para representar un campo como la señal WiFi.
+        """Smooth interpolation using griddata."""
+        # Use griddata with cubic method for smooth interpolation
         grid = griddata(points, values, (xx, yy), method='cubic')
-
-        # El método 'cubic' puede generar valores fuera del rango original (ej. > 100 o < 0)
-        # en los bordes de la interpolación. Los "recortamos" para mantenerlos en el rango 0-100.
+        
+        # Clip values to valid range
         grid = np.clip(grid, 0, 100)
         
-        # griddata puede dejar 'NaN' (Not a Number) en áreas fuera del alcance de tus puntos.
-        # Rellenamos esos huecos usando una interpolación 'nearest' para que no haya vacíos.
+        # Fill NaN values with nearest neighbor
         nan_mask = np.isnan(grid)
         if np.any(nan_mask):
             grid[nan_mask] = griddata(points, values, (xx[nan_mask], yy[nan_mask]), method='nearest')
-
+        
         return grid
     
- 
-        
     def create_composite_heatmap(self):
         """Create comprehensive composite heatmap."""
         if not self.ap_data:
@@ -807,11 +1151,13 @@ class HeatmapManager:
         grid_max_signal = np.zeros_like(xx)
         
         for ap_key, data in self.ap_data.items():
-            if len(data) < 3:
+            # Filter data with coordinates
+            data_with_coords = [d for d in data if d.get('location') is not None]
+            if len(data_with_coords) < 3:
                 continue
             
-            points = np.array([(d['location']['x'], d['location']['y']) for d in data])
-            values = np.array([d['signal'] for d in data])
+            points = np.array([(d['location']['x'], d['location']['y']) for d in data_with_coords])
+            values = np.array([d['signal'] for d in data_with_coords])
             
             grid_signal = self._interpolate_grid(xx, yy, points, values)
             grid_max_signal = np.maximum(grid_max_signal, grid_signal)
@@ -844,11 +1190,13 @@ class HeatmapManager:
         grid_ap_count = np.zeros_like(xx)
         
         for ap_key, data in self.ap_data.items():
-            if len(data) < 3:
+            # Filter data with coordinates
+            data_with_coords = [d for d in data if d.get('location') is not None]
+            if len(data_with_coords) < 3:
                 continue
             
-            points = np.array([(d['location']['x'], d['location']['y']) for d in data])
-            values = np.array([d['signal'] for d in data])
+            points = np.array([(d['location']['x'], d['location']['y']) for d in data_with_coords])
+            values = np.array([d['signal'] for d in data_with_coords])
             
             grid_signal = self._interpolate_grid(xx, yy, points, values)
             grid_ap_count += (grid_signal > 20).astype(int)
@@ -962,11 +1310,13 @@ class HeatmapManager:
         grid_congestion = np.zeros_like(xx)
         
         for channel, usage_list in congested_channels:
-            if len(usage_list) < 3:
+            # Filter usage with locations
+            usage_with_coords = [u for u in usage_list if u['location'] is not None]
+            if len(usage_with_coords) < 3:
                 continue
             
-            points = np.array([(u['location']['x'], u['location']['y']) for u in usage_list])
-            values = np.array([len(usage_list) for _ in usage_list])
+            points = np.array([(u['location']['x'], u['location']['y']) for u in usage_with_coords])
+            values = np.array([len(usage_list) for _ in usage_with_coords])
             
             grid_channel = self._interpolate_grid(xx, yy, points, values)
             grid_congestion += grid_channel
@@ -1007,6 +1357,8 @@ class HeatmapManager:
             'measurements': self.measurements,
             'ap_data': {k: v for k, v in self.ap_data.items()},
             'network_test_results': {k: v for k, v in self.network_test_results.items()},
+            'id_mapping': self.id_mapping,
+            'next_measurement_id': self.next_measurement_id,
             'last_updated': datetime.now().isoformat()
         }
         
@@ -1031,6 +1383,8 @@ class HeatmapManager:
                 self.measurements = data['measurements']
                 self.ap_data = defaultdict(list, data['ap_data'])
                 self.network_test_results = defaultdict(list, data.get('network_test_results', {}))
+                self.id_mapping = data.get('id_mapping', {})
+                self.next_measurement_id = data.get('next_measurement_id', 1)
                 
                 print(f"📂 Loaded: {len(self.measurements)} measurements, {len(self.ap_data)} APs")
             except Exception as e:
@@ -1126,6 +1480,7 @@ class HeatmapManager:
         
         return stats
 
+
 # Main execution function
 def main():
     """Main entry point for the integrated system."""
@@ -1135,11 +1490,21 @@ def main():
     # Initialize manager
     manager = HeatmapManager()
     
-    # Check for iperf server
-    if not manager.tester.check_iperf_server():
-        print("\n⚠️  iPerf3 server not running.")
-        if input("Start iPerf3 server? (y/n): ").lower() == 'y':
-            manager.tester.start_iperf_server()
+    # Configure iPerf server
+    print("\n📡 IPERF SERVER CONFIGURATION")
+    print("Default server: iperf.he.net (public server)")
+    custom_server = input("Enter iPerf server IP (press Enter for default): ").strip()
+    if custom_server:
+        manager.tester.set_iperf_server(custom_server)
+    else:
+        print("✓ Using default public server: iperf.he.net")
+    
+    # Ask about local server only if needed
+    if custom_server == "127.0.0.1" or custom_server == "localhost":
+        if not manager.tester.check_iperf_server():
+            print("\n⚠️  Local iPerf3 server not running.")
+            if input("Start local iPerf3 server? (y/n): ").lower() == 'y':
+                manager.tester.start_iperf_server()
     
     # Setup rooms if needed
     if not manager.rooms:
@@ -1152,14 +1517,17 @@ def main():
         print("\n" + "="*60)
         print("MAIN MENU")
         print("="*60)
-        print("1. Collect measurement with tests")
-        print("2. Test all networks at location")
-        print("3. Auto-collect measurements")
-        print("4. Generate individual AP heatmaps")
-        print("5. Generate composite heatmap")
-        print("6. View statistics")
-        print("7. Continuous monitoring")
-        print("8. Network diagnostics")
+        print("1. Collect measurement by ID (field mode)")
+        print("2. Collect measurement with coordinates")
+        print("3. Map IDs to coordinates")
+        print("4. Test all networks by ID (field mode)")
+        print("5. Auto-collect measurements")
+        print("6. Generate individual AP heatmaps")
+        print("7. Generate composite heatmap")
+        print("8. View statistics")
+        print("9. Continuous monitoring")
+        print("10. Network diagnostics")
+        print("11. Change iPerf server")
         print("0. Exit")
         print("="*60)
         
@@ -1170,6 +1538,12 @@ def main():
             break
             
         elif choice == "1":
+            # Field mode - use ID
+
+                manager.collect_measurement_by_id()
+                
+        elif choice == "2":
+            # Original mode with coordinates
             try:
                 coords = input("Enter x,y coordinates (e.g., 5.5,3.2): ").strip()
                 x, y = map(float, coords.split(','))
@@ -1177,35 +1551,41 @@ def main():
             except Exception as e:
                 print(f"Error: {e}")
                 
-        elif choice == "2":
-            try:
-                coords = input("Enter x,y coordinates (e.g., 5.5,3.2): ").strip()
-                x, y = map(float, coords.split(','))
-                manager.test_all_networks(x, y)
-            except Exception as e:
-                print(f"Error: {e}")
-                
         elif choice == "3":
+            # Map IDs to coordinates
+            manager.batch_map_coordinates()
+                
+        elif choice == "4":
+            # Test all networks by ID
+                manager.test_all_networks_by_id()
+                
+        elif choice == "5":
             auto_collect(manager)
             
-        elif choice == "4":
+        elif choice == "6":
             for ap_key in manager.ap_data.keys():
                 try:
                     manager.create_ap_heatmap(ap_key)
                 except Exception as e:
                     print(f"Error creating heatmap for {ap_key}: {e}")
             
-        elif choice == "5":
+        elif choice == "7":
             manager.create_composite_heatmap()
             
-        elif choice == "6":
+        elif choice == "8":
             show_statistics(manager)
             
-        elif choice == "7":
+        elif choice == "9":
             continuous_monitoring(manager)
             
-        elif choice == "8":
+        elif choice == "10":
             network_diagnostics(manager)
+            
+        elif choice == "11":
+            new_server = input("Enter new iPerf server IP: ").strip()
+            if new_server:
+                manager.tester.set_iperf_server(new_server)
+
 
 def auto_collect(manager):
     """Automated measurement collection."""
@@ -1228,44 +1608,83 @@ def auto_collect(manager):
     except KeyboardInterrupt:
         print("\nStopped by user")
 
+
 def continuous_monitoring(manager):
     """Continuous monitoring mode."""
     print("\nCONTINUOUS MONITORING MODE")
-    print("- Measurements every 30 seconds")
-    print("- Test all networks every 5 minutes")
-    print("- Update heatmaps every 10 minutes")
-    print("\nPress Ctrl+C to stop")
+    print("Choose mode:")
+    print("1. Random positions (original)")
+    print("2. Fixed ID increments (field mode)")
     
-    measurement_count = 0
-    last_test_time = time.time()
-    last_heatmap_time = time.time()
+    mode = input("Select mode (1 or 2): ").strip()
     
-    try:
-        while True:
-            # Random position
-            x = np.random.uniform(0, manager.house_width)
-            y = np.random.uniform(0, manager.house_length)
-            
-            # Basic measurement
-            manager.collect_measurement_with_tests(x, y, run_tests=False)
-            measurement_count += 1
-            
-            # Test all networks every 5 minutes
-            if time.time() - last_test_time > 300:
-                print("\n🔄 Testing all networks...")
-                manager.test_all_networks(x, y)
-                last_test_time = time.time()
-            
-            # Update heatmaps every 10 minutes
-            if time.time() - last_heatmap_time > 600:
-                print("\n📊 Updating heatmaps...")
-                manager.create_composite_heatmap()
-                last_heatmap_time = time.time()
-            
-            time.sleep(30)
-            
-    except KeyboardInterrupt:
-        print(f"\nMonitoring stopped. Total measurements: {measurement_count}")
+    if mode == "2":
+        # Field mode with IDs
+        print("\n- Measurements with auto-incrementing IDs")
+        print("- Remember to map IDs to coordinates later")
+        print("\nPress Ctrl+C to stop")
+        
+        measurement_count = 0
+        
+        try:
+            while True:
+                manager.collect_measurement_by_id(run_tests=False)
+                measurement_count += 1
+                
+                # Periodic network test
+                if measurement_count % 10 == 0:
+                    print("\n🔄 Running network test...")
+                    current_conn = manager.scanner.get_current_connection_info()
+                    if 'ssid' in current_conn and 'error' not in current_conn:
+                        # Run basic test
+                        ping = manager.tester.run_ping()
+                        if ping['success']:
+                            print(f"✓ Ping: {ping['avg_time']:.1f}ms")
+                
+                time.sleep(30)
+                
+        except KeyboardInterrupt:
+            print(f"\nMonitoring stopped. Total measurements: {measurement_count}")
+            print("Remember to map IDs to coordinates using option 3!")
+    
+    else:
+        # Original mode
+        print("\n- Measurements every 30 seconds at random positions")
+        print("- Test all networks every 5 minutes")
+        print("- Update heatmaps every 10 minutes")
+        print("\nPress Ctrl+C to stop")
+        
+        measurement_count = 0
+        last_test_time = time.time()
+        last_heatmap_time = time.time()
+        
+        try:
+            while True:
+                # Random position
+                x = np.random.uniform(0, manager.house_width)
+                y = np.random.uniform(0, manager.house_length)
+                
+                # Basic measurement
+                manager.collect_measurement_with_tests(x, y, run_tests=False)
+                measurement_count += 1
+                
+                # Test all networks every 5 minutes
+                if time.time() - last_test_time > 300:
+                    print("\n🔄 Testing all networks...")
+                    manager.test_all_networks(x, y)
+                    last_test_time = time.time()
+                
+                # Update heatmaps every 10 minutes
+                if time.time() - last_heatmap_time > 600:
+                    print("\n📊 Updating heatmaps...")
+                    manager.create_composite_heatmap()
+                    last_heatmap_time = time.time()
+                
+                time.sleep(30)
+                
+        except KeyboardInterrupt:
+            print(f"\nMonitoring stopped. Total measurements: {measurement_count}")
+
 
 def network_diagnostics(manager):
     """Run network diagnostics."""
@@ -1274,6 +1693,15 @@ def network_diagnostics(manager):
     
     # Current connection
     current = manager.scanner.get_current_connection_info()
+    
+    if 'error' in current:
+        print(f"⚠️  {current['error']}")
+        print("\nPossible issues:")
+        print("- Not connected to WiFi")
+        print("- Need to run as Administrator")
+        print("- WiFi adapter disabled")
+        return
+    
     if 'ssid' in current:
         print(f"Connected to: {current['ssid']}")
         print(f"Signal: {current.get('signal_percentage', 'N/A')}%")
@@ -1311,15 +1739,16 @@ def network_diagnostics(manager):
                 print(f"✗ Speedtest: {speed['error']}")
         
         # iPerf
-        if manager.tester.check_iperf_server():
-            if input("\nRun iPerf test? (y/n): ").lower() == 'y':
-                iperf = manager.tester.run_iperf()
-                if iperf['success']:
-                    print(f"✓ iPerf: {iperf['throughput_mbps']:.1f} Mbps")
-                else:
-                    print(f"✗ iPerf: {iperf['error']}")
-    else:
-        print("Not connected to any WiFi network")
+        if input("    Run iPerf test suite? (y/n): ").lower() == 'y':
+            iperf_result = manager.tester.run_iperf_suite()
+            if iperf_result['success']:
+                print(f"✓ iPerf Test Suite:")
+                print(f"   Throughput: {iperf_result['throughput_mbps']:.1f} Mbps")
+                print(f"   Jitter: {iperf_result['jitter_ms']:.2f} ms")
+                print(f"   Loss: {iperf_result['loss_percentage']:.2f}%")
+            else:
+                print(f"    ✗ iPerf: {iperf_result['error']}")
+
 
 def show_statistics(manager):
     """Display comprehensive statistics."""
@@ -1358,6 +1787,7 @@ def show_statistics(manager):
         tests = ap.get('tests_performed', 0)
         
         print(f"{ssid:<25} {bssid:<20} {ap['avg_signal']:>10.1f}% {tests:>8} {avg_ping:>10}")
+
 
 if __name__ == "__main__":
     try:
