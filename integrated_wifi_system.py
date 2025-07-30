@@ -54,7 +54,7 @@ class Config:
     ]
     
     # Si está vacío, monitorea TODAS las redes
-    MONITOR_ALL_NETWORKS = False  # Cambiar a True para monitorear todo
+    MONITOR_ALL_NETWORKS = True  # Cambiar a True para monitorear todo
 
 
 class NetworkTester:
@@ -67,6 +67,7 @@ class NetworkTester:
     def set_iperf_server(self, server_ip: str):
         """Update the iperf server IP."""
         self.iperf_server = server_ip
+        Config.IPERF_SERVER = server_ip
         print(f"✓ iPerf server set to: {server_ip}")
     
     @staticmethod
@@ -174,130 +175,172 @@ class NetworkTester:
             return {"success": False, "error": str(e)}
     
     def run_iperf_suite(self, duration=10):
-        """Run comprehensive iPerf test suite with TCP and UDP tests."""
+        """Run comprehensive iPerf test suite with REAL-TIME output."""
         if not os.path.exists(Config.IPERF_PATH):
             return {"success": False, "error": "iperf3 not found"}
         
         results = {
             "success": True,
             "server": self.iperf_server,
-            "tests": {}
+            "tests": {},
+            "raw_output": []
         }
         
         try:
-            # 1. TCP bidirectional test to measure maximum bandwidth
-            print(f"  Running TCP bidirectional test...")
-            tcp_result = subprocess.run(
+            print(f"\n🚀 EJECUTANDO SUITE COMPLETA DE IPERF")
+            print(f"   Servidor: {self.iperf_server}")
+            print(f"   Duración: {duration} segundos por test")
+            print("="*70)
+            
+            # 1. TCP TEST CON SALIDA EN TIEMPO REAL
+            print(f"\n🔄 1. TCP THROUGHPUT TEST")
+            print("-"*50)
+            
+            process = subprocess.Popen(
+                [Config.IPERF_PATH, "-c", self.iperf_server, "-t", str(duration), "-i", "1"],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
+                bufsize=1,
+                universal_newlines=True
+            )
+            
+            tcp_lines = []
+            while True:
+                output = process.stdout.readline()
+                if output == '' and process.poll() is not None:
+                    break
+                if output:
+                    # Mostrar línea en tiempo real
+                    clean_line = output.strip()
+                    print(f"   {clean_line}")
+                    tcp_lines.append(output)
+            
+            process.wait(timeout=duration + 10)
+            results["raw_output"].extend(tcp_lines)
+            
+            # Obtener datos JSON para procesamiento
+            json_process = subprocess.run(
                 [Config.IPERF_PATH, "-c", self.iperf_server, "-J", "-t", str(duration)],
                 capture_output=True,
                 text=True,
                 timeout=duration + 10
             )
             
-            if tcp_result.returncode == 0:
-                tcp_data = json.loads(tcp_result.stdout)
+            if json_process.returncode == 0:
+                tcp_data = json.loads(json_process.stdout)
                 
-                # Extract download and upload speeds
                 download_bps = tcp_data.get("end", {}).get("sum_received", {}).get("bits_per_second", 0)
                 upload_bps = tcp_data.get("end", {}).get("sum_sent", {}).get("bits_per_second", 0)
                 
-                results["tests"]["tcp_bidirectional"] = {
+                results["tests"]["tcp"] = {
                     "download_mbps": download_bps / 1_000_000,
-                    "upload_mbps": upload_bps / 1_000_000
+                    "upload_mbps": upload_bps / 1_000_000,
+                    "download_gbps": download_bps / 1_000_000_000,
+                    "upload_gbps": upload_bps / 1_000_000_000
                 }
                 
-                print(f"    ✓ TCP: {results['tests']['tcp_bidirectional']['download_mbps']:.1f}↓ / {results['tests']['tcp_bidirectional']['upload_mbps']:.1f}↑ Mbps")
+                print("-"*50)
+                print(f"✅ TCP RESUMEN:")
+                print(f"   Download: {results['tests']['tcp']['download_mbps']:.1f} Mbps ({results['tests']['tcp']['download_gbps']:.2f} Gbps)")
+                print(f"   Upload:   {results['tests']['tcp']['upload_mbps']:.1f} Mbps ({results['tests']['tcp']['upload_gbps']:.2f} Gbps)")
                 
-                # 2. UDP download test at measured bandwidth
+                # 2. UDP TEST SOLO SI TCP FUE EXITOSO
                 if download_bps > 0:
-                    print(f"  Running UDP download test at {download_bps/1_000_000:.1f} Mbps...")
-
-                    udp_down_result = subprocess.run(
-                        [Config.IPERF_PATH, "-c", self.iperf_server, "-u", "-b", str(download_bps), 
-                        "-t", str(duration),"--get-server-output", "-J"],  # -R for reverse (download) client receives server sends
+                    target_bps = min(download_bps, 1_000_000_000)  # Máximo 1 Gbps para UDP
+                    target_mbps = target_bps / 1_000_000
+                    
+                    print(f"\n🔄 2. UDP QUALITY TEST")
+                    print(f"   Target: {target_mbps:.0f} Mbps")
+                    print("-"*50)
+                    
+                    udp_process = subprocess.Popen(
+                        [Config.IPERF_PATH, "-c", self.iperf_server, "-u", "-b", str(target_bps), 
+                        "-t", str(duration), "-i", "1"],
+                        stdout=subprocess.PIPE,
+                        stderr=subprocess.PIPE,
+                        text=True,
+                        bufsize=1,
+                        universal_newlines=True
+                    )
+                    
+                    udp_lines = []
+                    while True:
+                        output = udp_process.stdout.readline()
+                        if output == '' and udp_process.poll() is not None:
+                            break
+                        if output:
+                            clean_line = output.strip()
+                            print(f"   {clean_line}")
+                            udp_lines.append(output)
+                    
+                    udp_process.wait(timeout=duration + 10)
+                    results["raw_output"].extend(udp_lines)
+                    
+                    # Obtener datos JSON para UDP
+                    udp_json_process = subprocess.run(
+                        [Config.IPERF_PATH, "-c", self.iperf_server, "-u", "-b", str(target_bps), 
+                        "-t", str(duration), "-J"],
                         capture_output=True,
                         text=True,
                         timeout=duration + 10
                     )
                     
-                    if udp_down_result.returncode == 0:
-                        udp_down_data = json.loads(udp_down_result.stdout)
+                    if udp_json_process.returncode == 0:
+                        udp_data = json.loads(udp_json_process.stdout)
                         
-                        results["tests"]["udp_download"] = {
-                            "target_mbps": download_bps / 1_000_000,
-                            "actual_mbps": udp_down_data.get("end", {}).get("sum", {}).get("bits_per_second", 0) / 1_000_000,
-                            "jitter_ms": udp_down_data.get("end", {}).get("sum", {}).get("jitter_ms", 0),
-                            "lost_packets": udp_down_data.get("end", {}).get("sum", {}).get("lost_packets", 0),
-                            "lost_percent": udp_down_data.get("end", {}).get("sum", {}).get("lost_percent", 0)
+                        results["tests"]["udp"] = {
+                            "target_mbps": target_mbps,
+                            "actual_mbps": udp_data.get("end", {}).get("sum", {}).get("bits_per_second", 0) / 1_000_000,
+                            "jitter_ms": udp_data.get("end", {}).get("sum", {}).get("jitter_ms", 0),
+                            "lost_packets": udp_data.get("end", {}).get("sum", {}).get("lost_packets", 0),
+                            "lost_percent": udp_data.get("end", {}).get("sum", {}).get("lost_percent", 0),
+                            "total_packets": udp_data.get("end", {}).get("sum", {}).get("packets", 0)
                         }
                         
-                        print(f"    ✓ UDP Download: {results['tests']['udp_download']['actual_mbps']:.1f} Mbps, "
-                            f"Loss: {results['tests']['udp_download']['lost_percent']:.1f}%, "
-                            f"Jitter: {results['tests']['udp_download']['jitter_ms']:.1f}ms")
-                    else:
-                        results["tests"]["udp_download"] = {
-                            "error": "UDP download test failed",
-                            "details": udp_down_result.stderr or "No details available"
-                        }
-                        print(f"    ✗ UDP Download: {results['tests']['udp_download']['error']}")
-                        print(f"      Details: {results['tests']['udp_download']['details']}")
-
-                # 3. UDP upload test at measured bandwidth
-                if upload_bps > 0:
-                    print(f"  Running UDP upload test at {upload_bps/1_000_000:.1f} Mbps...")
-
-                    udp_up_result = subprocess.run(
-                        [Config.IPERF_PATH, "-c", self.iperf_server, "-u", "-b", str(upload_bps), 
-                        "-t", str(duration), "-J"],  # No -R for upload
-                        capture_output=True,
-                        text=True,
-                        timeout=duration + 10
-                    )
-                    
-                    if udp_up_result.returncode == 0:
-                        udp_up_data = json.loads(udp_up_result.stdout)
+                        print("-"*50)
+                        print(f"✅ UDP RESUMEN:")
+                        print(f"   Throughput:  {results['tests']['udp']['actual_mbps']:.1f} Mbps (target: {target_mbps:.0f})")
+                        print(f"   Jitter:      {results['tests']['udp']['jitter_ms']:.2f} ms")
+                        print(f"   Packet Loss: {results['tests']['udp']['lost_percent']:.1f}% ({results['tests']['udp']['lost_packets']}/{results['tests']['udp']['total_packets']})")
                         
-                        results["tests"]["udp_upload"] = {
-                            "target_mbps": upload_bps / 1_000_000,
-                            "actual_mbps": udp_up_data.get("end", {}).get("sum", {}).get("bits_per_second", 0) / 1_000_000,
-                            "jitter_ms": udp_up_data.get("end", {}).get("sum", {}).get("jitter_ms", 0),
-                            "lost_packets": udp_up_data.get("end", {}).get("sum", {}).get("lost_packets", 0),
-                            "lost_percent": udp_up_data.get("end", {}).get("sum", {}).get("lost_percent", 0)
-                        }
+                        # Evaluación de calidad
+                        if results['tests']['udp']['lost_percent'] < 1.0 and results['tests']['udp']['jitter_ms'] < 5.0:
+                            quality = "EXCELENTE"
+                        elif results['tests']['udp']['lost_percent'] < 3.0 and results['tests']['udp']['jitter_ms'] < 10.0:
+                            quality = "BUENA"
+                        elif results['tests']['udp']['lost_percent'] < 5.0:
+                            quality = "ACEPTABLE"
+                        else:
+                            quality = "PROBLEMÁTICA"
                         
-                        print(f"    ✓ UDP Upload: {results['tests']['udp_upload']['actual_mbps']:.1f} Mbps, "
-                            f"Loss: {results['tests']['udp_upload']['lost_percent']:.1f}%, "
-                            f"Jitter: {results['tests']['udp_upload']['jitter_ms']:.1f}ms")
+                        print(f"   Calidad:     {quality}")
             
-            # 4. UDP 5 Mbps stability test
-            print(f"  Running UDP 5 Mbps stability test...")
-            udp_5m_result = subprocess.run(
-                [Config.IPERF_PATH, "-c", self.iperf_server, "-u", "-b", "5M", 
-                "-t", str(duration), "-J"],
-                capture_output=True,
-                text=True,
-                timeout=duration + 10
-            )
+            # 3. RESUMEN FINAL
+            print("\n" + "="*70)
+            print("🎯 RESUMEN FINAL DE CONECTIVIDAD")
+            print("="*70)
             
-            if udp_5m_result.returncode == 0:
-                udp_5m_data = json.loads(udp_5m_result.stdout)
-                
-                results["tests"]["udp_5mbps"] = {
-                    "target_mbps": 5.0,
-                    "actual_mbps": udp_5m_data.get("end", {}).get("sum", {}).get("bits_per_second", 0) / 1_000_000,
-                    "jitter_ms": udp_5m_data.get("end", {}).get("sum", {}).get("jitter_ms", 0),
-                    "lost_packets": udp_5m_data.get("end", {}).get("sum", {}).get("lost_packets", 0),
-                    "lost_percent": udp_5m_data.get("end", {}).get("sum", {}).get("lost_percent", 0)
-                }
-                
-                print(f"    ✓ UDP 5 Mbps: {results['tests']['udp_5mbps']['actual_mbps']:.1f} Mbps, "
-                    f"Loss: {results['tests']['udp_5mbps']['lost_percent']:.1f}%, "
-                    f"Jitter: {results['tests']['udp_5mbps']['jitter_ms']:.1f}ms")
+            if "tcp" in results["tests"]:
+                tcp = results["tests"]["tcp"]
+                print(f"📊 TCP Performance:")
+                print(f"   • Download: {tcp['download_gbps']:.2f} Gbps ({tcp['download_mbps']:.0f} Mbps)")
+                print(f"   • Upload:   {tcp['upload_gbps']:.2f} Gbps ({tcp['upload_mbps']:.0f} Mbps)")
+            
+            if "udp" in results["tests"]:
+                udp = results["tests"]["udp"]
+                print(f"📊 UDP Quality:")
+                print(f"   • Jitter:      {udp['jitter_ms']:.2f} ms")
+                print(f"   • Packet Loss: {udp['lost_percent']:.1f}%")
+            
+            print("="*70)
             
             return results
             
+        except subprocess.TimeoutExpired:
+            return {"success": False, "error": "iPerf test timeout"}
         except json.JSONDecodeError:
-            return {"success": False, "error": "Invalid iperf3 output"}
+            return {"success": False, "error": "Invalid iperf3 JSON output"}
         except Exception as e:
             return {"success": False, "error": str(e)}
     
@@ -883,21 +926,19 @@ class HeatmapManager:
                     'ssid': network['ssid'],
                     'bssid': network['bssid'],
                     'signal': network['signal_percentage'],
-                    'signal_dbm': network.get('signal_dbm'),  # Añadir
-                    'snr_db': network.get('snr_db'),         # Añadir
-                    'signal_quality': network.get('signal_quality'),  # Añadir
+                    'signal_dbm': network.get('signal_dbm'),  
+                    'snr_db': network.get('snr_db'),         
+                    'signal_quality': network.get('signal_quality'),  
                     'channel': network['channel'],
-                    'band': network.get('band'),             # Añadir
+                    'band': network.get('band'),             
                     'authentication': network['authentication']
                 }
                 measurement['networks'].append(net_data)
                 
                 # Mostrar más información
-                print(f"  📡 {network['ssid']} - Signal: {network['signal_percentage']}% "
-                    f"({network.get('signal_dbm', 'N/A'):.1f} dBm) "
-                    f"SNR: {network.get('snr_db', 'N/A'):.1f} dB "
-                    f"[{network.get('signal_quality', 'Unknown')}]")
-        # Run network tests if connected
+            signal_dbm_str = f"({network['signal_dbm']:.1f} dBm)" if network.get('signal_dbm') is not None else ""
+            print(f"  📡 {network['ssid']} {network['bssid']} - {network['signal_percentage']}% - Ch{network['channel']} {signal_dbm_str} - {network.get('signal_quality', 'Unknown')}")
+                    # Run network tests if connected
         if run_tests:
             current_conn = self.scanner.get_current_connection_info()
             if 'ssid' in current_conn and 'error' not in current_conn:
@@ -1925,7 +1966,7 @@ def main():
         print("9. Continuous monitoring")
         print("10. Network diagnostics")
         print("11. Change iPerf server")
-        print("Ethernet Test")
+        print("12. Ethernet Test")
         print("0. Exit")
         print("="*60)
         
