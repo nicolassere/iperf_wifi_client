@@ -46,6 +46,16 @@ class Config:
     HEATMAP_DPI = 300
     MEASUREMENT_INTERVAL = 30
 
+    # FILTRADO DE REDES - SOLO MONITOREAR ESTOS SSIDs
+    MONITORED_SSIDS = [
+        "Pumita",           
+        "Puma",              
+        
+    ]
+    
+    # Si está vacío, monitorea TODAS las redes
+    MONITOR_ALL_NETWORKS = False  # Cambiar a True para monitorear todo
+
 
 class NetworkTester:
     """Handles all network testing functionality."""
@@ -332,11 +342,24 @@ class WiFiScanner:
         self.tested_networks = set()
     
     def scan_networks(self, force_refresh=False) -> List[Dict]:
-        """Scan WiFi networks with enhanced signal information."""
+        """
+        Scan WiFi networks - VERSIÓN PARA ESPAÑOL/INGLÉS
+        debería Funcionar con ambos formatos de salida de netsh
+        """
         try:
-            # Force refresh
-            subprocess.run(["netsh", "wlan", "refresh", "hostednetwork"], capture_output=True, timeout=10)
+            print("🔄 Escaneando redes WiFi...")
             
+            # Force refresh - comando correcto
+            try:
+                subprocess.run(["netsh", "wlan", "refresh", "hostednetwork"], 
+                            capture_output=True, timeout=10)
+            except:
+                # Fallback si no funciona el refresh
+                pass
+            
+            time.sleep(1)
+            
+            # Intentar comando con mode=bssid primero
             result = subprocess.run(
                 ["netsh", "wlan", "show", "networks", "mode=bssid"],
                 capture_output=True,
@@ -345,22 +368,64 @@ class WiFiScanner:
                 encoding='cp1252'
             )
             
+            print(f"✅ Comando netsh ejecutado, código: {result.returncode}")
+            
+            if result.returncode != 0:
+                print(f"⚠️ Error con mode=bssid, probando comando básico...")
+                # Fallback a comando básico
+                result = subprocess.run(
+                    ["netsh", "wlan", "show", "networks"],
+                    capture_output=True,
+                    text=True,
+                    timeout=20,
+                    encoding='cp1252'
+                )
+            
+            if result.returncode != 0:
+                print(f"❌ Error en netsh: {result.stderr}")
+                return []
+            
+            # Debug: mostrar primeras líneas
+            lines = result.stdout.splitlines()
+            print(f"📋 Procesando {len(lines)} líneas de salida...")
+            
+            # Mostrar algunas líneas para debug
+            print("🔍 Primeras líneas de netsh:")
+            for i, line in enumerate(lines[:10]):
+                if line.strip():
+                    print(f"   {i:2d}: '{line.strip()}'")
+            
             networks = []
             current_network = {}
             
-            for line in result.stdout.splitlines():
+            for line_num, line in enumerate(lines):
                 line = line.strip()
                 
-                if line.startswith("SSID") and ":" in line:
-                    if current_network.get("ssid"):
-                        # Calculate additional metrics before saving
+                # DETECTAR INICIO DE NUEVA RED
+                # Patrones: "SSID 1 : NombreRed" o "SSID : NombreRed"
+                if re.match(r'^SSID\s*\d*\s*:', line, re.IGNORECASE):
+                    # Guardar red anterior si existe
+                    if current_network.get("ssid") and current_network["ssid"] != "":
+                        # Calcular métricas adicionales
                         self._calculate_signal_metrics(current_network)
+                        current_network["is_saved"] = self._is_network_saved(current_network["ssid"])
                         networks.append(current_network.copy())
+                        print(f"   ✅ Red guardada: '{current_network['ssid']}' - {current_network.get('signal_percentage', 0)}% - Canal {current_network.get('channel', 0)}")
                     
-                    ssid = line.split(":", 1)[1].strip()
+                    # Extraer SSID
+                    ssid_match = re.search(r'SSID\s*\d*\s*:\s*(.*)$', line, re.IGNORECASE)
+                    if ssid_match:
+                        ssid_name = ssid_match.group(1).strip()
+                        # Si SSID está vacío, crear nombre
+                        if not ssid_name:
+                            ssid_name = f"Red_Oculta_{len(networks)+1}"
+                    else:
+                        ssid_name = f"Red_Desconocida_{len(networks)+1}"
+                    
+                    # Inicializar nueva red
                     current_network = {
-                        "ssid": ssid,
-                        "bssid": "Unknown",
+                        "ssid": ssid_name,
+                        "bssid": "Unknown", 
                         "signal_percentage": 0,
                         "signal_dbm": None,
                         "noise_dbm": None,
@@ -368,7 +433,7 @@ class WiFiScanner:
                         "signal_quality": "Unknown",
                         "channel": 0,
                         "channel_width": "Unknown",
-                        "band": "Unknown",
+                        "band": "Unknown", 
                         "authentication": "Unknown",
                         "encryption": "Unknown",
                         "phy_type": "Unknown",
@@ -377,66 +442,140 @@ class WiFiScanner:
                         "is_saved": False,
                         "timestamp": datetime.now().isoformat()
                     }
-                
-                elif ":" in line and current_network.get("ssid"):
-                    key, value = line.split(":", 1)
-                    key = key.strip().lower()
-                    value = value.strip()
                     
-                    if "bssid" in key:
-                        current_network["bssid"] = value
-                    elif any(term in key for term in ["signal", "señal", "senal", "se¤al"]):
-                        current_network["signal_strength"] = value
-                        # Extract percentage
-                        match = re.search(r'(\d+)%', value)
-                        if match:
-                            current_network["signal_percentage"] = int(match.group(1))
-                            # Calculate dBm more accurately
-                            current_network["signal_dbm"] = self._percentage_to_dbm(current_network["signal_percentage"])
-                    elif any(term in key for term in ["channel", "canal"]):
-                        match = re.search(r'(\d+)', value)
-                        if match:
-                            current_network["channel"] = int(match.group(1))
-                            # Determine band
-                            if current_network["channel"] <= 14:
-                                current_network["band"] = "2.4GHz"
+                    print(f"   🆕 Nueva red encontrada: '{ssid_name}'")
+                    continue
+                
+                # PROCESAR ATRIBUTOS DE LA RED ACTUAL
+                if current_network.get("ssid") and ":" in line:
+                    try:
+                        key, value = line.split(":", 1)
+                        key = key.strip().lower()
+                        value = value.strip()
+                        
+                        # BSSID (MAC address del AP)
+                        if "bssid" in key:
+                            current_network["bssid"] = value
+                            print(f"     📍 BSSID: {value}")
+                        
+                        # SEÑAL - Manejo robusto
+                        elif any(term in key for term in ["señal", "signal", "senal", "se¤al"]):
+                            current_network["signal_strength"] = value
+                            # Buscar porcentaje
+                            percentage_match = re.search(r'(\d+)%', value)
+                            if percentage_match:
+                                signal_pct = int(percentage_match.group(1))
+                                current_network["signal_percentage"] = signal_pct
+                                current_network["signal_dbm"] = self._percentage_to_dbm(signal_pct)
+                                print(f"     📶 Señal: {signal_pct}% ({current_network['signal_dbm']:.1f} dBm)")
                             else:
-                                current_network["band"] = "5GHz"
-                    elif any(term in key for term in ["authentication", "autenticación"]):
-                        current_network["authentication"] = value
-                        if "open" in value.lower() or "abierto" in value.lower():
-                            current_network["is_open"] = True
-                    elif any(term in key for term in ["encryption", "cifrado"]):
-                        current_network["encryption"] = value
-                    elif any(term in key for term in ["radio type", "tipo de radio"]):
-                        current_network["phy_type"] = value
-                        # Determine channel width and max rate
-                        if "802.11n" in value:
-                            current_network["channel_width"] = "20/40 MHz"
-                            current_network["max_rate_mbps"] = 300
-                        elif "802.11ac" in value:
-                            current_network["channel_width"] = "20/40/80 MHz"
-                            current_network["max_rate_mbps"] = 866
-                        elif "802.11ax" in value:
-                            current_network["channel_width"] = "20/40/80/160 MHz"
-                            current_network["max_rate_mbps"] = 1200
-                        elif "802.11g" in value:
-                            current_network["channel_width"] = "20 MHz"
-                            current_network["max_rate_mbps"] = 54
+                                # Buscar solo números sin %
+                                number_match = re.search(r'(\d+)', value)
+                                if number_match:
+                                    signal_pct = int(number_match.group(1))
+                                    current_network["signal_percentage"] = signal_pct
+                                    current_network["signal_dbm"] = self._percentage_to_dbm(signal_pct)
+                                    print(f"     📶 Señal: {signal_pct}% (estimado)")
+                        
+                        # CANAL
+                        elif any(term in key for term in ["canal", "channel"]):
+                            channel_match = re.search(r'(\d+)', value)
+                            if channel_match:
+                                channel_num = int(channel_match.group(1))
+                                current_network["channel"] = channel_num
+                                # Determinar banda
+                                if channel_num <= 14:
+                                    current_network["band"] = "2.4GHz"
+                                else:
+                                    current_network["band"] = "5GHz"
+                                print(f"     📡 Canal: {channel_num} ({current_network['band']})")
+                        
+                        # AUTENTICACIÓN - Manejo español/inglés
+                        elif any(term in key for term in ["autenticación", "authentication", "autenticacion", "autenticaci¢n"]):
+                            current_network["authentication"] = value
+                            # Detectar redes abiertas
+                            if any(open_term in value.lower() for open_term in ["abierta", "open", "ninguna", "none"]):
+                                current_network["is_open"] = True
+                            print(f"     🔐 Autenticación: {value}")
+                        
+                        # CIFRADO - Manejo español/inglés  
+                        elif any(term in key for term in ["cifrado", "encryption", "cipher"]):
+                            current_network["encryption"] = value
+                            print(f"     🔒 Cifrado: {value}")
+                        
+                        # TIPO DE RADIO
+                        elif any(term in key for term in ["tipo de radio", "radio type", "tipo radio"]):
+                            current_network["phy_type"] = value
+                            # Determinar capacidades
+                            if "802.11ax" in value or "wifi 6" in value.lower():
+                                current_network["channel_width"] = "20/40/80/160 MHz"
+                                current_network["max_rate_mbps"] = 1200
+                            elif "802.11ac" in value or "wifi 5" in value.lower():
+                                current_network["channel_width"] = "20/40/80 MHz"
+                                current_network["max_rate_mbps"] = 866
+                            elif "802.11n" in value or "wifi 4" in value.lower():
+                                current_network["channel_width"] = "20/40 MHz"
+                                current_network["max_rate_mbps"] = 300
+                            elif "802.11g" in value:
+                                current_network["channel_width"] = "20 MHz"
+                                current_network["max_rate_mbps"] = 54
+                            elif "802.11a" in value:
+                                current_network["channel_width"] = "20 MHz"
+                                current_network["max_rate_mbps"] = 54
+                            print(f"     📻 Tipo: {value}")
+                        
+                        # TIPO DE RED (Infraestructura/Ad-hoc)
+                        elif any(term in key for term in ["tipo de red", "network type", "tipo red"]):
+                            current_network["network_type"] = value
+                            print(f"     🏗️ Tipo de red: {value}")
+                    
+                    except ValueError:
+                        # Línea mal formateada, ignorar
+                        continue
+                    except Exception as e:
+                        print(f"     ⚠️ Error procesando línea '{line}': {e}")
+                        continue
             
-            if current_network.get("ssid"):
+            # Guardar última red si existe
+            if current_network.get("ssid") and current_network["ssid"] != "":
                 self._calculate_signal_metrics(current_network)
+                current_network["is_saved"] = self._is_network_saved(current_network["ssid"])
                 networks.append(current_network)
+                print(f"   ✅ Última red guardada: '{current_network['ssid']}' - {current_network.get('signal_percentage', 0)}%")
             
-            # Check saved networks
-            for network in networks:
-                network["is_saved"] = self._is_network_saved(network["ssid"])
+            # Filtrar redes válidas
+            valid_networks = []
+            for net in networks:
+                if net.get("ssid") and net["ssid"] != "" and not net["ssid"].startswith("Red_Desconocida"):
+                    valid_networks.append(net)
             
-            self.cached_networks = networks
-            return networks
+            print(f"\n🎯 RESUMEN DE ESCANEO:")
+            print(f"   📊 Total líneas procesadas: {len(lines)}")
+            print(f"   📡 Redes encontradas: {len(valid_networks)}")
             
+            if valid_networks:
+                print(f"   📋 Lista de redes:")
+                for i, net in enumerate(valid_networks, 1):
+                    signal_info = f"{net['signal_percentage']}%" if net['signal_percentage'] > 0 else "Sin señal"
+                    channel_info = f"Canal {net['channel']}" if net['channel'] > 0 else "Canal desconocido"
+                    print(f"      {i}. 📶 {net['ssid']} - {signal_info} - {channel_info} - {net['authentication']}")
+            else:
+                print("   ❌ No se encontraron redes válidas")
+                print("   🔍 Verificar:")
+                print("      - Permisos de administrador")
+                print("      - Adaptador WiFi habilitado")
+                print("      - Proximidad a redes WiFi")
+            
+            self.cached_networks = valid_networks
+            return valid_networks
+            
+        except subprocess.TimeoutExpired:
+            print("❌ Timeout ejecutando netsh wlan")
+            return []
         except Exception as e:
-            print(f"Error scanning networks: {e}")
+            print(f"💥 Error inesperado en scan_networks: {e}")
+            import traceback
+            traceback.print_exc()
             return []
     
     def _percentage_to_dbm(self, percentage: int) -> float:
