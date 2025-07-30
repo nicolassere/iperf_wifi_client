@@ -335,7 +335,7 @@ class WiFiScanner:
         """Scan WiFi networks with enhanced signal information."""
         try:
             # Force refresh
-            subprocess.run(["netsh", "wlan", "refresh"], capture_output=True, timeout=10)
+            subprocess.run(["netsh", "wlan", "refresh", "hostednetwork"], capture_output=True, timeout=10)
             
             result = subprocess.run(
                 ["netsh", "wlan", "show", "networks", "mode=bssid"],
@@ -1550,6 +1550,120 @@ class HeatmapManager:
         else:
             print("No conectado a WiFi")
 
+class EthernetTester:
+    """Tester para conexiones cableadas Gigabit."""
+    
+    @staticmethod
+    def get_ethernet_interfaces():
+        """Obtener interfaces Ethernet disponibles."""
+        try:
+            result = subprocess.run(
+                ["netsh", "interface", "show", "interface"],
+                capture_output=True,
+                text=True,
+                timeout=10
+            )
+            
+            ethernet_interfaces = []
+            for line in result.stdout.splitlines():
+                if "ethernet" in line.lower() or "local" in line.lower():
+                    # Parse interface info
+                    parts = line.split()
+                    if len(parts) >= 4 and ("conectado" in line.lower() or "connected" in line.lower()):
+                        ethernet_interfaces.append({
+                            "name": " ".join(parts[3:]),
+                            "status": "connected",
+                            "type": "ethernet"
+                        })
+            
+            return ethernet_interfaces
+            
+        except Exception as e:
+            print(f"Error getting ethernet interfaces: {e}")
+            return []
+    
+    @staticmethod
+    def test_ethernet_speed(interface_name="Ethernet", server="iperf.he.net", duration=10):
+        """Test de velocidad en conexión cableada."""
+        print(f"\n🌐 TESTING ETHERNET CONNECTION: {interface_name}")
+        print("=" * 60)
+        
+        # Información de la interfaz
+        try:
+            result = subprocess.run(
+                ["netsh", "interface", "ip", "show", "config", interface_name],
+                capture_output=True,
+                text=True,
+                timeout=10
+            )
+            
+            if result.returncode == 0:
+                print("📋 Interface Information:")
+                for line in result.stdout.splitlines()[:10]:
+                    if line.strip():
+                        print(f"   {line.strip()}")
+            
+        except Exception as e:
+            print(f"⚠️ Could not get interface info: {e}")
+        
+        # Test de velocidad con iPerf
+        print(f"\n🚀 Running Gigabit Speed Test...")
+        print(f"   Server: {server}")
+        print(f"   Duration: {duration} seconds")
+        print("   " + "="*50)
+        
+        try:
+            # TCP test con salida en tiempo real
+            process = subprocess.Popen(
+                ["C:\\iperf3\\iperf3.exe\\iperf3.exe", "-c", server, "-t", str(duration), "-i", "1"],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
+                bufsize=1,
+                universal_newlines=True
+            )
+            
+            tcp_lines = []
+            while True:
+                output = process.stdout.readline()
+                if output == '' and process.poll() is not None:
+                    break
+                if output:
+                    print(f"   {output.strip()}")
+                    tcp_lines.append(output)
+            
+            process.wait(timeout=duration + 10)
+            
+            # Test UDP a 1 Gbps
+            print(f"\n🔄 Running UDP Test at 1 Gbps...")
+            print("   " + "="*50)
+            
+            udp_process = subprocess.Popen(
+                ["C:\\iperf3\\iperf3.exe\\iperf3.exe", "-c", server, "-u", "-b", "1G", "-t", str(duration), "-i", "1"],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
+                bufsize=1,
+                universal_newlines=True
+            )
+            
+            while True:
+                output = udp_process.stdout.readline()
+                if output == '' and udp_process.poll() is not None:
+                    break
+                if output:
+                    print(f"   {output.strip()}")
+            
+            udp_process.wait(timeout=duration + 10)
+            
+            return {"success": True, "raw_output": "".join(tcp_lines)}
+            
+        except Exception as e:
+            print(f"❌ Error durante test Ethernet: {e}")
+            return {"success": False, "error": str(e)}
+
+
+
 
 # Main execution function
 def main():
@@ -1598,6 +1712,7 @@ def main():
         print("9. Continuous monitoring")
         print("10. Network diagnostics")
         print("11. Change iPerf server")
+        print("Ethernet Test")
         print("0. Exit")
         print("="*60)
         
@@ -1655,7 +1770,44 @@ def main():
             new_server = input("Enter new iPerf server IP: ").strip()
             if new_server:
                 manager.tester.set_iperf_server(new_server)
+        
+        elif choice =="12":
+            ethernet_diagnostics()
 
+
+def ethernet_diagnostics():
+    """Diagnósticos de red cableada."""
+    print("\n🌐 ETHERNET DIAGNOSTICS")
+    print("-" * 40)
+    
+    # Encontrar interfaces Ethernet
+    interfaces = EthernetTester.get_ethernet_interfaces()
+    
+    if not interfaces:
+        print("❌ No se encontraron interfaces Ethernet conectadas")
+        return
+    
+    print("📋 Interfaces Ethernet encontradas:")
+    for i, iface in enumerate(interfaces):
+        print(f"   {i+1}. {iface['name']} ({iface['status']})")
+    
+    # Seleccionar interfaz
+    if len(interfaces) == 1:
+        selected = interfaces[0]
+        print(f"\n✅ Usando interfaz: {selected['name']}")
+    else:
+        try:
+            choice = int(input(f"\nSeleccionar interfaz (1-{len(interfaces)}): ")) - 1
+            selected = interfaces[choice]
+        except:
+            print("❌ Selección inválida")
+            return
+    
+    # Ejecutar test
+    server = input("Servidor iPerf (Enter para iperf.he.net): ").strip() or "iperf.he.net"
+    duration = int(input("Duración en segundos (Enter para 10): ").strip() or "10")
+    
+    EthernetTester.test_ethernet_speed(selected['name'], server, duration)
 
 def auto_collect(manager):
     """Automated measurement collection."""

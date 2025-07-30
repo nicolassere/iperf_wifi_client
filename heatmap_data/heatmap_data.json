@@ -1133,11 +1133,313 @@
           ]
         }
       }
+    },
+    {
+      "id": 9,
+      "timestamp": "2025-07-30T17:42:48.965550",
+      "location": null,
+      "networks": [
+        {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 99,
+          "signal_dbm": -30.5,
+          "snr_db": 69.5,
+          "signal_quality": "Excellent",
+          "channel": 149,
+          "band": "5GHz",
+          "authentication": "Unknown"
+        },
+        {
+          "ssid": "CasaM",
+          "bssid": "40:ae:30:f3:9e:da",
+          "signal": 43,
+          "signal_dbm": -69.2,
+          "snr_db": 25.799999999999997,
+          "signal_quality": "Good",
+          "channel": 3,
+          "band": "2.4GHz",
+          "authentication": "Unknown"
+        },
+        {
+          "ssid": "CasaM_EXT",
+          "bssid": "62:61:b4:05:92:54",
+          "signal": 61,
+          "signal_dbm": -58.4,
+          "snr_db": 36.6,
+          "signal_quality": "Very Good",
+          "channel": 3,
+          "band": "2.4GHz",
+          "authentication": "Unknown"
+        },
+        {
+          "ssid": "Puma",
+          "bssid": "b8:dd:71:e3:9c:3a",
+          "signal": 90,
+          "signal_dbm": -35.0,
+          "snr_db": 60.0,
+          "signal_quality": "Excellent",
+          "channel": 1,
+          "band": "2.4GHz",
+          "authentication": "Unknown"
+        }
+      ],
+      "tests": {},
+      "all_network_tests": [
+        {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 99,
+          "timestamp": "2025-07-30T17:42:57.081659",
+          "tests": {
+            "ping": {
+              "success": true,
+              "avg_time": 16.75,
+              "min_time": 13,
+              "max_time": 22,
+              "packet_loss": "0%",
+              "raw_times": [
+                13,
+                17,
+                15,
+                22
+              ]
+            }
+          }
+        },
+        {
+          "ssid": "Puma",
+          "bssid": "b8:dd:71:e3:9c:3a",
+          "signal": 90,
+          "timestamp": "2025-07-30T17:43:12.148810",
+          "tests": {
+            "ping": {
+              "success": true,
+              "avg_time": 17.5,
+              "min_time": 14,
+              "max_time": 23,
+              "packet_loss": "0%",
+              "raw_times": [
+                16,
+                17,
+                23,
+                14
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "timestamp": "2025-07-30T17:43:22.223453",
+      "location": null,
+      "networks": [
+        {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 85,
+          "signal_dbm": -40.0,
+          "snr_db": 60.0,
+          "signal_quality": "Excellent",
+          "channel": 149,
+          "band": "5GHz",
+          "authentication": "Unknown"
+        },
+        {
+          "ssid": "CasaM_EXT",
+          "bssid": "62:61:b4:05:92:54",
+          "signal": 65,
+          "signal_dbm": -56.0,
+          "snr_db": 39.0,
+          "signal_quality": "Very Good",
+          "channel": 3,
+          "band": "2.4GHz",
+          "authentication": "Unknown"
+        },
+        {
+          "ssid": "CasaM",
+          "bssid": "40:ae:30:f3:9e:da",
+          "signal": 50,
+          "signal_dbm": -65.0,
+          "snr_db": 30.0,
+          "signal_quality": "Very Good",
+          "channel": 3,
+          "band": "2.4GHz",
+          "authentication": "Unknown"
+        },
+        {
+          "ssid": "Puma",
+          "bssid": "b8:dd:71:e3:9c:3a",
+          "signal": 99,
+          "signal_dbm": -30.5,
+          "snr_db": 64.5,
+          "signal_quality": "Excellent",
+          "channel": 1,
+          "band": "2.4GHz",
+          "authentication": "Unknown"
+        },
+        {
+          "ssid": "SSID8",
+          "bssid": "ce:29:bd:89:7e:09",
+          "signal": 18,
+          "signal_dbm": -84.9,
+          "snr_db": 15.099999999999994,
+          "signal_quality": "Fair",
+          "channel": 60,
+          "band": "5GHz",
+          "authentication": "Unknown"
+        },
+        {
+          "ssid": "ABEL-5GHz",
+          "bssid": "cc:29:bd:59:7e:09",
+          "signal": 20,
+          "signal_dbm": -83.5,
+          "snr_db": 16.5,
+          "signal_quality": "Fair",
+          "channel": 60,
+          "band": "5GHz",
+          "authentication": "Unknown"
+        }
+      ],
+      "tests": {
+        "ping": {
+          "success": true,
+          "avg_time": 12.75,
+          "min_time": 12,
+          "max_time": 13,
+          "packet_loss": "0%",
+          "raw_times": [
+            13,
+            13,
+            13,
+            12
+          ]
+        }
+      }
+    },
+    {
+      "id": 11,
+      "timestamp": "2025-07-30T17:43:30.749160",
+      "location": null,
+      "networks": [
+        {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 85,
+          "signal_dbm": -40.0,
+          "snr_db": 60.0,
+          "signal_quality": "Excellent",
+          "channel": 149,
+          "band": "5GHz",
+          "authentication": "Unknown"
+        },
+        {
+          "ssid": "CasaM_EXT",
+          "bssid": "62:61:b4:05:92:54",
+          "signal": 65,
+          "signal_dbm": -56.0,
+          "snr_db": 39.0,
+          "signal_quality": "Very Good",
+          "channel": 3,
+          "band": "2.4GHz",
+          "authentication": "Unknown"
+        },
+        {
+          "ssid": "CasaM",
+          "bssid": "40:ae:30:f3:9e:da",
+          "signal": 50,
+          "signal_dbm": -65.0,
+          "snr_db": 30.0,
+          "signal_quality": "Very Good",
+          "channel": 3,
+          "band": "2.4GHz",
+          "authentication": "Unknown"
+        },
+        {
+          "ssid": "Puma",
+          "bssid": "b8:dd:71:e3:9c:3a",
+          "signal": 99,
+          "signal_dbm": -30.5,
+          "snr_db": 64.5,
+          "signal_quality": "Excellent",
+          "channel": 1,
+          "band": "2.4GHz",
+          "authentication": "Unknown"
+        },
+        {
+          "ssid": "SSID8",
+          "bssid": "ce:29:bd:89:7e:09",
+          "signal": 18,
+          "signal_dbm": -84.9,
+          "snr_db": 15.099999999999994,
+          "signal_quality": "Fair",
+          "channel": 60,
+          "band": "5GHz",
+          "authentication": "Unknown"
+        },
+        {
+          "ssid": "ABEL-5GHz",
+          "bssid": "cc:29:bd:59:7e:09",
+          "signal": 20,
+          "signal_dbm": -83.5,
+          "snr_db": 16.5,
+          "signal_quality": "Fair",
+          "channel": 60,
+          "band": "5GHz",
+          "authentication": "Unknown"
+        }
+      ],
+      "tests": {},
+      "all_network_tests": [
+        {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 85,
+          "timestamp": "2025-07-30T17:43:38.594134",
+          "tests": {
+            "ping": {
+              "success": true,
+              "avg_time": 14.5,
+              "min_time": 12,
+              "max_time": 21,
+              "packet_loss": "0%",
+              "raw_times": [
+                12,
+                21,
+                12,
+                13
+              ]
+            }
+          }
+        },
+        {
+          "ssid": "Puma",
+          "bssid": "b8:dd:71:e3:9c:3a",
+          "signal": 99,
+          "timestamp": "2025-07-30T17:44:23.118173",
+          "tests": {
+            "ping": {
+              "success": true,
+              "avg_time": 14.25,
+              "min_time": 12,
+              "max_time": 16,
+              "packet_loss": "0%",
+              "raw_times": [
+                14,
+                16,
+                15,
+                12
+              ]
+            }
+          }
+        }
+      ]
     }
   ],
   "ap_data": {},
   "network_test_results": {},
   "id_mapping": {},
-  "next_measurement_id": 9,
-  "last_updated": "2025-07-29T18:01:34.605490"
+  "next_measurement_id": 12,
+  "last_updated": "2025-07-30T17:51:43.498694"
 }
