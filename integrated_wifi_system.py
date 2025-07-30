@@ -334,20 +334,28 @@ class NetworkTester:
 
 
 class WiFiScanner:
-    """Enhanced WiFi scanner with connection capabilities."""
+    """Enhanced WiFi scanner with connection capabilities and SSID filtering."""
     
     def __init__(self):
         self.last_scan = 0
         self.cached_networks = []
         self.tested_networks = set()
+        # NUEVO: Cache de APs por SSID+BSSID
+        self.ap_cache = {}  # Key: "SSID_BSSID", Value: AP data
     
     def scan_networks(self, force_refresh=False) -> List[Dict]:
         """
-        Scan WiFi networks - VERSIÓN PARA ESPAÑOL/INGLÉS
-        debería Funcionar con ambos formatos de salida de netsh
+        Scan WiFi networks - VERSIÓN MEJORADA CON FILTRADO POR SSID
+        Funciona con español/inglés y filtra solo SSIDs monitoreados
         """
         try:
             print("🔄 Escaneando redes WiFi...")
+            
+            # Mostrar qué SSIDs estamos monitoreando
+            if hasattr(Config, 'MONITORED_SSIDS') and Config.MONITORED_SSIDS:
+                print(f"📋 Monitoreando SSIDs: {', '.join(Config.MONITORED_SSIDS)}")
+            else:
+                print(f"📋 Monitoreando TODAS las redes")
             
             # Force refresh - comando correcto
             try:
@@ -359,7 +367,7 @@ class WiFiScanner:
             
             time.sleep(1)
             
-            # Intentar comando con mode=bssid primero
+            # FORZAR mode=bssid para obtener BSSID (crítico para múltiples APs)
             result = subprocess.run(
                 ["netsh", "wlan", "show", "networks", "mode=bssid"],
                 capture_output=True,
@@ -380,20 +388,23 @@ class WiFiScanner:
                     timeout=20,
                     encoding='cp1252'
                 )
-            
-            if result.returncode != 0:
-                print(f"❌ Error en netsh: {result.stderr}")
-                return []
+                
+                if result.returncode != 0:
+                    print(f"❌ Error en netsh: {result.stderr}")
+                    return []
+                else:
+                    print("⚠️ Usando comando básico - no se obtendrán BSSIDs individuales")
             
             # Debug: mostrar primeras líneas
             lines = result.stdout.splitlines()
             print(f"📋 Procesando {len(lines)} líneas de salida...")
             
-            # Mostrar algunas líneas para debug
-            print("🔍 Primeras líneas de netsh:")
-            for i, line in enumerate(lines[:10]):
-                if line.strip():
-                    print(f"   {i:2d}: '{line.strip()}'")
+            # Mostrar algunas líneas para debug (solo si es desarrollo)
+            if hasattr(Config, 'DEBUG_MODE') and Config.DEBUG_MODE:
+                print("🔍 Primeras líneas de netsh:")
+                for i, line in enumerate(lines[:10]):
+                    if line.strip():
+                        print(f"   {i:2d}: '{line.strip()}'")
             
             networks = []
             current_network = {}
@@ -404,13 +415,18 @@ class WiFiScanner:
                 # DETECTAR INICIO DE NUEVA RED
                 # Patrones: "SSID 1 : NombreRed" o "SSID : NombreRed"
                 if re.match(r'^SSID\s*\d*\s*:', line, re.IGNORECASE):
-                    # Guardar red anterior si existe
-                    if current_network.get("ssid") and current_network["ssid"] != "":
+                    # Guardar red anterior si existe y es relevante
+                    if self._should_save_network(current_network):
                         # Calcular métricas adicionales
                         self._calculate_signal_metrics(current_network)
                         current_network["is_saved"] = self._is_network_saved(current_network["ssid"])
+                        # Generar clave única AP
+                        ap_key = f"{current_network['ssid']}_{current_network['bssid']}"
+                        current_network["ap_key"] = ap_key
+                        self.ap_cache[ap_key] = current_network.copy()
                         networks.append(current_network.copy())
-                        print(f"   ✅ Red guardada: '{current_network['ssid']}' - {current_network.get('signal_percentage', 0)}% - Canal {current_network.get('channel', 0)}")
+                        
+                        print(f"   ✅ AP guardado: '{current_network['ssid']}' ({current_network['bssid'][-8:] if current_network['bssid'] != 'Unknown' else 'No-BSSID'}) - {current_network.get('signal_percentage', 0)}% - Canal {current_network.get('channel', 0)}")
                     
                     # Extraer SSID
                     ssid_match = re.search(r'SSID\s*\d*\s*:\s*(.*)$', line, re.IGNORECASE)
@@ -418,9 +434,9 @@ class WiFiScanner:
                         ssid_name = ssid_match.group(1).strip()
                         # Si SSID está vacío, crear nombre
                         if not ssid_name:
-                            ssid_name = f"Red_Oculta_{len(networks)+1}"
+                            ssid_name = f"Hidden_Network_{len(networks)+1}"
                     else:
-                        ssid_name = f"Red_Desconocida_{len(networks)+1}"
+                        ssid_name = f"Unknown_Network_{len(networks)+1}"
                     
                     # Inicializar nueva red
                     current_network = {
@@ -440,10 +456,14 @@ class WiFiScanner:
                         "max_rate_mbps": None,
                         "is_open": False,
                         "is_saved": False,
-                        "timestamp": datetime.now().isoformat()
+                        "timestamp": datetime.now().isoformat(),
+                        "ap_key": None
                     }
                     
-                    print(f"   🆕 Nueva red encontrada: '{ssid_name}'")
+                    # Solo mostrar debug si es una red que monitoreamos
+                    if self._should_monitor_ssid(ssid_name):
+                        print(f"   🎯 SSID monitoreado encontrado: '{ssid_name}'")
+                    
                     continue
                 
                 # PROCESAR ATRIBUTOS DE LA RED ACTUAL
@@ -453,10 +473,11 @@ class WiFiScanner:
                         key = key.strip().lower()
                         value = value.strip()
                         
-                        # BSSID (MAC address del AP)
+                        # BSSID (MAC address del AP) - CRÍTICO
                         if "bssid" in key:
                             current_network["bssid"] = value
-                            print(f"     📍 BSSID: {value}")
+                            if self._should_monitor_ssid(current_network["ssid"]):
+                                print(f"     📍 BSSID: {value}")
                         
                         # SEÑAL - Manejo robusto
                         elif any(term in key for term in ["señal", "signal", "senal", "se¤al"]):
@@ -467,7 +488,8 @@ class WiFiScanner:
                                 signal_pct = int(percentage_match.group(1))
                                 current_network["signal_percentage"] = signal_pct
                                 current_network["signal_dbm"] = self._percentage_to_dbm(signal_pct)
-                                print(f"     📶 Señal: {signal_pct}% ({current_network['signal_dbm']:.1f} dBm)")
+                                if self._should_monitor_ssid(current_network["ssid"]):
+                                    print(f"     📶 Señal: {signal_pct}% ({current_network['signal_dbm']:.1f} dBm)")
                             else:
                                 # Buscar solo números sin %
                                 number_match = re.search(r'(\d+)', value)
@@ -475,7 +497,8 @@ class WiFiScanner:
                                     signal_pct = int(number_match.group(1))
                                     current_network["signal_percentage"] = signal_pct
                                     current_network["signal_dbm"] = self._percentage_to_dbm(signal_pct)
-                                    print(f"     📶 Señal: {signal_pct}% (estimado)")
+                                    if self._should_monitor_ssid(current_network["ssid"]):
+                                        print(f"     📶 Señal: {signal_pct}% (estimado)")
                         
                         # CANAL
                         elif any(term in key for term in ["canal", "channel"]):
@@ -488,7 +511,8 @@ class WiFiScanner:
                                     current_network["band"] = "2.4GHz"
                                 else:
                                     current_network["band"] = "5GHz"
-                                print(f"     📡 Canal: {channel_num} ({current_network['band']})")
+                                if self._should_monitor_ssid(current_network["ssid"]):
+                                    print(f"     📡 Canal: {channel_num} ({current_network['band']})")
                         
                         # AUTENTICACIÓN - Manejo español/inglés
                         elif any(term in key for term in ["autenticación", "authentication", "autenticacion", "autenticaci¢n"]):
@@ -496,12 +520,14 @@ class WiFiScanner:
                             # Detectar redes abiertas
                             if any(open_term in value.lower() for open_term in ["abierta", "open", "ninguna", "none"]):
                                 current_network["is_open"] = True
-                            print(f"     🔐 Autenticación: {value}")
+                            if self._should_monitor_ssid(current_network["ssid"]):
+                                print(f"     🔐 Autenticación: {value}")
                         
                         # CIFRADO - Manejo español/inglés  
                         elif any(term in key for term in ["cifrado", "encryption", "cipher"]):
                             current_network["encryption"] = value
-                            print(f"     🔒 Cifrado: {value}")
+                            if self._should_monitor_ssid(current_network["ssid"]):
+                                print(f"     🔒 Cifrado: {value}")
                         
                         # TIPO DE RADIO
                         elif any(term in key for term in ["tipo de radio", "radio type", "tipo radio"]):
@@ -522,52 +548,66 @@ class WiFiScanner:
                             elif "802.11a" in value:
                                 current_network["channel_width"] = "20 MHz"
                                 current_network["max_rate_mbps"] = 54
-                            print(f"     📻 Tipo: {value}")
+                            if self._should_monitor_ssid(current_network["ssid"]):
+                                print(f"     📻 Tipo: {value}")
                         
                         # TIPO DE RED (Infraestructura/Ad-hoc)
                         elif any(term in key for term in ["tipo de red", "network type", "tipo red"]):
                             current_network["network_type"] = value
-                            print(f"     🏗️ Tipo de red: {value}")
+                            if self._should_monitor_ssid(current_network["ssid"]):
+                                print(f"     🏗️ Tipo de red: {value}")
                     
                     except ValueError:
                         # Línea mal formateada, ignorar
                         continue
                     except Exception as e:
-                        print(f"     ⚠️ Error procesando línea '{line}': {e}")
+                        if hasattr(Config, 'DEBUG_MODE') and Config.DEBUG_MODE:
+                            print(f"     ⚠️ Error procesando línea '{line}': {e}")
                         continue
             
-            # Guardar última red si existe
-            if current_network.get("ssid") and current_network["ssid"] != "":
+            # Guardar última red si existe y es relevante
+            if self._should_save_network(current_network):
                 self._calculate_signal_metrics(current_network)
                 current_network["is_saved"] = self._is_network_saved(current_network["ssid"])
+                ap_key = f"{current_network['ssid']}_{current_network['bssid']}"
+                current_network["ap_key"] = ap_key
+                self.ap_cache[ap_key] = current_network.copy()
                 networks.append(current_network)
-                print(f"   ✅ Última red guardada: '{current_network['ssid']}' - {current_network.get('signal_percentage', 0)}%")
+                print(f"   ✅ Último AP guardado: '{current_network['ssid']}' ({current_network['bssid'][-8:] if current_network['bssid'] != 'Unknown' else 'No-BSSID'}) - {current_network.get('signal_percentage', 0)}%")
             
-            # Filtrar redes válidas
-            valid_networks = []
-            for net in networks:
-                if net.get("ssid") and net["ssid"] != "" and not net["ssid"].startswith("Red_Desconocida"):
-                    valid_networks.append(net)
-            
+            # ESTADÍSTICAS FINALES
             print(f"\n🎯 RESUMEN DE ESCANEO:")
             print(f"   📊 Total líneas procesadas: {len(lines)}")
-            print(f"   📡 Redes encontradas: {len(valid_networks)}")
+            print(f"   📡 APs monitoreados encontrados: {len(networks)}")
             
-            if valid_networks:
-                print(f"   📋 Lista de redes:")
-                for i, net in enumerate(valid_networks, 1):
-                    signal_info = f"{net['signal_percentage']}%" if net['signal_percentage'] > 0 else "Sin señal"
-                    channel_info = f"Canal {net['channel']}" if net['channel'] > 0 else "Canal desconocido"
-                    print(f"      {i}. 📶 {net['ssid']} - {signal_info} - {channel_info} - {net['authentication']}")
+            if networks:
+                print(f"   📋 Detalle de APs:")
+                ssid_counts = {}
+                for net in networks:
+                    ssid = net['ssid']
+                    ssid_counts[ssid] = ssid_counts.get(ssid, 0) + 1
+                    
+                    signal_info = f"{net['signal_percentage']}%" if net['signal_percentage'] > 0 else "0%"
+                    channel_info = f"Ch{net['channel']}" if net['channel'] > 0 else "Ch?"
+                    bssid_short = net['bssid'][-8:] if net['bssid'] != "Unknown" else "No-BSSID"
+                    
+                    print(f"      📶 {net['ssid']} ({bssid_short}) - {signal_info} - {channel_info} - {net['band']} - {net['authentication']}")
+                
+                # Mostrar conteo por SSID
+                if len(ssid_counts) > 1 or any(count > 1 for count in ssid_counts.values()):
+                    print(f"   📊 APs por SSID:")
+                    for ssid, count in ssid_counts.items():
+                        print(f"      {ssid}: {count} AP(s)")
+                        
             else:
-                print("   ❌ No se encontraron redes válidas")
-                print("   🔍 Verificar:")
-                print("      - Permisos de administrador")
-                print("      - Adaptador WiFi habilitado")
-                print("      - Proximidad a redes WiFi")
+                print("   ❌ No se encontraron APs de los SSIDs monitoreados")
+                if hasattr(Config, 'MONITORED_SSIDS') and Config.MONITORED_SSIDS:
+                    print(f"   🔍 Verificar que estos SSIDs estén activos: {Config.MONITORED_SSIDS}")
+                else:
+                    print("   🔍 Verificar conectividad WiFi y permisos")
             
-            self.cached_networks = valid_networks
-            return valid_networks
+            self.cached_networks = networks
+            return networks
             
         except subprocess.TimeoutExpired:
             print("❌ Timeout ejecutando netsh wlan")
@@ -577,6 +617,31 @@ class WiFiScanner:
             import traceback
             traceback.print_exc()
             return []
+    
+    def _should_monitor_ssid(self, ssid: str) -> bool:
+        """Verificar si un SSID debe ser monitoreado."""
+        if not hasattr(Config, 'MONITORED_SSIDS'):
+            return True  # Si no hay configuración, monitorear todo
+        
+        if hasattr(Config, 'MONITOR_ALL_NETWORKS') and Config.MONITOR_ALL_NETWORKS:
+            return True
+        
+        if not Config.MONITORED_SSIDS:
+            return True  # Lista vacía = monitorear todo
+        
+        return ssid in Config.MONITORED_SSIDS
+    
+    def _should_save_network(self, network: dict) -> bool:
+        """Verificar si una red completa debe ser guardada."""
+        if not network.get("ssid") or network["ssid"].startswith(("Hidden_Network_", "Unknown_Network_")):
+            return False
+        
+        # Advertir si no tiene BSSID pero permitir guardado
+        if network.get("bssid") == "Unknown":
+            if self._should_monitor_ssid(network["ssid"]):
+                print(f"   ⚠️ Red {network['ssid']} sin BSSID - múltiples APs no se distinguirán")
+        
+        return self._should_monitor_ssid(network["ssid"])
     
     def _percentage_to_dbm(self, percentage: int) -> float:
         """Convert signal percentage to dBm with better accuracy."""
@@ -619,6 +684,7 @@ class WiFiScanner:
                 network["signal_quality"] = "Fair"
             else:
                 network["signal_quality"] = "Poor"
+    
     def display_network_details(self, network: Dict):
         """Display detailed network information."""
         print(f"\n📡 {network['ssid']} ({network['bssid']})")
@@ -629,6 +695,8 @@ class WiFiScanner:
         print(f"   Auth: {network['authentication']}")
         print(f"   Encryption: {network['encryption']}")
         print(f"   PHY: {network['phy_type']}")
+        if network.get('ap_key'):
+            print(f"   AP Key: {network['ap_key']}")
     
     def _is_network_saved(self, ssid: str) -> bool:
         """Check if a network profile exists."""
@@ -704,7 +772,7 @@ class WiFiScanner:
                         info["connection_state"] = value
                     elif "ssid" in key and "bssid" not in key:
                         info["ssid"] = value
-                    elif "bssid" in key:
+                    elif any(term in key for term in ["ap bssid", "bssid"]):
                         info["bssid"] = value
                         info["ap_mac"] = value
                     elif any(term in key for term in ["network type", "tipo de red"]):
@@ -718,7 +786,11 @@ class WiFiScanner:
                     elif any(term in key for term in ["connection mode", "modo de conexión", "modo de conexion", "modo de conexi¢n"]):
                         info["connection_mode"] = value
                     elif any(term in key for term in ["channel", "canal"]):
-                        info["channel"] = value
+                        # Extraer solo el número del canal
+                        match = re.search(r'(\d+)', value)
+                        if match:
+                            info["channel"] = match.group(1)
+                            info["channel_raw"] = value
                     elif any(term in key for term in ["receive rate", "velocidad de recepción", "velocidad de recepcion", "velocidad de recepci¢n"]):
                         info["receive_rate"] = value
                     elif any(term in key for term in ["transmit rate", "velocidad de transmisión", "velocidad de transmision", "velocidad de transmisi¢n"]):
@@ -729,11 +801,14 @@ class WiFiScanner:
                         match = re.search(r'(\d+)%', value)
                         if match:
                             info["signal_percentage"] = int(match.group(1))
+                            # Calcular dBm
+                            info["signal_dbm"] = self._percentage_to_dbm(info["signal_percentage"])
                         else:
                             # If no %, look for numbers only
                             match = re.search(r'(\d+)', value)
                             if match:
                                 info["signal_percentage"] = int(match.group(1))
+                                info["signal_dbm"] = self._percentage_to_dbm(info["signal_percentage"])
             
             # Check if we got valid connection info
             if 'ssid' not in info:
@@ -743,7 +818,6 @@ class WiFiScanner:
             
         except Exception as e:
             return {"error": f"Error getting connection info: {str(e)}"}
-
 
 class HeatmapManager:
     """Manages persistent heatmaps with network testing."""

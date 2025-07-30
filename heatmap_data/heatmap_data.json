@@ -1726,11 +1726,217 @@
           }
         }
       ]
+    },
+    {
+      "id": 14,
+      "timestamp": "2025-07-30T18:26:13.625836",
+      "location": null,
+      "networks": [
+        {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 99,
+          "signal_dbm": -30.5,
+          "snr_db": 69.5,
+          "signal_quality": "Excellent",
+          "channel": 149,
+          "band": "5GHz",
+          "authentication": "WPA2-Personal"
+        },
+        {
+          "ssid": "Puma",
+          "bssid": "b8:dd:71:e3:9c:3a",
+          "signal": 86,
+          "signal_dbm": -39.0,
+          "snr_db": 56.0,
+          "signal_quality": "Excellent",
+          "channel": 1,
+          "band": "2.4GHz",
+          "authentication": "WPA2-Personal"
+        }
+      ],
+      "tests": {
+        "iperf_suite": {
+          "success": true,
+          "server": "iperf.he.net",
+          "tests": {
+            "udp_5mbps": {
+              "target_mbps": 5.0,
+              "actual_mbps": 4.94934,
+              "jitter_ms": 5.85725,
+              "lost_packets": 2,
+              "lost_percent": 0.26455
+            }
+          }
+        }
+      },
+      "all_network_tests": [
+        {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 99,
+          "timestamp": "2025-07-30T18:26:21.696808",
+          "tests": {
+            "ping": {
+              "success": true,
+              "avg_time": 15.75,
+              "min_time": 13,
+              "max_time": 21,
+              "packet_loss": "0%",
+              "raw_times": [
+                13,
+                15,
+                14,
+                21
+              ]
+            },
+            "speedtest": {
+              "success": true,
+              "download_mbps": 54.591168,
+              "upload_mbps": 5.224118,
+              "ping_ms": 3.647,
+              "server": "Antel",
+              "raw_data": {
+                "type": "result",
+                "timestamp": "2025-07-30T21:26:49Z",
+                "ping": {
+                  "jitter": 0.187,
+                  "latency": 3.647,
+                  "low": 3.489,
+                  "high": 3.938
+                },
+                "download": {
+                  "bandwidth": 54591168,
+                  "bytes": 384938616,
+                  "elapsed": 7115,
+                  "latency": {
+                    "iqm": 161.221,
+                    "low": 8.297,
+                    "high": 339.046,
+                    "jitter": 47.935
+                  }
+                },
+                "upload": {
+                  "bandwidth": 5224118,
+                  "bytes": 43000130,
+                  "elapsed": 8302,
+                  "latency": {
+                    "iqm": 462.983,
+                    "low": 19.799,
+                    "high": 832.922,
+                    "jitter": 94.901
+                  }
+                },
+                "packetLoss": 0,
+                "isp": "Antel Uruguay",
+                "interface": {
+                  "internalIp": "2800:a4:1c8b:d500:ade7:cf79:4fca:83c3",
+                  "name": "",
+                  "macAddr": "D8:FC:93:BC:E1:16",
+                  "isVpn": false,
+                  "externalIp": "2800:a4:1c8b:d500:ade7:cf79:4fca:83c3"
+                },
+                "server": {
+                  "id": 40741,
+                  "host": "testdevelocidad.com.uy",
+                  "port": 8080,
+                  "name": "Antel",
+                  "location": "Montevideo",
+                  "country": "Uruguay",
+                  "ip": "2800:a0:1:c828:1e00:1800:0:8"
+                },
+                "result": {
+                  "id": "01e20d64-2769-4bf9-92bb-512a38f01242",
+                  "url": "https://www.speedtest.net/result/c/01e20d64-2769-4bf9-92bb-512a38f01242",
+                  "persisted": true
+                }
+              }
+            }
+          }
+        },
+        {
+          "ssid": "Puma",
+          "bssid": "b8:dd:71:e3:9c:3a",
+          "signal": 86,
+          "timestamp": "2025-07-30T18:27:51.379669",
+          "tests": {
+            "ping": {
+              "success": true,
+              "avg_time": 14.5,
+              "min_time": 13,
+              "max_time": 17,
+              "packet_loss": "0%",
+              "raw_times": [
+                17,
+                13,
+                15,
+                13
+              ]
+            },
+            "speedtest": {
+              "success": true,
+              "download_mbps": 3.410391,
+              "upload_mbps": 2.474335,
+              "ping_ms": 3.994,
+              "server": "Antel",
+              "raw_data": {
+                "type": "result",
+                "timestamp": "2025-07-30T21:29:51Z",
+                "ping": {
+                  "jitter": 0.727,
+                  "latency": 3.994,
+                  "low": 2.96,
+                  "high": 4.746
+                },
+                "download": {
+                  "bandwidth": 3410391,
+                  "bytes": 32313256,
+                  "elapsed": 9703,
+                  "latency": {
+                    "iqm": 321.985,
+                    "low": 39.536,
+                    "high": 723.153,
+                    "jitter": 81.606
+                  }
+                },
+                "upload": {
+                  "bandwidth": 2474335,
+                  "bytes": 10439718,
+                  "elapsed": 4209
+                },
+                "packetLoss": 0,
+                "isp": "Antel Uruguay",
+                "interface": {
+                  "internalIp": "2800:a4:1c8b:d500:1829:c305:6d3:f1e8",
+                  "name": "",
+                  "macAddr": "D8:FC:93:BC:E1:16",
+                  "isVpn": false,
+                  "externalIp": "2800:a4:1c8b:d500:1829:c305:6d3:f1e8"
+                },
+                "server": {
+                  "id": 40741,
+                  "host": "testdevelocidad.com.uy",
+                  "port": 8080,
+                  "name": "Antel",
+                  "location": "Montevideo",
+                  "country": "Uruguay",
+                  "ip": "2800:a0:1:c828:1e00:1800:0:8"
+                },
+                "result": {
+                  "id": "2e499dfe-0091-45b2-91be-9484fa2cb53d",
+                  "url": "https://www.speedtest.net/result/c/2e499dfe-0091-45b2-91be-9484fa2cb53d",
+                  "persisted": true
+                }
+              }
+            }
+          }
+        }
+      ]
     }
   ],
   "ap_data": {},
   "network_test_results": {},
   "id_mapping": {},
-  "next_measurement_id": 14,
-  "last_updated": "2025-07-30T18:02:54.036522"
+  "next_measurement_id": 15,
+  "last_updated": "2025-07-30T18:30:17.163036"
 }
