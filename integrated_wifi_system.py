@@ -45,7 +45,7 @@ def main():
     if custom_server:
         manager.tester.set_iperf_server(custom_server)
     else:
-        print("✓ Using default public server: iperf.he.net")
+        print("✓ Using server :" + Config.IPERF_SERVER)
     
     # Ask about local server only if needed
     if custom_server == "127.0.0.1" or custom_server == "localhost":

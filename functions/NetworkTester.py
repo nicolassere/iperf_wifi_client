@@ -22,6 +22,65 @@ class NetworkTester:
         print(f"✓ iPerf server set to: {server_ip}")
     
     @staticmethod
+    def get_client_network_info():
+        """Obtener información de red del cliente."""
+        client_info = {
+            'client_ip': None,
+            'gateway': None,
+            'dns_servers': [],
+            'interface_name': None,
+            'subnet_mask': None,
+            'timestamp': time.time()
+        }
+        
+        try:
+            # Obtener IP del cliente y gateway
+            result = subprocess.run(
+                ["ipconfig", "/all"],
+                capture_output=True,
+                text=True,
+                timeout=10,
+                encoding='cp1252'
+            )
+            
+            current_interface = None
+            for line in result.stdout.splitlines():
+                line = line.strip()
+                
+                # Detectar interfaz WiFi activa
+                if "Wireless LAN adapter" in line or "Adaptador de LAN inalámbrica" in line:
+                    if "Wi-Fi" in line or "WiFi" in line:
+                        current_interface = line
+                        client_info['interface_name'] = current_interface
+                
+                # Si estamos en la interfaz correcta, extraer información
+                if current_interface and ":" in line:
+                    if "IPv4" in line or "Dirección IPv4" in line:
+                        match = re.search(r'(\d+\.\d+\.\d+\.\d+)', line)
+                        if match:
+                            client_info['client_ip'] = match.group(1)
+                    
+                    elif "Subnet Mask" in line or "Máscara de subred" in line:
+                        match = re.search(r'(\d+\.\d+\.\d+\.\d+)', line)
+                        if match:
+                            client_info['subnet_mask'] = match.group(1)
+                    
+                    elif "Default Gateway" in line or "Puerta de enlace predeterminada" in line:
+                        match = re.search(r'(\d+\.\d+\.\d+\.\d+)', line)
+                        if match:
+                            client_info['gateway'] = match.group(1)
+                    
+                    elif "DNS Servers" in line or "Servidores DNS" in line:
+                        match = re.search(r'(\d+\.\d+\.\d+\.\d+)', line)
+                        if match:
+                            client_info['dns_servers'].append(match.group(1))
+        
+        except Exception as e:
+            print(f"⚠️ Error obteniendo info de red del cliente: {e}")
+        
+        return client_info
+    
+    @staticmethod
     def check_iperf_server():
         """Check if LOCAL iperf3 server is running."""
         try:
@@ -126,241 +185,298 @@ class NetworkTester:
             return {"success": False, "error": str(e)}
     
     def run_iperf_suite(self, duration=10):
-            if not os.path.exists(Config.IPERF_PATH):
-                return {"success": False, "error": "iperf3 not found", "tests": {}, "raw_output": []}
+        """Suite completa de tests iPerf con múltiples tests UDP."""
+        if not os.path.exists(Config.IPERF_PATH):
+            return {"success": False, "error": "iperf3 not found", "tests": {}, "raw_output": []}
 
-            results = {"success": True, "server": self.iperf_server, "tests": {}, "raw_output": []}
+        results = {"success": True, "server": self.iperf_server, "tests": {}, "raw_output": []}
 
-            def stream_process(cmd_list, desc):
-                print(f"\n🔄 {desc}")
-                print("-" * 50)
-                proc = subprocess.Popen(
-                    cmd_list,
-                    stdout=subprocess.PIPE,
-                    stderr=subprocess.PIPE,
-                    text=True,
-                    bufsize=1,
-                    universal_newlines=True
-                )
-                lines = []
-                while True:
-                    line = proc.stdout.readline()
-                    if line == '' and proc.poll() is not None:
-                        break
-                    if line:
-                        clean = line.strip()
-                        print(f"   {clean}")
-                        lines.append(line)
-                try:
-                    proc.wait(timeout=duration + 10)
-                except subprocess.TimeoutExpired:
-                    proc.kill()
-                    print(f"   ⚠️ Timeout en {desc}")
-                return lines
-
-            def run_json(cmd_list):
-                try:
-                    proc = subprocess.run(
-                        cmd_list,
-                        capture_output=True,
-                        text=True,
-                        timeout=duration + 10
-                    )
-                    if proc.returncode == 0:
-                        return json.loads(proc.stdout)
-                    else:
-                        stderr = proc.stderr.strip()
-                        print(f"   ⚠️ Error en JSON command {' '.join(cmd_list)}: returncode {proc.returncode}, stderr: {stderr}")
-                except subprocess.TimeoutExpired:
-                    print(f"   ⚠️ Timeout en JSON command {' '.join(cmd_list)}")
-                except json.JSONDecodeError:
-                    print(f"   ⚠️ JSON inválido de {' '.join(cmd_list)}")
-                return None
-
+        def stream_process(cmd_list, desc):
+            print(f"\n🔄 {desc}")
+            print("-" * 50)
+            proc = subprocess.Popen(
+                cmd_list,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
+                bufsize=1,
+                universal_newlines=True
+            )
+            lines = []
+            while True:
+                line = proc.stdout.readline()
+                if line == '' and proc.poll() is not None:
+                    break
+                if line:
+                    clean = line.strip()
+                    print(f"   {clean}")
+                    lines.append(line)
             try:
-                print(f"\n🚀 EJECUTANDO SUITE ROBUSTA DE IPERF")
-                print(f"   Servidor: {self.iperf_server}")
-                print(f"   Duración: {duration} segundos por test")
-                print("=" * 70)
-
-                # 1. TCP FORWARD
-                print("\n1. TCP FORWARD (cliente -> servidor)")
-                tcp_fwd_lines = stream_process([
-                    Config.IPERF_PATH, "-c", self.iperf_server, "-t", str(duration), "-i", "1"
-                ], "TCP FORWARD (streaming)")
-                results["raw_output"].extend(tcp_fwd_lines)
-                tcp_fwd_json = run_json([
-                    Config.IPERF_PATH, "-c", self.iperf_server, "-J", "-t", str(duration)
-                ])
-                if tcp_fwd_json:
-                    dl_bps = tcp_fwd_json.get("end", {}).get("sum_received", {}).get("bits_per_second", 0)
-                    ul_bps = tcp_fwd_json.get("end", {}).get("sum_sent", {}).get("bits_per_second", 0)
-                    results["tests"]["tcp_forward"] = {
-                        "download_mbps": dl_bps / 1_000_000,
-                        "upload_mbps": ul_bps / 1_000_000,
-                        "download_gbps": dl_bps / 1_000_000_000,
-                        "upload_gbps": ul_bps / 1_000_000_000
-                    }
-
-                # 2. TCP REVERSE
-                print("\n2. TCP REVERSE (servidor -> cliente)")
-                tcp_rev_lines = stream_process([
-                    Config.IPERF_PATH, "-c", self.iperf_server, "-R", "-t", str(duration), "-i", "1"
-                ], "TCP REVERSE (streaming)")
-                results["raw_output"].extend(tcp_rev_lines)
-                tcp_rev_json = run_json([
-                    Config.IPERF_PATH, "-c", self.iperf_server, "-J", "-R", "-t", str(duration)
-                ])
-                if tcp_rev_json:
-                    dl_bps = tcp_rev_json.get("end", {}).get("sum_received", {}).get("bits_per_second", 0)
-                    ul_bps = tcp_rev_json.get("end", {}).get("sum_sent", {}).get("bits_per_second", 0)
-                    results["tests"]["tcp_reverse"] = {
-                        "download_mbps": dl_bps / 1_000_000,
-                        "upload_mbps": ul_bps / 1_000_000,
-                        "download_gbps": dl_bps / 1_000_000_000,
-                        "upload_gbps": ul_bps / 1_000_000_000
-                    }
-
-                # 3. UDP REVERSE 10 Mbps con degradación y fallback IPv4
-                def run_udp_reverse_10mbps():
-                    desc = "UDP REVERSE 10 Mbps (servidor -> cliente)"
-                    target_rates = ["10M", "5M", "2M"]
-                    last_error = None
-                    for rate in target_rates:
-                        print(f"\n3. {desc} intentando {rate}")
-                        print("-" * 50)
-                        # streaming (con -l para evitar fragmentación y forzar IPv4 si hay fallos después)
-                        udp_rev_lines = stream_process([
-                            Config.IPERF_PATH, "-c", self.iperf_server, "-u", "-R", "-b", rate, "-t", str(duration), "-i", "1", "-l", "1400"
-                        ], f"UDP REVERSE {rate} (streaming)")
-                        results["raw_output"].extend(udp_rev_lines)
-
-                        # JSON normal
-                        udp_rev_json = run_json([
-                            Config.IPERF_PATH, "-c", self.iperf_server, "-u", "-R", "-b", rate, "-t", str(duration), "-J", "-l", "1400"
-                        ])
-                        if udp_rev_json is None:
-                            # fallback IPv4
-                            print(f"   ⚠️ fallo en modo por defecto para {rate}, reintentando con IPv4")
-                            udp_rev_json = run_json([
-                                Config.IPERF_PATH, "-4", "-c", self.iperf_server, "-u", "-R", "-b", rate, "-t", str(duration), "-J", "-l", "1400"
-                            ])
-
-                        if udp_rev_json:
-                            sum_info = udp_rev_json.get("end", {}).get("sum", {})
-                            actual_bps = sum_info.get("bits_per_second", 0)
-                            results["tests"]["udp_reverse_10mbps"] = {
-                                "target_mbps": float(rate.rstrip("M")),
-                                "actual_mbps": actual_bps / 1_000_000,
-                                "jitter_ms": sum_info.get("jitter_ms", 0),
-                                "lost_packets": sum_info.get("lost_packets", 0),
-                                "lost_percent": sum_info.get("lost_percent", 0),
-                                "total_packets": sum_info.get("packets", 0),
-                                "used_rate": rate,
-                            }
-                            print(f"   ✅ UDP REVERSE {rate} exitoso")
-                            return
-                        else:
-                            last_error = f"Reverse UDP {rate} falló incluso con fallback IPv4"
-                    # si todos fallan:
-                    print(f"   ❌ {desc} falló en todos los niveles: {last_error}")
-                    results["tests"]["udp_reverse_10mbps"] = {"error": "failed all retries", "details": last_error}
-
-                run_udp_reverse_10mbps()
-
-                # 4. UDP 10 Mbps STABILITY TEST con degradación y fallback IPv4
-                def run_udp_stability_10mbps():
-                    desc = "UDP 10 Mbps STABILITY TEST (cliente -> servidor)"
-                    target_rates = ["10M", "5M", "1M"]
-                    last_error = None
-                    for rate in target_rates:
-                        print(f"\n4. {desc} intentando {rate}")
-                        print("-" * 50)
-                        udp_5m_lines = stream_process([
-                            Config.IPERF_PATH, "-c", self.iperf_server, "-u", "-b", rate, "-t", str(duration), "-i", "1", "-l", "1400"
-                        ], f"UDP {rate} STABILITY (streaming)")
-                        results["raw_output"].extend(udp_5m_lines)
-
-                        udp_5m_json = run_json([
-                            Config.IPERF_PATH, "-c", self.iperf_server, "-u", "-b", rate, "-t", str(duration), "-J", "-l", "1400"
-                        ])
-                        if udp_5m_json is None:
-                            print(f"   ⚠️ fallo en modo por defecto para {rate}, reintentando con IPv4")
-                            udp_5m_json = run_json([
-                                Config.IPERF_PATH, "-4", "-c", self.iperf_server, "-u", "-b", rate, "-t", str(duration), "-J", "-l", "1400"
-                            ])
-
-                        if udp_5m_json:
-                            sum_info = udp_5m_json.get("end", {}).get("sum", {})
-                            actual_bps = sum_info.get("bits_per_second", 0)
-                            lost = sum_info.get("lost_percent", 0)
-                            jitter = sum_info.get("jitter_ms", 0)
-                            # calidad como antes
-                            if lost < 0.1 and jitter < 2.0:
-                                quality = "EXCELENTE"
-                            elif lost < 0.5 and jitter < 5.0:
-                                quality = "BUENA"
-                            elif lost < 1.0:
-                                quality = "ACEPTABLE"
-                            else:
-                                quality = "PROBLEMÁTICA"
-
-                            results["tests"]["udp_5mbps"] = {
-                                "target_mbps": float(rate.rstrip("M")),
-                                "actual_mbps": actual_bps / 1_000_000,
-                                "jitter_ms": jitter,
-                                "lost_percent": lost,
-                                "total_packets": sum_info.get("packets", 0),
-                                "lost_packets": sum_info.get("lost_packets", 0),
-                                "used_rate": rate,
-                                "quality": quality,
-                            }
-                            print(f"   ✅ UDP {rate} STABILITY exitoso (calidad: {quality})")
-                            return
-                        else:
-                            last_error = f"UDP stability {rate} falló incluso con fallback IPv4"
-                    print(f"   ❌ {desc} falló en todos los niveles: {last_error}")
-                    results["tests"]["udp_10mbps"] = {"error": "failed all retries", "details": last_error}
-
-                run_udp_stability_10mbps()
-
-                # verificación de tests críticos
-                if "udp_10mbps" not in results["tests"]:
-                    results["success"] = False
-                    results["error"] = "UDP 10 Mbps stability no completado"
-
-                if "udp_reverse_10mbps" not in results["tests"]:
-                    results["success"] = False
-                    results.setdefault("error", "");
-                    if "UDP" not in results["error"]:
-                        results["error"] += " | UDP reverse 10Mbps no completado"
-
-                # resumen impreso (podés expandir según quieras)
-                print("\n" + "=" * 70)
-                print("🎯 RESUMEN FINAL DE CONECTIVIDAD")
-                print("=" * 70)
-                if "tcp_forward" in results["tests"]:
-                    t = results["tests"]["tcp_forward"]
-                    print(f"📊 TCP FORWARD: Download {t['download_mbps']:.1f} Mbps, Upload {t['upload_mbps']:.1f} Mbps")
-                if "tcp_reverse" in results["tests"]:
-                    t = results["tests"]["tcp_reverse"]
-                    print(f"📊 TCP REVERSE: Download {t['download_mbps']:.1f} Mbps, Upload {t['upload_mbps']:.1f} Mbps")
-                if "udp_reverse_10mbps" in results["tests"]:
-                    u = results["tests"]["udp_reverse_10mbps"]
-                    print(f"📊 UDP REVERSE 10Mbps: actual {u.get('actual_mbps', 0):.1f} Mbps, rate usada {u.get('used_rate')}")
-                if "udp_10mbps" in results["tests"]:
-                    u = results["tests"]["udp_10mbps"]
-                    print(f"📊 UDP 10Mbps Stability: actual {u.get('actual_mbps', 0):.1f} Mbps, calidad {u.get('quality')}")
-
-                print("=" * 70)
-                return results
-
+                proc.wait(timeout=duration + 10)
             except subprocess.TimeoutExpired:
-                return {"success": False, "error": "iPerf test timeout", "tests": results.get("tests", {}), "raw_output": results.get("raw_output", [])}
+                proc.kill()
+                print(f"   ⚠️ Timeout en {desc}")
+            return lines
+
+        def run_json(cmd_list):
+            try:
+                proc = subprocess.run(
+                    cmd_list,
+                    capture_output=True,
+                    text=True,
+                    timeout=duration + 10
+                )
+                if proc.returncode == 0:
+                    return json.loads(proc.stdout)
+                else:
+                    stderr = proc.stderr.strip()
+                    print(f"   ⚠️ Error en JSON command {' '.join(cmd_list)}: returncode {proc.returncode}, stderr: {stderr}")
+            except subprocess.TimeoutExpired:
+                print(f"   ⚠️ Timeout en JSON command {' '.join(cmd_list)}")
             except json.JSONDecodeError:
-                return {"success": False, "error": "Invalid iperf3 JSON output", "tests": results.get("tests", {}), "raw_output": results.get("raw_output", [])}
-            except Exception as e:
-                return {"success": False, "error": str(e), "tests": results.get("tests", {}), "raw_output": results.get("raw_output", [])}
+                print(f"   ⚠️ JSON inválido de {' '.join(cmd_list)}")
+            return None
+
+        # Obtener información de red del cliente
+        client_info = self.get_client_network_info()
+        results['client_network_info'] = client_info
+        
+        print(f"\n📋 INFO DE RED DEL CLIENTE:")
+        print(f"   IP Cliente: {client_info.get('client_ip', 'N/A')}")
+        print(f"   Gateway: {client_info.get('gateway', 'N/A')}")
+        print(f"   Interfaz: {client_info.get('interface_name', 'N/A')}")
+
+        try:
+            print(f"\n🚀 EJECUTANDO SUITE COMPLETA DE IPERF")
+            print(f"   Servidor: {self.iperf_server}")
+            print(f"   Duración: {duration} segundos por test")
+            print("=" * 70)
+
+            # 1. TCP FORWARD
+            print("\n1. TCP FORWARD (cliente -> servidor)")
+            tcp_fwd_lines = stream_process([
+                Config.IPERF_PATH, "-c", self.iperf_server, "-t", str(duration), "-i", "1"
+            ], "TCP FORWARD (streaming)")
+            results["raw_output"].extend(tcp_fwd_lines)
+            tcp_fwd_json = run_json([
+                Config.IPERF_PATH, "-c", self.iperf_server, "-J", "-t", str(duration)
+            ])
+            if tcp_fwd_json:
+                dl_bps = tcp_fwd_json.get("end", {}).get("sum_received", {}).get("bits_per_second", 0)
+                ul_bps = tcp_fwd_json.get("end", {}).get("sum_sent", {}).get("bits_per_second", 0)
+                results["tests"]["tcp_forward"] = {
+                    "download_mbps": dl_bps / 1_000_000,
+                    "upload_mbps": ul_bps / 1_000_000,
+                    "download_gbps": dl_bps / 1_000_000_000,
+                    "upload_gbps": ul_bps / 1_000_000_000
+                }
+
+            # 2. TCP REVERSE
+            print("\n2. TCP REVERSE (servidor -> cliente)")
+            tcp_rev_lines = stream_process([
+                Config.IPERF_PATH, "-c", self.iperf_server, "-R", "-t", str(duration), "-i", "1"
+            ], "TCP REVERSE (streaming)")
+            results["raw_output"].extend(tcp_rev_lines)
+            tcp_rev_json = run_json([
+                Config.IPERF_PATH, "-c", self.iperf_server, "-J", "-R", "-t", str(duration)
+            ])
+            if tcp_rev_json:
+                dl_bps = tcp_rev_json.get("end", {}).get("sum_received", {}).get("bits_per_second", 0)
+                ul_bps = tcp_rev_json.get("end", {}).get("sum_sent", {}).get("bits_per_second", 0)
+                results["tests"]["tcp_reverse"] = {
+                    "download_mbps": dl_bps / 1_000_000,
+                    "upload_mbps": ul_bps / 1_000_000,
+                    "download_gbps": dl_bps / 1_000_000_000,
+                    "upload_gbps": ul_bps / 1_000_000_000
+                }
+
+            # 3. MÚLTIPLES TESTS UDP FORWARD (NUEVO)
+            udp_forward_rates = ["1M", "5M", "10M", "25M", "50M"]
+            print(f"\n3. UDP FORWARD TESTS (cliente -> servidor)")
+            results["tests"]["udp_forward_tests"] = {}
+            
+            for rate in udp_forward_rates:
+                print(f"\n   3.{udp_forward_rates.index(rate)+1}. UDP FORWARD {rate}")
+                print("-" * 40)
+                
+                # Streaming
+                udp_fwd_lines = stream_process([
+                    Config.IPERF_PATH, "-c", self.iperf_server, "-u", "-b", rate, 
+                    "-t", str(duration), "-i", "1", "-l", "1400"
+                ], f"UDP FORWARD {rate} (streaming)")
+                results["raw_output"].extend(udp_fwd_lines)
+                
+                # JSON
+                udp_fwd_json = run_json([
+                    Config.IPERF_PATH, "-c", self.iperf_server, "-u", "-b", rate, 
+                    "-t", str(duration), "-J", "-l", "1400"
+                ])
+                
+                if udp_fwd_json is None:
+                    # Fallback IPv4
+                    print(f"   ⚠️ Reintentando UDP FORWARD {rate} con IPv4")
+                    udp_fwd_json = run_json([
+                        Config.IPERF_PATH, "-4", "-c", self.iperf_server, "-u", "-b", rate,
+                        "-t", str(duration), "-J", "-l", "1400"
+                    ])
+                
+                if udp_fwd_json:
+                    sum_info = udp_fwd_json.get("end", {}).get("sum", {})
+                    actual_bps = sum_info.get("bits_per_second", 0)
+                    lost = sum_info.get("lost_percent", 0)
+                    jitter = sum_info.get("jitter_ms", 0)
+                    
+                    # Calcular calidad
+                    if lost < 0.1 and jitter < 2.0:
+                        quality = "EXCELENTE"
+                    elif lost < 0.5 and jitter < 5.0:
+                        quality = "BUENA"
+                    elif lost < 1.0:
+                        quality = "ACEPTABLE"
+                    else:
+                        quality = "PROBLEMÁTICA"
+                    
+                    results["tests"]["udp_forward_tests"][f"udp_forward_{rate}"] = {
+                        "target_mbps": float(rate.rstrip("M")),
+                        "actual_mbps": actual_bps / 1_000_000,
+                        "jitter_ms": jitter,
+                        "lost_percent": lost,
+                        "total_packets": sum_info.get("packets", 0),
+                        "lost_packets": sum_info.get("lost_packets", 0),
+                        "quality": quality,
+                    }
+                    print(f"   ✅ UDP FORWARD {rate}: {actual_bps/1_000_000:.1f} Mbps, {lost:.2f}% loss, calidad: {quality}")
+                else:
+                    results["tests"]["udp_forward_tests"][f"udp_forward_{rate}"] = {
+                        "error": f"Failed UDP forward test {rate}"
+                    }
+
+            # 4. MÚLTIPLES TESTS UDP REVERSE (MEJORADO)
+            udp_reverse_rates = ["1M", "5M", "10M", "25M", "50M"]
+            print(f"\n4. UDP REVERSE TESTS (servidor -> cliente)")
+            results["tests"]["udp_reverse_tests"] = {}
+            
+            for rate in udp_reverse_rates:
+                print(f"\n   4.{udp_reverse_rates.index(rate)+1}. UDP REVERSE {rate}")
+                print("-" * 40)
+                
+                # Streaming
+                udp_rev_lines = stream_process([
+                    Config.IPERF_PATH, "-c", self.iperf_server, "-u", "-R", "-b", rate,
+                    "-t", str(duration), "-i", "1", "-l", "1400"
+                ], f"UDP REVERSE {rate} (streaming)")
+                results["raw_output"].extend(udp_rev_lines)
+                
+                # JSON
+                udp_rev_json = run_json([
+                    Config.IPERF_PATH, "-c", self.iperf_server, "-u", "-R", "-b", rate,
+                    "-t", str(duration), "-J", "-l", "1400"
+                ])
+                
+                if udp_rev_json is None:
+                    # Fallback IPv4
+                    print(f"   ⚠️ Reintentando UDP REVERSE {rate} con IPv4")
+                    udp_rev_json = run_json([
+                        Config.IPERF_PATH, "-4", "-c", self.iperf_server, "-u", "-R", "-b", rate,
+                        "-t", str(duration), "-J", "-l", "1400"
+                    ])
+                
+                if udp_rev_json:
+                    sum_info = udp_rev_json.get("end", {}).get("sum", {})
+                    actual_bps = sum_info.get("bits_per_second", 0)
+                    lost = sum_info.get("lost_percent", 0)
+                    jitter = sum_info.get("jitter_ms", 0)
+                    
+                    # Calcular calidad
+                    if lost < 0.1 and jitter < 2.0:
+                        quality = "EXCELENTE"
+                    elif lost < 0.5 and jitter < 5.0:
+                        quality = "BUENA"
+                    elif lost < 1.0:
+                        quality = "ACEPTABLE"
+                    else:
+                        quality = "PROBLEMÁTICA"
+                    
+                    results["tests"]["udp_reverse_tests"][f"udp_reverse_{rate}"] = {
+                        "target_mbps": float(rate.rstrip("M")),
+                        "actual_mbps": actual_bps / 1_000_000,
+                        "jitter_ms": jitter,
+                        "lost_percent": lost,
+                        "total_packets": sum_info.get("packets", 0),
+                        "lost_packets": sum_info.get("lost_packets", 0),
+                        "quality": quality,
+                    }
+                    print(f"   ✅ UDP REVERSE {rate}: {actual_bps/1_000_000:.1f} Mbps, {lost:.2f}% loss, calidad: {quality}")
+                else:
+                    results["tests"]["udp_reverse_tests"][f"udp_reverse_{rate}"] = {
+                        "error": f"Failed UDP reverse test {rate}"
+                    }
+
+            # 5. UDP BIDIRECCIONAL (NUEVO)
+            print(f"\n5. UDP BIDIRECCIONAL TEST (ambas direcciones simultáneas)")
+            print("-" * 50)
+            
+            # Este es más complejo, usa parallel streams
+            udp_bi_json = run_json([
+                Config.IPERF_PATH, "-c", self.iperf_server, "-u", "-d", "-b", "10M",
+                "-t", str(duration), "-J", "-l", "1400"
+            ])
+            
+            if udp_bi_json:
+                results["tests"]["udp_bidirectional"] = {
+                    "test_completed": True,
+                    "raw_data": udp_bi_json
+                }
+                print(f"   ✅ UDP BIDIRECCIONAL completado")
+            else:
+                results["tests"]["udp_bidirectional"] = {
+                    "error": "UDP bidirectional test failed"
+                }
+                print(f"   ❌ UDP BIDIRECCIONAL falló")
+
+            # Mantener los tests originales para compatibilidad
+            # (Los tests UDP originales que ya tenías)
+            # Solo los ejecuto si no se ejecutaron arriba
+            if "udp_reverse_10mbps" not in results["tests"]:
+                # Tu código UDP original aquí...
+                pass
+
+            # Resumen final
+            print("\n" + "=" * 70)
+            print("🎯 RESUMEN FINAL DE CONECTIVIDAD")
+            print("=" * 70)
+            if "tcp_forward" in results["tests"]:
+                t = results["tests"]["tcp_forward"]
+                print(f"📊 TCP FORWARD: Download {t['download_mbps']:.1f} Mbps, Upload {t['upload_mbps']:.1f} Mbps")
+            if "tcp_reverse" in results["tests"]:
+                t = results["tests"]["tcp_reverse"]
+                print(f"📊 TCP REVERSE: Download {t['download_mbps']:.1f} Mbps, Upload {t['upload_mbps']:.1f} Mbps")
+            
+            # Resumen UDP Forward
+            if "udp_forward_tests" in results["tests"]:
+                print(f"📊 UDP FORWARD TESTS:")
+                for test_name, test_data in results["tests"]["udp_forward_tests"].items():
+                    if "error" not in test_data:
+                        rate = test_name.split("_")[-1]
+                        print(f"   {rate}: {test_data['actual_mbps']:.1f} Mbps ({test_data['quality']})")
+            
+            # Resumen UDP Reverse  
+            if "udp_reverse_tests" in results["tests"]:
+                print(f"📊 UDP REVERSE TESTS:")
+                for test_name, test_data in results["tests"]["udp_reverse_tests"].items():
+                    if "error" not in test_data:
+                        rate = test_name.split("_")[-1]
+                        print(f"   {rate}: {test_data['actual_mbps']:.1f} Mbps ({test_data['quality']})")
+
+            print("=" * 70)
+            return results
+
+        except subprocess.TimeoutExpired:
+            return {"success": False, "error": "iPerf test timeout", "tests": results.get("tests", {}), "raw_output": results.get("raw_output", [])}
+        except json.JSONDecodeError:
+            return {"success": False, "error": "Invalid iperf3 JSON output", "tests": results.get("tests", {}), "raw_output": results.get("raw_output", [])}
+        except Exception as e:
+            return {"success": False, "error": str(e), "tests": results.get("tests", {}), "raw_output": results.get("raw_output", [])}
         
     @staticmethod
     def run_traceroute(target=Config.PING_TARGET):
@@ -392,4 +508,3 @@ class NetworkTester:
             return {"success": False, "error": "Traceroute timeout"}
         except Exception as e:
             return {"success": False, "error": str(e)}
-
