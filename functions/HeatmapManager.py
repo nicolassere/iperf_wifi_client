@@ -8,18 +8,24 @@ from functions.WifiScanner import WiFiScanner
 from functions.NetworkTester import NetworkTester
 from config.config import Config
 import json
-
-
+import subprocess
 
 
 class HeatmapManager:
-    """Manages persistent heatmaps with network testing."""
+    """Manages persistent heatmaps with network testing and individual file storage."""
     
     def __init__(self, house_width=Config.HOUSE_WIDTH, house_length=Config.HOUSE_LENGTH):
         self.house_width = house_width
         self.house_length = house_length
         self.data_dir = Config.DATA_DIR
         self.data_dir.mkdir(exist_ok=True)
+        
+        # Crear subdirectorios para archivos individuales
+        self.individual_measurements_dir = self.data_dir / "individual_measurements"
+        self.individual_measurements_dir.mkdir(exist_ok=True)
+        
+        self.ap_details_dir = self.data_dir / "ap_details"
+        self.ap_details_dir.mkdir(exist_ok=True)
         
         self.scanner = WiFiScanner()
         self.tester = NetworkTester()
@@ -34,6 +40,254 @@ class HeatmapManager:
         
         # Load existing data
         self.load_data()
+    
+    def get_current_client_ip_info(self):
+        """Obtener información detallada de IP del cliente actual."""
+        return self.tester.get_client_network_info()
+    
+    def save_individual_measurement(self, measurement):
+        """Guardar medición individual en archivo separado."""
+        try:
+            timestamp = measurement.get('timestamp', datetime.now().isoformat())
+            measurement_id = measurement.get('id', f"manual_{int(datetime.now().timestamp())}")
+            
+            # Crear nombre de archivo único
+            filename = f"measurement_{measurement_id}_{timestamp.replace(':', '-').replace('.', '_')}.json"
+            filepath = self.individual_measurements_dir / filename
+            
+            # Agregar información de cliente actual
+            client_info = self.get_current_client_ip_info()
+            measurement['client_network_info'] = client_info
+            
+            # Agregar resumen de APs para fácil lectura
+            measurement['ap_summary'] = {
+                'total_aps_found': len(measurement.get('networks', [])),
+                'strongest_ap': None,
+                'ap_list': []
+            }
+            
+            # Procesar información de APs
+            if measurement.get('networks'):
+                # Encontrar AP más fuerte
+                strongest = max(measurement['networks'], key=lambda x: x.get('signal', 0))
+                measurement['ap_summary']['strongest_ap'] = {
+                    'ssid': strongest.get('ssid'),
+                    'bssid': strongest.get('bssid'),
+                    'signal': strongest.get('signal'),
+                    'signal_dbm': strongest.get('signal_dbm'),
+                    'channel': strongest.get('channel'),
+                    'band': strongest.get('band')
+                }
+                
+                # Lista resumida de todos los APs
+                for network in measurement['networks']:
+                    ap_info = {
+                        'ssid': network.get('ssid'),
+                        'bssid': network.get('bssid'),
+                        'signal_percentage': network.get('signal', 0),
+                        'signal_dbm': network.get('signal_dbm'),
+                        'snr_db': network.get('snr_db'),
+                        'channel': network.get('channel'),
+                        'band': network.get('band'),
+                        'signal_quality': network.get('signal_quality'),
+                        'authentication': network.get('authentication')
+                    }
+                    measurement['ap_summary']['ap_list'].append(ap_info)
+                
+                # Ordenar por señal
+                measurement['ap_summary']['ap_list'].sort(
+                    key=lambda x: x.get('signal_percentage', 0), reverse=True
+                )
+            
+            # Guardar archivo individual
+            with open(filepath, 'w', encoding='utf-8') as f:
+                json.dump(measurement, f, indent=2, ensure_ascii=False)
+            
+            print(f"💾 Medición individual guardada: {filename}")
+            
+            # También crear archivo de resumen legible
+            summary_filename = f"summary_{measurement_id}_{timestamp.replace(':', '-').replace('.', '_')}.txt"
+            summary_filepath = self.individual_measurements_dir / summary_filename
+            self.create_measurement_summary_file(measurement, summary_filepath)
+            
+            return str(filepath)
+            
+        except Exception as e:
+            print(f"❌ Error guardando medición individual: {e}")
+            return None
+    
+    def create_measurement_summary_file(self, measurement, filepath):
+        """Crear archivo de resumen legible de la medición."""
+        try:
+            with open(filepath, 'w', encoding='utf-8') as f:
+                f.write("=" * 80 + "\n")
+                f.write("RESUMEN DE MEDICIÓN WIFI\n")
+                f.write("=" * 80 + "\n\n")
+                
+                # Información básica
+                f.write(f"ID de Medición: {measurement.get('id', 'N/A')}\n")
+                f.write(f"Timestamp: {measurement.get('timestamp', 'N/A')}\n")
+                
+                location = measurement.get('location')
+                if location:
+                    f.write(f"Ubicación: ({location.get('x', 'N/A')}, {location.get('y', 'N/A')})\n")
+                else:
+                    f.write("Ubicación: No mapeada aún\n")
+                
+                # Información de red del cliente
+                client_info = measurement.get('client_network_info', {})
+                f.write(f"\nINFORMACIÓN DE RED DEL CLIENTE:\n")
+                f.write(f"IP Cliente: {client_info.get('client_ip', 'N/A')}\n")
+                f.write(f"Gateway: {client_info.get('gateway', 'N/A')}\n")
+                f.write(f"DNS: {', '.join(client_info.get('dns_servers', []))}\n")
+                f.write(f"Interfaz: {client_info.get('interface_name', 'N/A')}\n")
+                
+                # Resumen de APs
+                ap_summary = measurement.get('ap_summary', {})
+                f.write(f"\nRESUMEN DE ACCESS POINTS:\n")
+                f.write(f"Total APs encontrados: {ap_summary.get('total_aps_found', 0)}\n")
+                
+                strongest = ap_summary.get('strongest_ap')
+                if strongest:
+                    f.write(f"AP más fuerte: {strongest.get('ssid')} ({strongest.get('signal', 0)}%)\n")
+                    f.write(f"  BSSID: {strongest.get('bssid', 'N/A')}\n")
+                    f.write(f"  Señal: {strongest.get('signal_dbm', 'N/A')} dBm\n")
+                    f.write(f"  Canal: {strongest.get('channel', 'N/A')} ({strongest.get('band', 'N/A')})\n")
+                
+                f.write(f"\nDETALLE DE TODOS LOS APs:\n")
+                f.write("-" * 80 + "\n")
+                f.write(f"{'SSID':<25} {'BSSID':<18} {'Señal':<8} {'dBm':<8} {'SNR':<8} {'Canal':<8} {'Banda':<8} {'Calidad':<12}\n")
+                f.write("-" * 80 + "\n")
+                
+                for ap in ap_summary.get('ap_list', []):
+                    ssid = (ap.get('ssid', 'N/A'))[:24]
+                    bssid = (ap.get('bssid', 'N/A'))[:17]
+                    signal = f"{ap.get('signal_percentage', 0)}%"
+                    dbm = f"{ap.get('signal_dbm', 0):.1f}" if ap.get('signal_dbm') else "N/A"
+                    snr = f"{ap.get('snr_db', 0):.1f}" if ap.get('snr_db') else "N/A"
+                    channel = str(ap.get('channel', 'N/A'))
+                    band = (ap.get('band', 'N/A'))[:7]
+                    quality = (ap.get('signal_quality', 'N/A'))[:11]
+                    
+                    f.write(f"{ssid:<25} {bssid:<18} {signal:<8} {dbm:<8} {snr:<8} {channel:<8} {band:<8} {quality:<12}\n")
+                
+                # Tests de red si existen
+                if measurement.get('tests'):
+                    f.write(f"\nRESULTADOS DE TESTS DE RED:\n")
+                    f.write("-" * 40 + "\n")
+                    
+                    tests = measurement['tests']
+                    if 'ping' in tests and tests['ping'].get('success'):
+                        ping = tests['ping']
+                        f.write(f"Ping: {ping.get('avg_time', 'N/A'):.1f} ms (promedio)\n")
+                        f.write(f"  Min: {ping.get('min_time', 'N/A')} ms, Max: {ping.get('max_time', 'N/A')} ms\n")
+                        f.write(f"  Pérdida de paquetes: {ping.get('packet_loss', 'N/A')}\n")
+                    
+                    if 'speedtest' in tests and tests['speedtest'].get('success'):
+                        speed = tests['speedtest']
+                        f.write(f"Speedtest:\n")
+                        f.write(f"  Download: {speed.get('download_mbps', 'N/A'):.1f} Mbps\n")
+                        f.write(f"  Upload: {speed.get('upload_mbps', 'N/A'):.1f} Mbps\n")
+                        f.write(f"  Ping: {speed.get('ping_ms', 'N/A'):.1f} ms\n")
+                        f.write(f"  Servidor: {speed.get('server', 'N/A')}\n")
+                    
+                    if 'iperf_suite' in tests and tests['iperf_suite'].get('success'):
+                        iperf = tests['iperf_suite']
+                        f.write(f"iPerf Suite:\n")
+                        f.write(f"  Servidor: {iperf.get('server', 'N/A')}\n")
+                        
+                        # TCP tests
+                        if 'tcp_forward' in iperf.get('tests', {}):
+                            tcp_fwd = iperf['tests']['tcp_forward']
+                            f.write(f"  TCP Forward: DL {tcp_fwd.get('download_mbps', 0):.1f} Mbps, UL {tcp_fwd.get('upload_mbps', 0):.1f} Mbps\n")
+                        
+                        if 'tcp_reverse' in iperf.get('tests', {}):
+                            tcp_rev = iperf['tests']['tcp_reverse']
+                            f.write(f"  TCP Reverse: DL {tcp_rev.get('download_mbps', 0):.1f} Mbps, UL {tcp_rev.get('upload_mbps', 0):.1f} Mbps\n")
+                        
+                        # UDP Forward tests
+                        if 'udp_forward_tests' in iperf.get('tests', {}):
+                            f.write(f"  UDP Forward Tests:\n")
+                            for test_name, test_data in iperf['tests']['udp_forward_tests'].items():
+                                if 'error' not in test_data:
+                                    rate = test_name.split('_')[-1]
+                                    f.write(f"    {rate}: {test_data.get('actual_mbps', 0):.1f} Mbps ({test_data.get('quality', 'N/A')})\n")
+                        
+                        # UDP Reverse tests
+                        if 'udp_reverse_tests' in iperf.get('tests', {}):
+                            f.write(f"  UDP Reverse Tests:\n")
+                            for test_name, test_data in iperf['tests']['udp_reverse_tests'].items():
+                                if 'error' not in test_data:
+                                    rate = test_name.split('_')[-1]
+                                    f.write(f"    {rate}: {test_data.get('actual_mbps', 0):.1f} Mbps ({test_data.get('quality', 'N/A')})\n")
+                
+                f.write("\n" + "=" * 80 + "\n")
+                f.write("FIN DEL RESUMEN\n")
+                f.write("=" * 80 + "\n")
+            
+            print(f"📄 Resumen legible guardado: {filepath.name}")
+            
+        except Exception as e:
+            print(f"❌ Error creando resumen: {e}")
+    
+    def save_ap_details(self, measurement):
+        """Guardar detalles específicos de cada AP en archivos separados."""
+        try:
+            networks = measurement.get('networks', [])
+            timestamp = measurement.get('timestamp', datetime.now().isoformat())
+            measurement_id = measurement.get('id', 'unknown')
+            location = measurement.get('location')
+            client_info = measurement.get('client_network_info', {})
+            
+            for network in networks:
+                ssid = network.get('ssid', 'unknown')
+                bssid = network.get('bssid', 'unknown')
+                
+                # Crear archivo para cada AP
+                ap_filename = f"AP_{ssid}_{bssid.replace(':', '')}_{timestamp.replace(':', '-').replace('.', '_')}.json"
+                ap_filepath = self.ap_details_dir / ap_filename
+                
+                ap_record = {
+                    'measurement_id': measurement_id,
+                    'timestamp': timestamp,
+                    'location': location,
+                    'client_network_info': client_info,
+                    'ap_details': network,
+                    'measurement_context': {
+                        'total_aps_in_scan': len(networks),
+                        'strongest_signal_in_scan': max([n.get('signal', 0) for n in networks]) if networks else 0,
+                        'ap_rank_by_signal': sorted(networks, key=lambda x: x.get('signal', 0), reverse=True).index(network) + 1 if network in networks else 0
+                    }
+                }
+                
+                # Si este AP ya tiene archivo, actualizar
+                if ap_filepath.exists():
+                    try:
+                        with open(ap_filepath, 'r', encoding='utf-8') as f:
+                            existing_data = json.load(f)
+                        
+                        # Convertir a lista de mediciones si no lo es ya
+                        if not isinstance(existing_data, list):
+                            existing_data = [existing_data]
+                        
+                        existing_data.append(ap_record)
+                        
+                        with open(ap_filepath, 'w', encoding='utf-8') as f:
+                            json.dump(existing_data, f, indent=2, ensure_ascii=False)
+                            
+                    except Exception:
+                        # Si hay error leyendo archivo existente, sobrescribir
+                        with open(ap_filepath, 'w', encoding='utf-8') as f:
+                            json.dump([ap_record], f, indent=2, ensure_ascii=False)
+                else:
+                    # Archivo nuevo
+                    with open(ap_filepath, 'w', encoding='utf-8') as f:
+                        json.dump([ap_record], f, indent=2, ensure_ascii=False)
+                
+                print(f"📡 AP guardado: {ssid} ({network.get('signal', 0)}%) -> {ap_filename}")
+                
+        except Exception as e:
+            print(f"❌ Error guardando detalles de AP: {e}")
     
     def define_room(self, name: str, x: float, y: float, width: float, height: float):
         """Define a room in the house layout."""
@@ -69,6 +323,11 @@ class HeatmapManager:
         print(f"   Time: {datetime.now().strftime('%H:%M:%S')}")
         print(f"   Networks found: {len(networks)}")
         
+        # Obtener información de cliente actual
+        client_info = self.get_current_client_ip_info()
+        print(f"   Client IP: {client_info.get('client_ip', 'N/A')}")
+        print(f"   Gateway: {client_info.get('gateway', 'N/A')}")
+        
         # Store network data
         for network in networks:
             if network['bssid'] != "Unknown":
@@ -85,10 +344,12 @@ class HeatmapManager:
                 }
                 measurement['networks'].append(net_data)
                 
-                # Mostrar más información
-            signal_dbm_str = f"({network['signal_dbm']:.1f} dBm)" if network.get('signal_dbm') is not None else ""
-            print(f"  📡 {network['ssid']} {network['bssid']} - {network['signal_percentage']}% - Ch{network['channel']} {signal_dbm_str} - {network.get('signal_quality', 'Unknown')}")
-                    # Run network tests if connected
+                # Mostrar información mejorada
+                signal_dbm_str = f"({network['signal_dbm']:.1f} dBm)" if network.get('signal_dbm') is not None else ""
+                snr_str = f"SNR: {network.get('snr_db', 'N/A'):.1f} dB" if network.get('snr_db') is not None else ""
+                print(f"  📡 {network['ssid']} {network['bssid']} - {network['signal_percentage']}% - Ch{network['channel']} {signal_dbm_str} - {snr_str} - {network.get('signal_quality', 'Unknown')}")
+        
+        # Run network tests if connected
         if run_tests:
             current_conn = self.scanner.get_current_connection_info()
             if 'ssid' in current_conn and 'error' not in current_conn:
@@ -109,19 +370,25 @@ class HeatmapManager:
                 
                 # iPerf test
                 if input("    Run iPerf test suite? (y/n): ").lower() == 'y':
-                        iperf_result = self.tester.run_iperf_suite()
-                        if iperf_result['success']:
-                            measurement['tests']['iperf_suite'] = iperf_result
-                        else:
-                            print(f"    ✗ iPerf: {iperf_result['error']}")
-                else:
-                    print(f"  ⚠️  No WiFi connection detected - skipping network tests")
-            
+                    iperf_result = self.tester.run_iperf_suite()
+                    if iperf_result['success']:
+                        measurement['tests']['iperf_suite'] = iperf_result
+                    else:
+                        print(f"    ✗ iPerf: {iperf_result['error']}")
+            else:
+                print(f"  ⚠️  No WiFi connection detected - skipping network tests")
+        
+        # Guardar archivos individuales ANTES de agregar a la lista principal
+        individual_file = self.save_individual_measurement(measurement)
+        self.save_ap_details(measurement)
+        
+        # Agregar a datos principales
         self.measurements.append(measurement)
         self.save_data()
         
         print(f"\n✅ Measurement ID {measurement_id} saved successfully!")
         print("   Remember to note this ID on your floor plan!")
+        print(f"   Individual file: {individual_file}")
         
         return measurement
     
@@ -143,6 +410,9 @@ class HeatmapManager:
                         'timestamp': measurement['timestamp']
                     })
                 
+                # Re-guardar archivo individual con coordenadas actualizadas
+                self.save_individual_measurement(measurement)
+                
                 break
         
         self.save_data()
@@ -162,6 +432,16 @@ class HeatmapManager:
         
         for measurement in unmapped:
             print(f"\n   ID {measurement['id']} - {measurement['timestamp']}")
+            
+            # Mostrar información de cliente y APs para ayudar a identificar
+            client_info = measurement.get('client_network_info', {})
+            if client_info.get('client_ip'):
+                print(f"   Cliente IP: {client_info['client_ip']}")
+            
+            ap_summary = measurement.get('ap_summary', {})
+            strongest = ap_summary.get('strongest_ap')
+            if strongest:
+                print(f"   AP más fuerte: {strongest.get('ssid')} ({strongest.get('signal', 0)}%)")
             
             # Check if it's a network test or regular measurement
             if 'all_network_tests' in measurement:
@@ -246,12 +526,16 @@ class HeatmapManager:
                         print(f"    Speed: {speed_result['download_mbps']:.1f}↓/{speed_result['upload_mbps']:.1f}↑ Mbps")
                 
                 # iPerf test
-            if input("    Run iPerf test suite? (y/n): ").lower() == 'y':
-                iperf_result = self.tester.run_iperf_suite()
-                if iperf_result['success']:
-                    measurement['tests']['iperf_suite'] = iperf_result
-                else:
-                    print(f"    ✗ iPerf: {iperf_result['error']}")
+                if input("    Run iPerf test suite? (y/n): ").lower() == 'y':
+                    iperf_result = self.tester.run_iperf_suite()
+                    if iperf_result['success']:
+                        measurement['tests']['iperf_suite'] = iperf_result
+                    else:
+                        print(f"    ✗ iPerf: {iperf_result['error']}")
+        
+        # Guardar archivos individuales
+        self.save_individual_measurement(measurement)
+        self.save_ap_details(measurement)
         
         self.measurements.append(measurement)
         self.save_data()
@@ -290,16 +574,14 @@ class HeatmapManager:
                     'ssid': network['ssid'],
                     'bssid': network['bssid'],
                     'signal': network['signal_percentage'],
-                    'signal_dbm': network.get('signal_dbm'),  # Añadir
-                    'snr_db': network.get('snr_db'),         # Añadir
-                    'signal_quality': network.get('signal_quality'),  # Añadir
+                    'signal_dbm': network.get('signal_dbm'),
+                    'snr_db': network.get('snr_db'),
+                    'signal_quality': network.get('signal_quality'),
                     'channel': network['channel'],
-                    'band': network.get('band'),             # Añadir
+                    'band': network.get('band'),
                     'authentication': network['authentication']
                 }
                 measurement['networks'].append(net_data)
-                
-
         
         # Test each connectable network
         for network in connectable:
@@ -342,12 +624,16 @@ class HeatmapManager:
             if input("    Run iPerf test suite? (y/n): ").lower() == 'y':
                 iperf_result = self.tester.run_iperf_suite()
                 if iperf_result['success']:
-                    measurement['tests']['iperf_suite'] = iperf_result
+                    network_test['tests']['iperf_suite'] = iperf_result
                 else:
                     print(f"    ✗ iPerf: {iperf_result['error']}")
             
             measurement['all_network_tests'].append(network_test)
             self.scanner.tested_networks.add(ssid)
+        
+        # Guardar archivos individuales
+        self.save_individual_measurement(measurement)
+        self.save_ap_details(measurement)
         
         # Save measurement
         self.measurements.append(measurement)
@@ -401,11 +687,16 @@ class HeatmapManager:
                         }
                         self.network_test_results[ap_key].append(test_result)
                 
+                # Re-guardar archivo individual con coordenadas
+                self.save_individual_measurement(measurement)
+                
                 break
         
         self.save_data()
         print(f"✓ Network test ID {measurement_id} mapped to coordinates ({x}, {y})")
-        
+    
+    # [RESTO DE MÉTODOS SIN CAMBIOS - create_ap_heatmap, create_composite_heatmap, etc.]
+    # Los métodos de heatmap permanecen igual, solo agregando el nuevo campo client_network_info donde sea relevante
     
     def create_ap_heatmap(self, ap_key: str, include_performance: bool = True):
         """Create heatmap for specific AP with optional performance overlay."""
@@ -856,6 +1147,8 @@ class HeatmapManager:
             'total_measurements': len(self.measurements),
             'total_aps': len(self.ap_data),
             'tested_networks': len(self.network_test_results),
+            'individual_files': len(list(self.individual_measurements_dir.glob("*.json"))),
+            'ap_detail_files': len(list(self.ap_details_dir.glob("*.json"))),
             'ap_details': [],
             'test_summary': {
                 'total_ping_tests': 0,
@@ -940,16 +1233,31 @@ class HeatmapManager:
         
         return stats
     
-    def show_current_snr(manager):
+    def show_current_snr(self):
         """Mostrar SNR de la conexión actual."""
-        scanner = manager.scanner
-        current = scanner.get_current_connection_snr()
+        current = self.scanner.get_current_connection_info()
         
         if 'error' not in current and 'ssid' in current:
             print(f"\n📡 CONEXIÓN ACTUAL - {current.get('ssid', 'Unknown')}")
             print(f"   Signal: {current.get('signal_percentage', 'N/A')}% ({current.get('signal_dbm', 'N/A'):.1f} dBm)")
-            print(f"   SNR: {current.get('snr_db', 'N/A'):.1f} dB")
-            print(f"   Calidad: {current.get('signal_quality', 'Unknown')}")
-            print(f"   Ruido estimado: {current.get('noise_dbm', 'N/A')} dBm")
+            
+            # Calcular SNR si no está disponible
+            if current.get('signal_dbm') and not current.get('snr_db'):
+                # Estimar ruido basado en banda
+                if current.get('channel', 0) <= 14:
+                    noise_floor = -95  # 2.4GHz
+                else:
+                    noise_floor = -100  # 5GHz
+                
+                snr = current['signal_dbm'] - noise_floor
+                print(f"   SNR: {snr:.1f} dB (estimado)")
+                print(f"   Ruido estimado: {noise_floor} dBm")
+            else:
+                print(f"   SNR: {current.get('snr_db', 'N/A'):.1f} dB")
+                print(f"   Ruido estimado: {current.get('noise_dbm', 'N/A')} dBm")
+                
+            # Calidad de señal
+            signal_quality = current.get('signal_quality', 'Unknown')
+            print(f"   Calidad: {signal_quality}")
         else:
             print("No conectado a WiFi")
