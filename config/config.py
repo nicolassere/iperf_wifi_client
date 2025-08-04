@@ -1,23 +1,37 @@
-# CONFIGURACIÓN
-IPERF_PATH = "C:\\iperf3\\iperf3.exe\\iperf3.exe"  # Ruta al ejecutable de iperf3
-IPERF_SERVER = "127.0.0.1"           # Servidor local para pruebas
-INTERVAL_MINUTES = 0.1
-WIFI_SCAN_INTERVAL = 2  # Intervalos entre escaneos WiFi (minutos)
+import os
+from pathlib import Path
 
 
-# Configuración de Heatmap
-HEATMAP_ENABLED = True
-HEATMAP_ANALYSIS_INTERVAL = 10  # Cada cuántas iteraciones hacer análisis automático
-HEATMAP_HISTORY_DAYS = 7  # Días de historia para análisis completo
-HEATMAP_MIN_SIGNAL_THRESHOLD = 30  # Señal mínima para considerar AP
-HEATMAP_CONFLICT_THRESHOLD = 2  # Mínimo de APs para considerar conflicto
+class Config:
+    # Paths
+    IPERF_PATH = "C:\\iperf3\\iperf3.exe\\iperf3.exe"
+    SPEEDTEST_PATH = "C:\\Users\\Usuario\\speedtest.exe"
+    IPERF_SERVER = "iperf.he.net" 
 
-# Configuración de alertas
-ALERT_LOW_PERFORMANCE_THRESHOLD = 70  # % de éxito mínimo
-ALERT_HIGH_PING_THRESHOLD = 100  # ms máximo aceptable
-ALERT_LOW_SPEED_THRESHOLD = 10  # Mbps mínimo aceptable
+    # House dimensions
+    HOUSE_WIDTH = 15
+    HOUSE_LENGTH = 20
 
-# Configuración de visualización
-VISUALIZATION_ENABLED = True
-VISUALIZATION_DPI = 300
-VISUALIZATION_STYLE = 'seaborn'  # estilo de matplotlib
+    # Data storage
+    DATA_DIR = Path("heatmap_data")
+
+    # Test settings
+    PING_TARGET = "8.8.8.8"
+    PING_COUNT = 4
+    SPEEDTEST_SERVER_ID = 40741  # ANTEL
+
+    # Heatmap settings
+    GRID_RESOLUTION = 0.5
+    HEATMAP_DPI = 300
+    MEASUREMENT_INTERVAL = 30
+
+    # FILTRADO DE REDES - SOLO MONITOREAR ESTOS SSIDs
+    MONITORED_SSIDS = [
+        "Pumita",           
+        "Puma",              
+        
+    ]
+
+    # Si está vacío, monitorea TODAS las redes
+    MONITOR_ALL_NETWORKS = True  # Cambiar a True para monitorear todo
+

@@ -1,0 +1,77 @@
+{
+  "id": 18,
+  "timestamp": "2025-08-04T11:28:50.155882",
+  "client_ip": "192.168.1.11",
+  "location": null,
+  "networks": [
+    {
+      "ssid": "Pumita",
+      "bssid": "b8:dd:71:e3:9c:3c",
+      "signal": 85,
+      "signal_dbm": -40.0,
+      "snr_db": 60.0,
+      "signal_quality": "Excellent",
+      "channel": 149,
+      "band": "5GHz",
+      "authentication": "Unknown"
+    },
+    {
+      "ssid": "CasaM",
+      "bssid": "d8:47:32:50:7d:5a",
+      "signal": 50,
+      "signal_dbm": -65.0,
+      "snr_db": 30.0,
+      "signal_quality": "Very Good",
+      "channel": 3,
+      "band": "2.4GHz",
+      "authentication": "Unknown"
+    },
+    {
+      "ssid": "CasaM_EXT",
+      "bssid": "62:61:b4:05:92:54",
+      "signal": 58,
+      "signal_dbm": -60.2,
+      "snr_db": 34.8,
+      "signal_quality": "Very Good",
+      "channel": 3,
+      "band": "2.4GHz",
+      "authentication": "Unknown"
+    },
+    {
+      "ssid": "HP-Print-2A-Deskjet 3540 series",
+      "bssid": "a0:48:1c:5b:fd:2a",
+      "signal": 61,
+      "signal_dbm": -58.4,
+      "snr_db": 36.6,
+      "signal_quality": "Very Good",
+      "channel": 3,
+      "band": "2.4GHz",
+      "authentication": "Unknown"
+    },
+    {
+      "ssid": "Puma",
+      "bssid": "b8:dd:71:e3:9c:3a",
+      "signal": 99,
+      "signal_dbm": -30.5,
+      "snr_db": 64.5,
+      "signal_quality": "Excellent",
+      "channel": 1,
+      "band": "2.4GHz",
+      "authentication": "Unknown"
+    },
+    {
+      "ssid": "SSID8",
+      "bssid": "ce:29:bd:89:7e:09",
+      "signal": 18,
+      "signal_dbm": -84.9,
+      "snr_db": 15.099999999999994,
+      "signal_quality": "Fair",
+      "channel": 60,
+      "band": "5GHz",
+      "authentication": "Unknown"
+    }
+  ],
+  "tests": {},
+  "current_connection": null,
+  "errors": []
+}
