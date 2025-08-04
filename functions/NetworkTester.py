@@ -291,7 +291,7 @@ class NetworkTester:
                 }
 
             # 3. MÚLTIPLES TESTS UDP FORWARD (NUEVO)
-            udp_forward_rates = ["1M", "5M", "10M", "25M", "50M"]
+            udp_forward_rates = ["1M", "5M", "10M"]
             print(f"\n3. UDP FORWARD TESTS (cliente -> servidor)")
             results["tests"]["udp_forward_tests"] = {}
             
@@ -352,7 +352,7 @@ class NetworkTester:
                     }
 
             # 4. MÚLTIPLES TESTS UDP REVERSE (MEJORADO)
-            udp_reverse_rates = ["1M", "5M", "10M", "25M", "50M"]
+            udp_reverse_rates = ["1M", "5M", "10M"]
             print(f"\n4. UDP REVERSE TESTS (servidor -> cliente)")
             results["tests"]["udp_reverse_tests"] = {}
             
