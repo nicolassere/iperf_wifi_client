@@ -308,6 +308,9 @@ class HeatmapManager:
         if measurement_id is None:
             measurement_id = self.next_measurement_id
             self.next_measurement_id += 1
+
+        client_info = self.get_current_client_ip_info()
+
         
         networks = self.scanner.scan_networks(force_refresh=True)
         
@@ -322,7 +325,8 @@ class HeatmapManager:
         print(f"\n📍 MEASUREMENT ID: {measurement_id}")
         print(f"   Time: {datetime.now().strftime('%H:%M:%S')}")
         print(f"   Networks found: {len(networks)}")
-        
+        print(f"   Client IP: {client_info.get('client_ip', 'N/A')}")
+        print(f"   Gateway: {client_info.get('gateway', 'N/A')}")
         # Obtener información de cliente actual
         client_info = self.get_current_client_ip_info()
         print(f"   Client IP: {client_info.get('client_ip', 'N/A')}")
@@ -1261,3 +1265,229 @@ class HeatmapManager:
             print(f"   Calidad: {signal_quality}")
         else:
             print("No conectado a WiFi")
+
+# ==========================================
+# AGREGAR ESTOS MÉTODOS EN HeatmapManager
+# ==========================================
+
+def get_current_client_ip_info(self):
+    """Obtener información básica de IP del cliente actual."""
+    client_info = {
+        'client_ip': None,
+        'gateway': None,
+        'interface_name': None,
+        'timestamp': time.time()
+    }
+    
+    try:
+        result = subprocess.run(
+            ["ipconfig"],
+            capture_output=True,
+            text=True,
+            timeout=10,
+            encoding='cp1252'
+        )
+        
+        current_interface = None
+        for line in result.stdout.splitlines():
+            line = line.strip()
+            
+            if "Wireless LAN adapter" in line or "Adaptador de LAN inalámbrica" in line:
+                if "Wi-Fi" in line or "WiFi" in line:
+                    current_interface = line
+                    client_info['interface_name'] = current_interface
+            
+            if current_interface and ":" in line:
+                if "IPv4" in line or "Dirección IPv4" in line:
+                    match = re.search(r'(\d+\.\d+\.\d+\.\d+)', line)
+                    if match:
+                        client_info['client_ip'] = match.group(1)
+                
+                elif "Default Gateway" in line or "Puerta de enlace predeterminada" in line:
+                    match = re.search(r'(\d+\.\d+\.\d+\.\d+)', line)
+                    if match:
+                        client_info['gateway'] = match.group(1)
+    
+    except Exception as e:
+        print(f"⚠️ Error obteniendo info de cliente: {e}")
+    
+    return client_info
+
+def save_individual_measurement(self, measurement):
+    """Guardar medición individual en archivo separado."""
+    try:
+        measurement_id = measurement.get('id', f"manual_{int(datetime.now().timestamp())}")
+        
+        # Crear subdirectorio si no existe
+        self.individual_measurements_dir = self.data_dir / "individual_measurements"
+        self.individual_measurements_dir.mkdir(exist_ok=True)
+        
+        # Crear nombre de archivo simple
+        filename = f"medicion_{measurement_id}.json"
+        filepath = self.individual_measurements_dir / filename
+        
+        # Agregar información de cliente actual
+        client_info = self.get_current_client_ip_info()
+        measurement['client_network_info'] = client_info
+        
+        # Agregar resumen de APs
+        measurement['ap_summary'] = {
+            'total_aps_found': len(measurement.get('networks', [])),
+            'strongest_ap': None,
+            'client_ip': client_info.get('client_ip', 'N/A'),
+            'gateway': client_info.get('gateway', 'N/A'),
+            'ap_list': []
+        }
+        
+        # Procesar información de APs
+        if measurement.get('networks'):
+            strongest = max(measurement['networks'], key=lambda x: x.get('signal', 0))
+            measurement['ap_summary']['strongest_ap'] = {
+                'ssid': strongest.get('ssid'),
+                'bssid': strongest.get('bssid'),
+                'signal': strongest.get('signal'),
+                'channel': strongest.get('channel'),
+                'band': strongest.get('band')
+            }
+            
+            for network in measurement['networks']:
+                ap_info = {
+                    'ssid': network.get('ssid'),
+                    'bssid': network.get('bssid'),
+                    'signal_percentage': network.get('signal', 0),
+                    'channel': network.get('channel'),
+                    'band': network.get('band'),
+                    'authentication': network.get('authentication')
+                }
+                measurement['ap_summary']['ap_list'].append(ap_info)
+            
+            measurement['ap_summary']['ap_list'].sort(
+                key=lambda x: x.get('signal_percentage', 0), reverse=True
+            )
+        
+        # Guardar archivo individual
+        with open(filepath, 'w', encoding='utf-8') as f:
+            json.dump(measurement, f, indent=2, ensure_ascii=False)
+        
+        print(f"💾 Medición individual guardada: {filename}")
+        
+        # También crear archivo de resumen legible
+        summary_filename = f"resumen_{measurement_id}.txt"
+        summary_filepath = self.individual_measurements_dir / summary_filename
+        self.create_measurement_summary_file(measurement, summary_filepath)
+        
+        return str(filepath)
+        
+    except Exception as e:
+        print(f"❌ Error guardando medición individual: {e}")
+        return None
+
+def create_measurement_summary_file(self, measurement, filepath):
+    """Crear archivo de resumen legible de la medición."""
+    try:
+        with open(filepath, 'w', encoding='utf-8') as f:
+            f.write("=" * 80 + "\n")
+            f.write("RESUMEN DE MEDICIÓN WIFI\n")
+            f.write("=" * 80 + "\n\n")
+            
+            f.write(f"ID de Medición: {measurement.get('id', 'N/A')}\n")
+            f.write(f"Timestamp: {measurement.get('timestamp', 'N/A')}\n")
+            
+            location = measurement.get('location')
+            if location:
+                f.write(f"Ubicación: ({location.get('x', 'N/A')}, {location.get('y', 'N/A')})\n")
+            else:
+                f.write("Ubicación: No mapeada aún\n")
+            
+            # Información de red del cliente
+            client_info = measurement.get('client_network_info', {})
+            f.write(f"\nINFORMACIÓN DE RED DEL CLIENTE:\n")
+            f.write(f"IP Cliente: {client_info.get('client_ip', 'N/A')}\n")
+            f.write(f"Gateway: {client_info.get('gateway', 'N/A')}\n")
+            f.write(f"Interfaz: {client_info.get('interface_name', 'N/A')}\n")
+            
+            # Resumen de APs
+            ap_summary = measurement.get('ap_summary', {})
+            f.write(f"\nRESUMEN DE ACCESS POINTS:\n")
+            f.write(f"Total APs encontrados: {ap_summary.get('total_aps_found', 0)}\n")
+            
+            strongest = ap_summary.get('strongest_ap')
+            if strongest:
+                f.write(f"AP más fuerte: {strongest.get('ssid')} ({strongest.get('signal', 0)}%)\n")
+                f.write(f"  BSSID: {strongest.get('bssid', 'N/A')}\n")
+                f.write(f"  Canal: {strongest.get('channel', 'N/A')} ({strongest.get('band', 'N/A')})\n")
+            
+            f.write(f"\nDETALLE DE TODOS LOS APs:\n")
+            f.write("-" * 80 + "\n")
+            f.write(f"{'SSID':<25} {'BSSID':<18} {'Señal':<8} {'Canal':<8} {'Banda':<8}\n")
+            f.write("-" * 80 + "\n")
+            
+            for ap in ap_summary.get('ap_list', []):
+                ssid = (ap.get('ssid', 'N/A'))[:24]
+                bssid = (ap.get('bssid', 'N/A'))[:17]
+                signal = f"{ap.get('signal_percentage', 0)}%"
+                channel = str(ap.get('channel', 'N/A'))
+                band = (ap.get('band', 'N/A'))[:7]
+                
+                f.write(f"{ssid:<25} {bssid:<18} {signal:<8} {channel:<8} {band:<8}\n")
+            
+            f.write("\n" + "=" * 80 + "\n")
+        
+        print(f"📄 Resumen legible guardado: {filepath.name}")
+        
+    except Exception as e:
+        print(f"❌ Error creando resumen: {e}")
+
+def save_ap_details(self, measurement):
+    """Guardar detalles específicos de cada AP en archivos separados."""
+    try:
+        # Crear subdirectorio si no existe
+        self.ap_details_dir = self.data_dir / "ap_details"
+        self.ap_details_dir.mkdir(exist_ok=True)
+        
+        networks = measurement.get('networks', [])
+        measurement_id = measurement.get('id', 'unknown')
+        location = measurement.get('location')
+        client_info = measurement.get('client_network_info', {})
+        
+        for network in networks:
+            ssid = network.get('ssid', 'unknown')
+            bssid = network.get('bssid', 'unknown')
+            
+            ap_filename = f"AP_{ssid}_{bssid.replace(':', '')}.json"
+            ap_filepath = self.ap_details_dir / ap_filename
+            
+            ap_record = {
+                'measurement_id': measurement_id,
+                'timestamp': measurement.get('timestamp'),
+                'location': location,
+                'client_ip': client_info.get('client_ip'),
+                'gateway': client_info.get('gateway'),
+                'ap_details': network
+            }
+            
+            # Si el archivo existe, agregar al array; si no, crear nuevo
+            if ap_filepath.exists():
+                try:
+                    with open(ap_filepath, 'r', encoding='utf-8') as f:
+                        existing_data = json.load(f)
+                    
+                    if not isinstance(existing_data, list):
+                        existing_data = [existing_data]
+                    
+                    existing_data.append(ap_record)
+                    
+                    with open(ap_filepath, 'w', encoding='utf-8') as f:
+                        json.dump(existing_data, f, indent=2, ensure_ascii=False)
+                        
+                except Exception:
+                    with open(ap_filepath, 'w', encoding='utf-8') as f:
+                        json.dump([ap_record], f, indent=2, ensure_ascii=False)
+            else:
+                with open(ap_filepath, 'w', encoding='utf-8') as f:
+                    json.dump([ap_record], f, indent=2, ensure_ascii=False)
+            
+            print(f"📡 AP guardado: {ssid} ({network.get('signal', 0)}%) -> {ap_filename}")
+            
+    except Exception as e:
+        print(f"❌ Error guardando detalles de AP: {e}")
