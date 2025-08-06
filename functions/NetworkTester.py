@@ -23,7 +23,7 @@ class NetworkTester:
     
     @staticmethod
     def get_client_network_info():
-        """Obtener información de red del cliente."""
+        """Obtener información de red del cliente - VERSIÓN ULTRA ROBUSTA UNIVERSAL."""
         client_info = {
             'client_ip': None,
             'gateway': None,
@@ -33,53 +33,307 @@ class NetworkTester:
             'timestamp': time.time()
         }
         
-        try:
-            # Obtener IP del cliente y gateway
-            result = subprocess.run(
-                ["ipconfig", "/all"],
-                capture_output=True,
-                text=True,
-                timeout=10,
-                encoding='cp1252'
-            )
+        def normalize_text(text):
+            """Normalizar texto para manejar diferentes encodings y caracteres especiales."""
+            # Reemplazar caracteres especiales comunes en diferentes encodings
+            replacements = {
+                '¢': 'ó', '¡': 'í', '†': 'é', '£': 'ú', 'š': 'á', 
+                'Š': 'Á', '‚': 'é', 'ƒ': 'ó', '„': 'ü', '…': 'à',
+                'scara': 'máscara', 'Direcci': 'Dirección', 
+                'Configuraci': 'Configuración', 'descripci': 'descripción'
+            }
+            normalized = text
+            for old, new in replacements.items():
+                normalized = normalized.replace(old, new)
+            return normalized.lower()
+        
+        def is_wifi_adapter_line(line):
+            """Detectar si una línea corresponde a un adaptador WiFi."""
+            line_lower = normalize_text(line)
+            wifi_indicators = [
+                'wireless', 'wi-fi', 'wifi', 'inalámbrica', 'inalambrica',
+                '802.11', 'wlan', 'wireless lan', 'lan inalámbrica'
+            ]
+            adapter_indicators = ['adapter', 'adaptador']
             
+            has_wifi = any(indicator in line_lower for indicator in wifi_indicators)
+            has_adapter = any(indicator in line_lower for indicator in adapter_indicators)
+            has_colon = ':' in line
+            
+            return has_wifi and has_adapter and has_colon
+        
+        def is_virtual_adapter(line):
+            """Detectar si es un adaptador virtual que debemos ignorar."""
+            line_lower = normalize_text(line)
+            virtual_indicators = [
+                'virtual', 'direct', 'hosted', 'microsoft', 'loopback',
+                'tunnel', 'teredo', 'isatap', 'miniport', 'bluetooth'
+            ]
+            return any(indicator in line_lower for indicator in virtual_indicators)
+        
+        def extract_ipv4(text):
+            """Extraer dirección IPv4 de un texto."""
+            ipv4_pattern = r'(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'
+            match = re.search(ipv4_pattern, text)
+            if match:
+                ip = match.group(1)
+                # Validar que sea una IP válida
+                parts = ip.split('.')
+                if all(0 <= int(part) <= 255 for part in parts):
+                    return ip
+            return None
+        
+        def is_private_ip(ip):
+            """Verificar si es una IP privada válida."""
+            if not ip:
+                return False
+            try:
+                parts = [int(x) for x in ip.split('.')]
+                # Rangos privados: 10.x.x.x, 172.16-31.x.x, 192.168.x.x
+                if parts[0] == 10:
+                    return True
+                elif parts[0] == 172 and 16 <= parts[1] <= 31:
+                    return True
+                elif parts[0] == 192 and parts[1] == 168:
+                    return True
+                # También aceptar algunas IPs públicas válidas
+                elif parts[0] not in [0, 127, 255]:
+                    return True
+            except:
+                pass
+            return False
+        
+        try:
+            print("🔧 NetworkTester: Iniciando análisis robusto de red...")
+            
+            # Método 1: ipconfig /all (principal)
+            encodings = ['cp1252', 'utf-8', 'latin1', 'cp850']
+            result = None
+            
+            for encoding in encodings:
+                try:
+                    result = subprocess.run(
+                        ["ipconfig", "/all"],
+                        capture_output=True,
+                        text=True,
+                        timeout=15,
+                        encoding=encoding
+                    )
+                    if result.returncode == 0 and len(result.stdout) > 100:
+                        print(f"   ✅ ipconfig exitoso con encoding: {encoding}")
+                        break
+                except UnicodeDecodeError:
+                    continue
+                except Exception:
+                    continue
+            
+            if not result or result.returncode != 0:
+                print("   ⚠️ ipconfig /all falló, intentando método alternativo...")
+                # Fallback a ipconfig simple
+                try:
+                    result = subprocess.run(
+                        ["ipconfig"],
+                        capture_output=True,
+                        text=True,
+                        timeout=10,
+                        encoding='cp1252'
+                    )
+                except:
+                    print("   ❌ Todos los métodos de ipconfig fallaron")
+                    return client_info
+            
+            lines = result.stdout.splitlines()
+            
+            # Variables de estado
             current_interface = None
-            for line in result.stdout.splitlines():
+            in_wifi_section = False
+            dhcp_servers = []
+            potential_gateways = []
+            wifi_adapters_found = []
+            
+            for line_num, line in enumerate(lines):
                 line = line.strip()
+                if not line:
+                    continue
                 
-                # Detectar interfaz WiFi activa
-                if "Wireless LAN adapter" in line or "Adaptador de LAN inalámbrica" in line:
-                    if "Wi-Fi" in line or "WiFi" in line:
+                # Detectar adaptador WiFi
+                if is_wifi_adapter_line(line):
+                    wifi_adapters_found.append(line)
+                    
+                    # Solo procesar si no es virtual
+                    if not is_virtual_adapter(line):
                         current_interface = line
                         client_info['interface_name'] = current_interface
+                        in_wifi_section = True
+                        print(f"   🎯 Adaptador WiFi real: {current_interface[:60]}...")
+                        continue
+                    else:
+                        print(f"   ⏭️  Adaptador virtual ignorado: {line[:50]}...")
                 
-                # Si estamos en la interfaz correcta, extraer información
-                if current_interface and ":" in line:
-                    if "IPv4" in line or "Dirección IPv4" in line:
-                        match = re.search(r'(\d+\.\d+\.\d+\.\d+)', line)
-                        if match:
-                            client_info['client_ip'] = match.group(1)
+                # Detectar fin de sección de adaptador
+                elif (('adapter' in line.lower() or 'adaptador' in line.lower()) and 
+                    ':' in line and in_wifi_section):
+                    print(f"   📤 Fin de sección WiFi actual")
+                    in_wifi_section = False
+                    current_interface = None
+                    continue
+                
+                # Procesar información dentro de la sección WiFi
+                if in_wifi_section and current_interface and ':' in line:
+                    try:
+                        key, value = line.split(':', 1)
+                        key = key.strip()
+                        value = value.strip()
+                        
+                        if not value:
+                            continue
+                        
+                        key_norm = normalize_text(key)
+                        value_norm = normalize_text(value)
+                        
+                        # IPv4 Address (múltiples patrones)
+                        if any(pattern in key_norm for pattern in [
+                            'ipv4', 'dirección ipv4', 'direccion ipv4', 'ip address'
+                        ]):
+                            ip = extract_ipv4(value)
+                            if ip and is_private_ip(ip) and not client_info['client_ip']:
+                                client_info['client_ip'] = ip
+                                print(f"   ✅ IP encontrada: {ip}")
+                        
+                        # Subnet Mask (múltiples patrones y encodings)
+                        elif any(pattern in key_norm for pattern in [
+                            'subnet mask', 'máscara de subred', 'mascara de subred',
+                            'subred', 'subnet', 'máscara', 'mascara'
+                        ]):
+                            mask = extract_ipv4(value)
+                            if mask and not client_info['subnet_mask']:
+                                client_info['subnet_mask'] = mask
+                                print(f"   ✅ Máscara encontrada: {mask}")
+                        
+                        # Default Gateway (manejar IPv4 e IPv6)
+                        elif any(pattern in key_norm for pattern in [
+                            'default gateway', 'puerta de enlace predeterminada',
+                            'puerta de enlace', 'gateway', 'enlace predeterminado'
+                        ]):
+                            # Priorizar IPv4 sobre IPv6
+                            gateway_ipv4 = extract_ipv4(value)
+                            if gateway_ipv4 and not client_info['gateway']:
+                                client_info['gateway'] = gateway_ipv4
+                                print(f"   ✅ Gateway IPv4: {gateway_ipv4}")
+                            elif gateway_ipv4:
+                                potential_gateways.append(gateway_ipv4)
+                        
+                        # DHCP Server (como fallback para gateway)
+                        elif any(pattern in key_norm for pattern in [
+                            'dhcp server', 'servidor dhcp', 'dhcp'
+                        ]):
+                            dhcp_ip = extract_ipv4(value)
+                            if dhcp_ip:
+                                dhcp_servers.append(dhcp_ip)
+                                print(f"   📝 Servidor DHCP: {dhcp_ip}")
+                        
+                        # DNS Servers (solo IPv4)
+                        elif any(pattern in key_norm for pattern in [
+                            'dns servers', 'servidores dns', 'dns'
+                        ]):
+                            dns_ip = extract_ipv4(value)
+                            if dns_ip and dns_ip not in client_info['dns_servers']:
+                                client_info['dns_servers'].append(dns_ip)
+                                print(f"   ✅ DNS encontrado: {dns_ip}")
+                        
+                    except ValueError:
+                        continue
+                    except Exception:
+                        continue
+            
+            # Post-procesamiento: fallbacks inteligentes
+            
+            # Fallback para gateway
+            if not client_info['gateway']:
+                # Usar DHCP server como gateway
+                if dhcp_servers:
+                    client_info['gateway'] = dhcp_servers[0]
+                # Usar gateway potencial
+                elif potential_gateways:
+                    client_info['gateway'] = potential_gateways[0]
+                # Inferir gateway desde IP
+                elif client_info['client_ip']:
+                    try:
+                        ip_parts = client_info['client_ip'].split('.')
+                        gateway_guess = f"{ip_parts[0]}.{ip_parts[1]}.{ip_parts[2]}.1"
+                        client_info['gateway'] = gateway_guess
+                    except:
+                        pass
+            
+            # Método 2: route print (fallback adicional para gateway)
+            if not client_info['gateway']:
+                try:
+                    print("   🔄 Buscando gateway con route print...")
+                    route_result = subprocess.run(
+                        ["route", "print", "0.0.0.0"],
+                        capture_output=True,
+                        text=True,
+                        timeout=10,
+                        encoding='cp1252'
+                    )
                     
-                    elif "Subnet Mask" in line or "Máscara de subred" in line:
-                        match = re.search(r'(\d+\.\d+\.\d+\.\d+)', line)
-                        if match:
-                            client_info['subnet_mask'] = match.group(1)
+                    if route_result.returncode == 0:
+                        for line in route_result.stdout.splitlines():
+                            if "0.0.0.0" in line:
+                                gateway = extract_ipv4(line)
+                                if gateway and gateway != "0.0.0.0":
+                                    client_info['gateway'] = gateway
+                                    break
+                except:
+                    pass
+            
+            # Método 3: arp -a (último recurso)
+            if not client_info['gateway'] and client_info['client_ip']:
+                try:
+                    print("   🔄 Buscando gateway con arp...")
+                    arp_result = subprocess.run(
+                        ["arp", "-a"],
+                        capture_output=True,
+                        text=True,
+                        timeout=10,
+                        encoding='cp1252'
+                    )
                     
-                    elif "Default Gateway" in line or "Puerta de enlace predeterminada" in line:
-                        match = re.search(r'(\d+\.\d+\.\d+\.\d+)', line)
-                        if match:
-                            client_info['gateway'] = match.group(1)
-                    
-                    elif "DNS Servers" in line or "Servidores DNS" in line:
-                        match = re.search(r'(\d+\.\d+\.\d+\.\d+)', line)
-                        if match:
-                            client_info['dns_servers'].append(match.group(1))
+                    if arp_result.returncode == 0:
+                        for line in arp_result.stdout.splitlines():
+                            gateway = extract_ipv4(line)
+                            if gateway and gateway.endswith('.1'):
+                                client_info['gateway'] = gateway
+                                print(f"   ✅ Gateway desde ARP: {gateway}")
+                                break
+                except:
+                    pass
+            
+            # Resumen final
+            print(f"   📊 RESUMEN FINAL:")
+            print(f"      🖥️  Adaptadores WiFi encontrados: {len(wifi_adapters_found)}")
+            print(f"      📱 Interfaz seleccionada: {client_info['interface_name'][:50] if client_info['interface_name'] else 'Ninguna'}...")
+            print(f"      🌐 IP: {client_info['client_ip'] or 'No encontrada'}")
+            print(f"      🚪 Gateway: {client_info['gateway'] or 'No encontrado'}")
+            print(f"      🎭 Máscara: {client_info['subnet_mask'] or 'No encontrada'}")
+            print(f"      🔍 DNS: {len(client_info['dns_servers'])} servidor(es)")
+            
+            # Evaluación de éxito
+            if client_info['client_ip'] and client_info['gateway']:
+                print(f"   ✅ NetworkTester: Información completa obtenida exitosamente")
+            elif client_info['client_ip']:
+                print(f"   ⚠️ NetworkTester: IP obtenida, gateway incompleto")
+            else:
+                print(f"   ❌ NetworkTester: Información insuficiente obtenida")
+            
+            return client_info
         
+        except subprocess.TimeoutExpired:
+            print("   ❌ NetworkTester: Timeout en comandos de red")
+            return client_info
         except Exception as e:
-            print(f"⚠️ Error obteniendo info de red del cliente: {e}")
-        
-        return client_info
-    
+            print(f"   ❌ NetworkTester: Error inesperado: {e}")
+            return client_info
     @staticmethod
     def check_iperf_server():
         """Check if LOCAL iperf3 server is running."""
@@ -412,34 +666,7 @@ class NetworkTester:
                         "error": f"Failed UDP reverse test {rate}"
                     }
 
-            # 5. UDP BIDIRECCIONAL (NUEVO)
-            print(f"\n5. UDP BIDIRECCIONAL TEST (ambas direcciones simultáneas)")
-            print("-" * 50)
-            
-            # Este es más complejo, usa parallel streams
-            udp_bi_json = run_json([
-                Config.IPERF_PATH, "-c", self.iperf_server, "-u", "-d", "-b", "10M",
-                "-t", str(duration), "-J", "-l", "1400"
-            ])
-            
-            if udp_bi_json:
-                results["tests"]["udp_bidirectional"] = {
-                    "test_completed": True,
-                    "raw_data": udp_bi_json
-                }
-                print(f"   ✅ UDP BIDIRECCIONAL completado")
-            else:
-                results["tests"]["udp_bidirectional"] = {
-                    "error": "UDP bidirectional test failed"
-                }
-                print(f"   ❌ UDP BIDIRECCIONAL falló")
-
-            # Mantener los tests originales para compatibilidad
-            # (Los tests UDP originales que ya tenías)
-            # Solo los ejecuto si no se ejecutaron arriba
-            if "udp_reverse_10mbps" not in results["tests"]:
-                # Tu código UDP original aquí...
-                pass
+           
 
             # Resumen final
             print("\n" + "=" * 70)

@@ -5473,11 +5473,1708 @@
           }
         ]
       }
+    },
+    {
+      "id": 28,
+      "timestamp": "2025-08-06T00:54:33.249497",
+      "location": null,
+      "networks": [
+        {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 86,
+          "signal_dbm": -39.0,
+          "snr_db": 61.0,
+          "signal_quality": "Excellent",
+          "channel": 149,
+          "band": "5GHz",
+          "authentication": "WPA2-Personal"
+        },
+        {
+          "ssid": "Puma",
+          "bssid": "b8:dd:71:e3:9c:3a",
+          "signal": 99,
+          "signal_dbm": -30.5,
+          "snr_db": 64.5,
+          "signal_quality": "Excellent",
+          "channel": 1,
+          "band": "2.4GHz",
+          "authentication": "WPA2-Personal"
+        }
+      ],
+      "tests": {},
+      "all_network_tests": [
+        {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 86,
+          "timestamp": "2025-08-06T00:54:41.093759",
+          "tests": {
+            "ping": {
+              "success": true,
+              "avg_time": 14,
+              "min_time": 12,
+              "max_time": 19,
+              "packet_loss": "0%",
+              "raw_times": [
+                12,
+                13,
+                19,
+                12
+              ]
+            },
+            "iperf_suite": {
+              "success": true,
+              "server": "iperf.he.net",
+              "tests": {
+                "tcp_forward": {
+                  "download_mbps": 4.48834,
+                  "upload_mbps": 4.48834,
+                  "download_gbps": 0.00448834,
+                  "upload_gbps": 0.00448834
+                },
+                "tcp_reverse": {
+                  "download_mbps": 2.55558,
+                  "upload_mbps": 3.08063,
+                  "download_gbps": 0.00255558,
+                  "upload_gbps": 0.00308063
+                },
+                "udp_forward_tests": {
+                  "udp_forward_1M": {
+                    "target_mbps": 1.0,
+                    "actual_mbps": 0.990794,
+                    "jitter_ms": 0.252929,
+                    "lost_percent": 0,
+                    "total_packets": 886,
+                    "lost_packets": 0,
+                    "quality": "EXCELENTE"
+                  },
+                  "udp_forward_5M": {
+                    "target_mbps": 5.0,
+                    "actual_mbps": 4.96296,
+                    "jitter_ms": 0.307221,
+                    "lost_percent": 0,
+                    "total_packets": 4434,
+                    "lost_packets": 0,
+                    "quality": "EXCELENTE"
+                  },
+                  "udp_forward_10M": {
+                    "target_mbps": 10.0,
+                    "actual_mbps": 9.99251,
+                    "jitter_ms": 0.172599,
+                    "lost_percent": 0,
+                    "total_packets": 8922,
+                    "lost_packets": 0,
+                    "quality": "EXCELENTE"
+                  }
+                },
+                "udp_reverse_tests": {
+                  "udp_reverse_1M": {
+                    "target_mbps": 1.0,
+                    "actual_mbps": 1.03582,
+                    "jitter_ms": 0.239062,
+                    "lost_percent": 0,
+                    "total_packets": 925,
+                    "lost_packets": 0,
+                    "quality": "EXCELENTE"
+                  },
+                  "udp_reverse_5M": {
+                    "target_mbps": 5.0,
+                    "actual_mbps": 5.12445,
+                    "jitter_ms": 2.18502,
+                    "lost_percent": 0,
+                    "total_packets": 4570,
+                    "lost_packets": 0,
+                    "quality": "BUENA"
+                  },
+                  "udp_reverse_10M": {
+                    "target_mbps": 10.0,
+                    "actual_mbps": 10.2392,
+                    "jitter_ms": 0.0529349,
+                    "lost_percent": 0,
+                    "total_packets": 9143,
+                    "lost_packets": 0,
+                    "quality": "EXCELENTE"
+                  }
+                },
+                "udp_bidirectional": {
+                  "error": "UDP bidirectional test failed"
+                }
+              },
+              "raw_output": [
+                "Connecting to host iperf.he.net, port 5201\n",
+                "[  4] local 2800:a4:1d03:8c00:b86e:df38:49b2:4159 port 61799 connected to 2001:470:0:236::2 port 5201\n",
+                "[ ID] Interval           Transfer     Bandwidth\n",
+                "[  4]   0.00-1.01   sec   189 KBytes  1.53 Mbits/sec                  \n",
+                "[  4]   1.01-2.00   sec   567 KBytes  4.68 Mbits/sec                  \n",
+                "[  4]   2.00-3.02   sec   567 KBytes  4.58 Mbits/sec                  \n",
+                "[  4]   3.02-4.01   sec   630 KBytes  5.17 Mbits/sec                  \n",
+                "[  4]   4.01-5.00   sec   504 KBytes  4.18 Mbits/sec                  \n",
+                "[  4]   5.00-6.01   sec   630 KBytes  5.14 Mbits/sec                  \n",
+                "[  4]   6.01-7.01   sec   630 KBytes  5.15 Mbits/sec                  \n",
+                "[  4]   7.01-8.01   sec   504 KBytes  4.12 Mbits/sec                  \n",
+                "[  4]   8.01-9.00   sec   630 KBytes  5.19 Mbits/sec                  \n",
+                "[  4]   9.00-10.00  sec   630 KBytes  5.18 Mbits/sec                  \n",
+                "- - - - - - - - - - - - - - - - - - - - - - - - -\n",
+                "[ ID] Interval           Transfer     Bandwidth\n",
+                "[  4]   0.00-10.00  sec  5.35 MBytes  4.49 Mbits/sec                  sender\n",
+                "[  4]   0.00-10.00  sec  5.35 MBytes  4.49 Mbits/sec                  receiver\n",
+                "\n",
+                "iperf Done.\n",
+                "Connecting to host iperf.he.net, port 5201\n",
+                "Reverse mode, remote host iperf.he.net is sending\n",
+                "[  4] local 2800:a4:1d03:8c00:b86e:df38:49b2:4159 port 61826 connected to 2001:470:0:236::2 port 5201\n",
+                "[ ID] Interval           Transfer     Bandwidth\n",
+                "[  4]   0.00-1.00   sec   235 KBytes  1.92 Mbits/sec                  \n",
+                "[  4]   1.00-2.01   sec   304 KBytes  2.48 Mbits/sec                  \n",
+                "[  4]   2.01-3.01   sec   315 KBytes  2.56 Mbits/sec                  \n",
+                "[  4]   3.01-4.00   sec   315 KBytes  2.61 Mbits/sec                  \n",
+                "[  4]   4.00-5.00   sec   315 KBytes  2.57 Mbits/sec                  \n",
+                "[  4]   5.00-6.00   sec   315 KBytes  2.57 Mbits/sec                  \n",
+                "[  4]   6.00-7.01   sec   315 KBytes  2.57 Mbits/sec                  \n",
+                "[  4]   7.01-8.01   sec   315 KBytes  2.57 Mbits/sec                  \n",
+                "[  4]   8.01-9.01   sec   315 KBytes  2.57 Mbits/sec                  \n",
+                "[  4]   9.01-10.01  sec   315 KBytes  2.58 Mbits/sec                  \n",
+                "- - - - - - - - - - - - - - - - - - - - - - - - -\n",
+                "[ ID] Interval           Transfer     Bandwidth       Retr\n",
+                "[  4]   0.00-10.01  sec  3.71 MBytes  3.11 Mbits/sec    0             sender\n",
+                "[  4]   0.00-10.01  sec  3.11 MBytes  2.61 Mbits/sec                  receiver\n",
+                "\n",
+                "iperf Done.\n",
+                "Connecting to host iperf.he.net, port 5201\n",
+                "[  4] local 2800:a4:1d03:8c00:b86e:df38:49b2:4159 port 51327 connected to 2001:470:0:236::2 port 5201\n",
+                "[ ID] Interval           Transfer     Bandwidth       Total Datagrams\n",
+                "[  4]   0.00-1.00   sec   112 KBytes   914 Kbits/sec  82  \n",
+                "[  4]   1.00-2.00   sec   122 KBytes   999 Kbits/sec  89  \n",
+                "[  4]   2.00-3.01   sec   122 KBytes   985 Kbits/sec  89  \n",
+                "[  4]   3.01-4.01   sec   122 KBytes   999 Kbits/sec  89  \n",
+                "[  4]   4.01-5.01   sec   122 KBytes   997 Kbits/sec  89  \n",
+                "[  4]   5.01-6.01   sec   123 KBytes  1.01 Mbits/sec  90  \n",
+                "[  4]   6.01-7.00   sec   123 KBytes  1.02 Mbits/sec  90  \n",
+                "[  4]   7.00-8.00   sec   120 KBytes   984 Kbits/sec  88  \n",
+                "[  4]   8.00-9.01   sec   123 KBytes  1.00 Mbits/sec  90  \n",
+                "[  4]   9.01-10.01  sec   123 KBytes  1.01 Mbits/sec  90  \n",
+                "- - - - - - - - - - - - - - - - - - - - - - - - -\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-10.01  sec  1.18 MBytes   992 Kbits/sec  0.255 ms  0/886 (0%)  \n",
+                "[  4] Sent 886 datagrams\n",
+                "\n",
+                "iperf Done.\n",
+                "Connecting to host iperf.he.net, port 5201\n",
+                "[  4] local 2800:a4:1d03:8c00:b86e:df38:49b2:4159 port 61515 connected to 2001:470:0:236::2 port 5201\n",
+                "[ ID] Interval           Transfer     Bandwidth       Total Datagrams\n",
+                "[  4]   0.00-1.03   sec   574 KBytes  4.58 Mbits/sec  420  \n",
+                "[  4]   1.03-2.01   sec   591 KBytes  4.92 Mbits/sec  432  \n",
+                "[  4]   2.01-3.00   sec   614 KBytes  5.07 Mbits/sec  449  \n",
+                "[  4]   3.00-4.00   sec   610 KBytes  5.00 Mbits/sec  446  \n",
+                "[  4]   4.00-5.01   sec   617 KBytes  5.00 Mbits/sec  451  \n",
+                "[  4]   5.01-6.01   sec   603 KBytes  4.93 Mbits/sec  441  \n",
+                "[  4]   6.01-7.01   sec   615 KBytes  5.06 Mbits/sec  450  \n",
+                "[  4]   7.01-8.01   sec   611 KBytes  5.02 Mbits/sec  447  \n",
+                "[  4]   8.01-9.01   sec   610 KBytes  5.00 Mbits/sec  446  \n",
+                "[  4]   9.01-10.01  sec   614 KBytes  5.02 Mbits/sec  449  \n",
+                "- - - - - - - - - - - - - - - - - - - - - - - - -\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-10.01  sec  5.92 MBytes  4.96 Mbits/sec  0.251 ms  0/4431 (0%)  \n",
+                "[  4] Sent 4431 datagrams\n",
+                "\n",
+                "iperf Done.\n",
+                "Connecting to host iperf.he.net, port 5201\n",
+                "[  4] local 2800:a4:1d03:8c00:b86e:df38:49b2:4159 port 60512 connected to 2001:470:0:236::2 port 5201\n",
+                "[ ID] Interval           Transfer     Bandwidth       Total Datagrams\n",
+                "[  4]   0.00-1.01   sec  1.09 MBytes  9.04 Mbits/sec  816  \n",
+                "[  4]   1.01-2.01   sec  1.19 MBytes  9.93 Mbits/sec  888  \n",
+                "[  4]   2.01-3.01   sec  1.19 MBytes  10.0 Mbits/sec  895  \n",
+                "[  4]   3.01-4.01   sec  1.21 MBytes  10.2 Mbits/sec  905  \n",
+                "[  4]   4.01-5.00   sec  1.19 MBytes  10.0 Mbits/sec  892  \n",
+                "[  4]   5.00-6.00   sec  1.19 MBytes  10.0 Mbits/sec  890  \n",
+                "[  4]   6.00-7.01   sec  1.23 MBytes  10.3 Mbits/sec  923  \n",
+                "[  4]   7.01-8.00   sec  1.15 MBytes  9.70 Mbits/sec  862  \n",
+                "[  4]   8.00-9.01   sec  1.19 MBytes  9.84 Mbits/sec  890  \n",
+                "[  4]   9.01-10.01  sec  1.21 MBytes  10.2 Mbits/sec  906  \n",
+                "- - - - - - - - - - - - - - - - - - - - - - - - -\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-10.01  sec  11.8 MBytes  9.92 Mbits/sec  0.228 ms  0/8867 (0%)  \n",
+                "[  4] Sent 8867 datagrams\n",
+                "\n",
+                "iperf Done.\n",
+                "Connecting to host iperf.he.net, port 5201\n",
+                "Reverse mode, remote host iperf.he.net is sending\n",
+                "[  4] local 2800:a4:1d03:8c00:b86e:df38:49b2:4159 port 65334 connected to 2001:470:0:236::2 port 5201\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-1.01   sec   130 KBytes  1.06 Mbits/sec  253479443.104 ms  0/95 (0%)  \n",
+                "[  4]   1.01-2.00   sec   120 KBytes   989 Kbits/sec  865795.286 ms  0/88 (0%)  \n",
+                "[  4]   2.00-3.01   sec   124 KBytes  1.01 Mbits/sec  2436.995 ms  0/91 (0%)  \n",
+                "[  4]   3.01-4.01   sec   122 KBytes  1.00 Mbits/sec  8.996 ms  0/89 (0%)  \n",
+                "[  4]   4.01-5.00   sec   122 KBytes   999 Kbits/sec  0.917 ms  0/89 (0%)  \n",
+                "[  4]   5.00-6.00   sec   122 KBytes   998 Kbits/sec  0.493 ms  0/89 (0%)  \n",
+                "[  4]   6.00-7.00   sec   122 KBytes   996 Kbits/sec  2.584 ms  0/89 (0%)  \n",
+                "[  4]   7.00-8.01   sec   123 KBytes  1.00 Mbits/sec  3.051 ms  0/90 (0%)  \n",
+                "[  4]   8.01-9.01   sec   120 KBytes   987 Kbits/sec  6.322 ms  0/88 (0%)  \n",
+                "[  4]   9.01-10.01  sec   122 KBytes   998 Kbits/sec  10.861 ms  0/89 (0%)  \n",
+                "- - - - - - - - - - - - - - - - - - - - - - - - -\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-10.01  sec  1.22 MBytes  1.03 Mbits/sec  7.364 ms  0/916 (0%)  \n",
+                "[  4] Sent 916 datagrams\n",
+                "\n",
+                "iperf Done.\n",
+                "Connecting to host iperf.he.net, port 5201\n",
+                "Reverse mode, remote host iperf.he.net is sending\n",
+                "[  4] local 2800:a4:1d03:8c00:b86e:df38:49b2:4159 port 61319 connected to 2001:470:0:236::2 port 5201\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-1.00   sec   643 KBytes  5.26 Mbits/sec  0.210 ms  0/470 (0%)  \n",
+                "[  4]   1.00-2.00   sec   611 KBytes  5.00 Mbits/sec  0.421 ms  0/447 (0%)  \n",
+                "[  4]   2.00-3.00   sec   607 KBytes  4.96 Mbits/sec  1.167 ms  0/444 (0%)  \n",
+                "[  4]   3.00-4.00   sec   614 KBytes  5.04 Mbits/sec  1.441 ms  0/449 (0%)  \n",
+                "[  4]   4.00-5.00   sec   607 KBytes  4.97 Mbits/sec  2.501 ms  0/444 (0%)  \n",
+                "[  4]   5.00-6.00   sec   612 KBytes  5.02 Mbits/sec  0.119 ms  0/448 (0%)  \n",
+                "[  4]   6.00-7.00   sec   611 KBytes  5.00 Mbits/sec  0.220 ms  0/447 (0%)  \n",
+                "[  4]   7.00-8.00   sec   611 KBytes  5.00 Mbits/sec  0.762 ms  0/447 (0%)  \n",
+                "[  4]   8.00-9.00   sec   610 KBytes  5.00 Mbits/sec  0.192 ms  0/446 (0%)  \n",
+                "[  4]   9.00-10.00  sec   610 KBytes  5.00 Mbits/sec  0.220 ms  0/446 (0%)  \n",
+                "- - - - - - - - - - - - - - - - - - - - - - - - -\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-10.00  sec  6.11 MBytes  5.13 Mbits/sec  0.031 ms  0/4577 (0%)  \n",
+                "[  4] Sent 4577 datagrams\n",
+                "\n",
+                "iperf Done.\n",
+                "Connecting to host iperf.he.net, port 5201\n",
+                "Reverse mode, remote host iperf.he.net is sending\n",
+                "[  4] local 2800:a4:1d03:8c00:b86e:df38:49b2:4159 port 63522 connected to 2001:470:0:236::2 port 5201\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-1.00   sec  1.25 MBytes  10.4 Mbits/sec  1.074 ms  0/934 (0%)  \n",
+                "[  4]   1.00-2.00   sec  1.20 MBytes  10.1 Mbits/sec  1.055 ms  0/896 (0%)  \n",
+                "[  4]   2.00-3.00   sec  1.19 MBytes  10.0 Mbits/sec  0.616 ms  0/893 (0%)  \n",
+                "[  4]   3.00-4.00   sec  1.19 MBytes  10.0 Mbits/sec  0.947 ms  0/893 (0%)  \n",
+                "[  4]   4.00-5.01   sec  1.19 MBytes  9.85 Mbits/sec  1.462 ms  0/889 (0%)  \n",
+                "[  4]   5.01-6.01   sec  1.20 MBytes  10.1 Mbits/sec  1.109 ms  0/897 (0%)  \n",
+                "[  4]   6.01-7.01   sec  1.19 MBytes  9.89 Mbits/sec  1.017 ms  0/890 (0%)  \n",
+                "[  4]   7.01-8.00   sec  1.19 MBytes  10.2 Mbits/sec  0.808 ms  0/895 (0%)  \n",
+                "[  4]   8.00-9.00   sec  1.13 MBytes  9.44 Mbits/sec  0.310 ms  47/893 (5.3%)  \n",
+                "[  4]   9.00-10.00  sec  1.19 MBytes  10.0 Mbits/sec  0.252 ms  0/893 (0%)  \n",
+                "- - - - - - - - - - - - - - - - - - - - - - - - -\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-10.00  sec  12.2 MBytes  10.2 Mbits/sec  0.672 ms  47/9150 (0.51%)  \n",
+                "[  4] Sent 9150 datagrams\n",
+                "\n",
+                "iperf Done.\n"
+              ],
+              "client_network_info": {
+                "client_ip": null,
+                "gateway": null,
+                "dns_servers": [],
+                "interface_name": null,
+                "subnet_mask": null,
+                "timestamp": 1754452486.592551
+              }
+            }
+          }
+        },
+        {
+          "ssid": "Puma",
+          "bssid": "b8:dd:71:e3:9c:3a",
+          "signal": 99,
+          "timestamp": "2025-08-06T00:58:33.648694",
+          "tests": {
+            "ping": {
+              "success": true,
+              "avg_time": 15.5,
+              "min_time": 12,
+              "max_time": 23,
+              "packet_loss": "0%",
+              "raw_times": [
+                12,
+                23,
+                12,
+                15
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "timestamp": "2025-08-06T01:06:25.303674",
+      "location": null,
+      "networks": [
+        {
+          "ssid": "Puma",
+          "bssid": "b8:dd:71:e3:9c:3a",
+          "signal": 99,
+          "signal_dbm": -30.5,
+          "snr_db": 64.5,
+          "signal_quality": "Excellent",
+          "channel": 1,
+          "band": "2.4GHz",
+          "authentication": "WPA2-Personal"
+        },
+        {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 90,
+          "signal_dbm": -35.0,
+          "snr_db": 65.0,
+          "signal_quality": "Excellent",
+          "channel": 149,
+          "band": "5GHz",
+          "authentication": "WPA2-Personal"
+        }
+      ],
+      "tests": {},
+      "all_network_tests": [
+        {
+          "ssid": "Puma",
+          "bssid": "b8:dd:71:e3:9c:3a",
+          "signal": 99,
+          "timestamp": "2025-08-06T01:06:33.170628",
+          "tests": {
+            "ping": {
+              "success": true,
+              "avg_time": 14.75,
+              "min_time": 11,
+              "max_time": 19,
+              "packet_loss": "0%",
+              "raw_times": [
+                19,
+                15,
+                14,
+                11
+              ]
+            },
+            "iperf_suite": {
+              "success": true,
+              "server": "iperf.he.net",
+              "tests": {
+                "tcp_forward": {
+                  "download_mbps": 4.38203,
+                  "upload_mbps": 4.38203,
+                  "download_gbps": 0.00438203,
+                  "upload_gbps": 0.00438203
+                },
+                "tcp_reverse": {
+                  "download_mbps": 2.46016,
+                  "upload_mbps": 2.85567,
+                  "download_gbps": 0.00246016,
+                  "upload_gbps": 0.00285567
+                },
+                "udp_forward_tests": {
+                  "udp_forward_1M": {
+                    "target_mbps": 1.0,
+                    "actual_mbps": 0.868878,
+                    "jitter_ms": 32.6291,
+                    "lost_percent": 0,
+                    "total_packets": 738,
+                    "lost_packets": 0,
+                    "quality": "ACEPTABLE"
+                  },
+                  "udp_forward_5M": {
+                    "target_mbps": 5.0,
+                    "actual_mbps": 4.94945,
+                    "jitter_ms": 0.601065,
+                    "lost_percent": 0,
+                    "total_packets": 4426,
+                    "lost_packets": 0,
+                    "quality": "EXCELENTE"
+                  },
+                  "udp_forward_10M": {
+                    "target_mbps": 10.0,
+                    "actual_mbps": 9.94028,
+                    "jitter_ms": 0.247488,
+                    "lost_percent": 0,
+                    "total_packets": 8888,
+                    "lost_packets": 0,
+                    "quality": "EXCELENTE"
+                  }
+                },
+                "udp_reverse_tests": {
+                  "udp_reverse_1M": {
+                    "target_mbps": 1.0,
+                    "actual_mbps": 1.02535,
+                    "jitter_ms": 1.81736,
+                    "lost_percent": 0,
+                    "total_packets": 912,
+                    "lost_packets": 0,
+                    "quality": "EXCELENTE"
+                  },
+                  "udp_reverse_5M": {
+                    "target_mbps": 5.0,
+                    "actual_mbps": 5.12049,
+                    "jitter_ms": 1.32145,
+                    "lost_percent": 0,
+                    "total_packets": 4572,
+                    "lost_packets": 0,
+                    "quality": "EXCELENTE"
+                  },
+                  "udp_reverse_10M": {
+                    "target_mbps": 10.0,
+                    "actual_mbps": 10.2561,
+                    "jitter_ms": 0.776791,
+                    "lost_percent": 0.480507,
+                    "total_packets": 9157,
+                    "lost_packets": 44,
+                    "quality": "BUENA"
+                  }
+                },
+                "udp_bidirectional": {
+                  "error": "UDP bidirectional test failed"
+                }
+              },
+              "raw_output": [
+                "Connecting to host iperf.he.net, port 5201\n",
+                "[  4] local 2800:a4:1d03:8c00:b86e:df38:49b2:4159 port 53072 connected to 2001:470:0:236::2 port 5201\n",
+                "[ ID] Interval           Transfer     Bandwidth\n",
+                "[  4]   0.00-1.05   sec   189 KBytes  1.47 Mbits/sec                  \n",
+                "[  4]   1.05-2.01   sec   504 KBytes  4.30 Mbits/sec                  \n",
+                "[  4]   2.01-3.01   sec   504 KBytes  4.14 Mbits/sec                  \n",
+                "[  4]   3.01-4.01   sec   567 KBytes  4.64 Mbits/sec                  \n",
+                "[  4]   4.01-5.01   sec   567 KBytes  4.68 Mbits/sec                  \n",
+                "[  4]   5.01-6.00   sec   315 KBytes  2.59 Mbits/sec                  \n",
+                "[  4]   6.00-7.01   sec   567 KBytes  4.61 Mbits/sec                  \n",
+                "[  4]   7.01-8.01   sec   504 KBytes  4.15 Mbits/sec                  \n",
+                "[  4]   8.01-9.01   sec   567 KBytes  4.64 Mbits/sec                  \n",
+                "[  4]   9.01-10.00  sec   567 KBytes  4.66 Mbits/sec                  \n",
+                "- - - - - - - - - - - - - - - - - - - - - - - - -\n",
+                "[ ID] Interval           Transfer     Bandwidth\n",
+                "[  4]   0.00-10.00  sec  4.74 MBytes  3.97 Mbits/sec                  sender\n",
+                "[  4]   0.00-10.00  sec  4.72 MBytes  3.96 Mbits/sec                  receiver\n",
+                "\n",
+                "iperf Done.\n",
+                "Connecting to host iperf.he.net, port 5201\n",
+                "Reverse mode, remote host iperf.he.net is sending\n",
+                "[  4] local 2800:a4:1d03:8c00:b86e:df38:49b2:4159 port 53113 connected to 2001:470:0:236::2 port 5201\n",
+                "[ ID] Interval           Transfer     Bandwidth\n",
+                "[  4]   0.00-1.01   sec   224 KBytes  1.81 Mbits/sec                  \n",
+                "[  4]   1.01-2.01   sec   315 KBytes  2.59 Mbits/sec                  \n",
+                "[  4]   2.01-3.00   sec   299 KBytes  2.47 Mbits/sec                  \n",
+                "[  4]   3.00-4.01   sec   278 KBytes  2.25 Mbits/sec                  \n",
+                "[  4]   4.01-5.01   sec   302 KBytes  2.48 Mbits/sec                  \n",
+                "[  4]   5.01-6.03   sec   257 KBytes  2.07 Mbits/sec                  \n",
+                "[  4]   6.03-7.02   sec   308 KBytes  2.55 Mbits/sec                  \n",
+                "[  4]   7.02-8.01   sec   305 KBytes  2.51 Mbits/sec                  \n",
+                "[  4]   8.01-9.00   sec   308 KBytes  2.55 Mbits/sec                  \n",
+                "[  4]   9.00-10.02  sec   255 KBytes  2.06 Mbits/sec                  \n",
+                "- - - - - - - - - - - - - - - - - - - - - - - - -\n",
+                "[ ID] Interval           Transfer     Bandwidth       Retr\n",
+                "[  4]   0.00-10.02  sec  3.32 MBytes  2.78 Mbits/sec    0             sender\n",
+                "[  4]   0.00-10.02  sec  2.91 MBytes  2.44 Mbits/sec                  receiver\n",
+                "\n",
+                "iperf Done.\n",
+                "Connecting to host iperf.he.net, port 5201\n",
+                "[  4] local 2800:a4:1d03:8c00:b86e:df38:49b2:4159 port 58293 connected to 2001:470:0:236::2 port 5201\n",
+                "[ ID] Interval           Transfer     Bandwidth       Total Datagrams\n",
+                "[  4]   0.00-1.00   sec   112 KBytes   918 Kbits/sec  82  \n",
+                "[  4]   1.00-2.01   sec   122 KBytes   983 Kbits/sec  89  \n",
+                "[  4]   2.01-3.01   sec   122 KBytes  1000 Kbits/sec  89  \n",
+                "[  4]   3.01-4.01   sec   122 KBytes   997 Kbits/sec  89  \n",
+                "[  4]   4.01-5.01   sec   122 KBytes   998 Kbits/sec  89  \n",
+                "[  4]   5.01-6.01   sec   123 KBytes  1.00 Mbits/sec  90  \n",
+                "[  4]   6.01-7.01   sec   122 KBytes   999 Kbits/sec  89  \n",
+                "[  4]   7.01-8.01   sec   122 KBytes   996 Kbits/sec  89  \n",
+                "[  4]   8.01-9.01   sec   123 KBytes  1.01 Mbits/sec  90  \n",
+                "[  4]   9.01-10.01  sec   122 KBytes   995 Kbits/sec  89  \n",
+                "- - - - - - - - - - - - - - - - - - - - - - - - -\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-10.01  sec  1.18 MBytes   990 Kbits/sec  0.763 ms  0/885 (0%)  \n",
+                "[  4] Sent 885 datagrams\n",
+                "\n",
+                "iperf Done.\n",
+                "Connecting to host iperf.he.net, port 5201\n",
+                "[  4] local 2800:a4:1d03:8c00:b86e:df38:49b2:4159 port 52840 connected to 2001:470:0:236::2 port 5201\n",
+                "[ ID] Interval           Transfer     Bandwidth       Total Datagrams\n",
+                "[  4]   0.00-1.00   sec   593 KBytes  4.85 Mbits/sec  434  \n",
+                "[  4]   1.00-2.01   sec   574 KBytes  4.65 Mbits/sec  420  \n",
+                "[  4]   2.01-3.01   sec   610 KBytes  5.00 Mbits/sec  446  \n",
+                "[  4]   3.01-4.01   sec   625 KBytes  5.13 Mbits/sec  457  \n",
+                "[  4]   4.01-5.01   sec   615 KBytes  5.06 Mbits/sec  450  \n",
+                "[  4]   5.01-6.00   sec   595 KBytes  4.89 Mbits/sec  435  \n",
+                "[  4]   6.00-7.00   sec   619 KBytes  5.09 Mbits/sec  453  \n",
+                "[  4]   7.00-8.02   sec   597 KBytes  4.82 Mbits/sec  437  \n",
+                "[  4]   8.02-9.01   sec   611 KBytes  5.02 Mbits/sec  447  \n",
+                "[  4]   9.01-10.01  sec   632 KBytes  5.20 Mbits/sec  462  \n",
+                "- - - - - - - - - - - - - - - - - - - - - - - - -\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-10.01  sec  5.93 MBytes  4.97 Mbits/sec  0.313 ms  0/4441 (0%)  \n",
+                "[  4] Sent 4441 datagrams\n",
+                "\n",
+                "iperf Done.\n",
+                "Connecting to host iperf.he.net, port 5201\n",
+                "[  4] local 2800:a4:1d03:8c00:b86e:df38:49b2:4159 port 61146 connected to 2001:470:0:236::2 port 5201\n",
+                "[ ID] Interval           Transfer     Bandwidth       Total Datagrams\n",
+                "[  4]   0.00-1.01   sec  1.17 MBytes  9.65 Mbits/sec  874  \n",
+                "[  4]   1.01-2.01   sec  1.16 MBytes  9.78 Mbits/sec  869  \n",
+                "[  4]   2.01-3.01   sec  1.22 MBytes  10.3 Mbits/sec  912  \n",
+                "[  4]   3.01-4.01   sec  1.12 MBytes  9.33 Mbits/sec  838  \n",
+                "[  4]   4.01-5.01   sec  1.20 MBytes  10.2 Mbits/sec  902  \n",
+                "[  4]   5.01-6.01   sec  1.20 MBytes  10.1 Mbits/sec  902  \n",
+                "[  4]   6.01-7.01   sec  1.25 MBytes  10.5 Mbits/sec  936  \n",
+                "[  4]   7.01-8.01   sec  1.10 MBytes  9.22 Mbits/sec  826  \n",
+                "[  4]   8.01-9.01   sec  1.25 MBytes  10.5 Mbits/sec  937  \n",
+                "[  4]   9.01-10.01  sec  1.20 MBytes  10.1 Mbits/sec  899  \n",
+                "- - - - - - - - - - - - - - - - - - - - - - - - -\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-10.01  sec  11.9 MBytes  9.96 Mbits/sec  1.345 ms  0/8895 (0%)  \n",
+                "[  4] Sent 8895 datagrams\n",
+                "\n",
+                "iperf Done.\n",
+                "Connecting to host iperf.he.net, port 5201\n",
+                "Reverse mode, remote host iperf.he.net is sending\n",
+                "[  4] local 2800:a4:1d03:8c00:b86e:df38:49b2:4159 port 51134 connected to 2001:470:0:236::2 port 5201\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-1.00   sec   129 KBytes  1.05 Mbits/sec  270378072.322 ms  0/94 (0%)  \n",
+                "[  4]   1.00-2.00   sec   122 KBytes  1.00 Mbits/sec  865795.613 ms  0/89 (0%)  \n",
+                "[  4]   2.00-3.00   sec   122 KBytes   997 Kbits/sec  2774.334 ms  0/89 (0%)  \n",
+                "[  4]   3.00-4.00   sec   122 KBytes   996 Kbits/sec  10.908 ms  0/89 (0%)  \n",
+                "[  4]   4.00-5.00   sec   123 KBytes  1.01 Mbits/sec  1.343 ms  0/90 (0%)  \n",
+                "[  4]   5.00-6.02   sec   122 KBytes   980 Kbits/sec  0.954 ms  0/89 (0%)  \n",
+                "[  4]   6.02-7.00   sec   122 KBytes  1.01 Mbits/sec  1.744 ms  0/89 (0%)  \n",
+                "[  4]   7.00-8.00   sec   123 KBytes  1.01 Mbits/sec  0.822 ms  0/90 (0%)  \n",
+                "[  4]   8.00-9.00   sec   122 KBytes  1000 Kbits/sec  0.867 ms  0/89 (0%)  \n",
+                "[  4]   9.00-10.01  sec   123 KBytes  1.00 Mbits/sec  0.830 ms  0/90 (0%)  \n",
+                "- - - - - - - - - - - - - - - - - - - - - - - - -\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-10.01  sec  1.22 MBytes  1.03 Mbits/sec  1.160 ms  0/915 (0%)  \n",
+                "[  4] Sent 915 datagrams\n",
+                "\n",
+                "iperf Done.\n",
+                "Connecting to host iperf.he.net, port 5201\n",
+                "Reverse mode, remote host iperf.he.net is sending\n",
+                "[  4] local 2800:a4:1d03:8c00:b86e:df38:49b2:4159 port 51847 connected to 2001:470:0:236::2 port 5201\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-1.00   sec   638 KBytes  5.23 Mbits/sec  0.556 ms  0/467 (0%)  \n",
+                "[  4]   1.00-2.00   sec   612 KBytes  5.00 Mbits/sec  1.044 ms  0/448 (0%)  \n",
+                "[  4]   2.00-3.00   sec   610 KBytes  5.01 Mbits/sec  1.257 ms  0/446 (0%)  \n",
+                "[  4]   3.00-4.00   sec   611 KBytes  5.00 Mbits/sec  0.962 ms  0/447 (0%)  \n",
+                "[  4]   4.00-5.00   sec   608 KBytes  4.99 Mbits/sec  0.768 ms  0/445 (0%)  \n",
+                "[  4]   5.00-6.00   sec   612 KBytes  5.02 Mbits/sec  0.404 ms  0/448 (0%)  \n",
+                "[  4]   6.00-7.00   sec   610 KBytes  5.00 Mbits/sec  0.562 ms  0/446 (0%)  \n",
+                "[  4]   7.00-8.00   sec   608 KBytes  4.98 Mbits/sec  0.947 ms  0/445 (0%)  \n",
+                "[  4]   8.00-9.00   sec   611 KBytes  5.01 Mbits/sec  0.740 ms  0/447 (0%)  \n",
+                "[  4]   9.00-10.00  sec   611 KBytes  5.01 Mbits/sec  0.473 ms  0/447 (0%)  \n",
+                "- - - - - - - - - - - - - - - - - - - - - - - - -\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-10.00  sec  6.11 MBytes  5.12 Mbits/sec  0.728 ms  0/4576 (0%)  \n",
+                "[  4] Sent 4576 datagrams\n",
+                "\n",
+                "iperf Done.\n",
+                "Connecting to host iperf.he.net, port 5201\n",
+                "Reverse mode, remote host iperf.he.net is sending\n",
+                "[  4] local 2800:a4:1d03:8c00:b86e:df38:49b2:4159 port 63197 connected to 2001:470:0:236::2 port 5201\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-1.00   sec  1.24 MBytes  10.4 Mbits/sec  0.835 ms  0/931 (0%)  \n",
+                "[  4]   1.00-2.00   sec  1.19 MBytes  10.0 Mbits/sec  0.799 ms  0/895 (0%)  \n",
+                "[  4]   2.00-3.00   sec  1.15 MBytes  9.67 Mbits/sec  0.703 ms  31/893 (3.5%)  \n",
+                "[  4]   3.00-4.00   sec  1.19 MBytes  9.99 Mbits/sec  0.702 ms  0/893 (0%)  \n",
+                "[  4]   4.00-5.00   sec  1.16 MBytes  9.72 Mbits/sec  0.760 ms  0/871 (0%)  \n",
+                "[  4]   5.00-6.00   sec  1.22 MBytes  10.3 Mbits/sec  1.047 ms  0/916 (0%)  \n",
+                "[  4]   6.00-7.00   sec  1.19 MBytes  10.0 Mbits/sec  1.178 ms  0/892 (0%)  \n",
+                "[  4]   7.00-8.00   sec  1.19 MBytes  9.99 Mbits/sec  0.729 ms  0/892 (0%)  \n",
+                "[  4]   8.00-9.00   sec  1.19 MBytes  10.0 Mbits/sec  0.789 ms  0/894 (0%)  \n",
+                "[  4]   9.00-10.00  sec  1.18 MBytes  9.85 Mbits/sec  1.326 ms  0/881 (0%)  \n",
+                "- - - - - - - - - - - - - - - - - - - - - - - - -\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-10.00  sec  12.2 MBytes  10.2 Mbits/sec  1.204 ms  31/9149 (0.34%)  \n",
+                "[  4] Sent 9149 datagrams\n",
+                "\n",
+                "iperf Done.\n"
+              ],
+              "client_network_info": {
+                "client_ip": null,
+                "gateway": null,
+                "dns_servers": [],
+                "interface_name": null,
+                "subnet_mask": null,
+                "timestamp": 1754453198.363411
+              }
+            }
+          }
+        },
+        {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 90,
+          "timestamp": "2025-08-06T01:10:28.395815",
+          "tests": {
+            "ping": {
+              "success": true,
+              "avg_time": 13.5,
+              "min_time": 11,
+              "max_time": 16,
+              "packet_loss": "0%",
+              "raw_times": [
+                15,
+                16,
+                11,
+                12
+              ]
+            }
+          }
+        }
+      ],
+      "client_network_info": {
+        "client_ip": null,
+        "gateway": null,
+        "interface_name": null,
+        "timestamp": 1754453518.8021076
+      },
+      "ap_summary": {
+        "total_aps_found": 2,
+        "strongest_ap": {
+          "ssid": "Puma",
+          "bssid": "b8:dd:71:e3:9c:3a",
+          "signal": 99,
+          "channel": 1,
+          "band": "2.4GHz"
+        },
+        "client_ip": null,
+        "gateway": null,
+        "ap_list": [
+          {
+            "ssid": "Puma",
+            "bssid": "b8:dd:71:e3:9c:3a",
+            "signal_percentage": 99,
+            "channel": 1,
+            "band": "2.4GHz",
+            "authentication": "WPA2-Personal"
+          },
+          {
+            "ssid": "Pumita",
+            "bssid": "b8:dd:71:e3:9c:3c",
+            "signal_percentage": 90,
+            "channel": 149,
+            "band": "5GHz",
+            "authentication": "WPA2-Personal"
+          }
+        ]
+      }
+    },
+    {
+      "id": 30,
+      "timestamp": "2025-08-06T01:21:03.191198",
+      "location": null,
+      "networks": [
+        {
+          "ssid": "Puma",
+          "bssid": "b8:dd:71:e3:9c:3a",
+          "signal": 99,
+          "signal_dbm": -30.5,
+          "snr_db": 64.5,
+          "signal_quality": "Excellent",
+          "channel": 1,
+          "band": "2.4GHz",
+          "authentication": "WPA2-Personal"
+        },
+        {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 86,
+          "signal_dbm": -39.0,
+          "snr_db": 61.0,
+          "signal_quality": "Excellent",
+          "channel": 149,
+          "band": "5GHz",
+          "authentication": "WPA2-Personal"
+        }
+      ],
+      "tests": {},
+      "all_network_tests": [
+        {
+          "ssid": "Puma",
+          "bssid": "b8:dd:71:e3:9c:3a",
+          "signal": 99,
+          "timestamp": "2025-08-06T01:21:11.221070",
+          "tests": {
+            "ping": {
+              "success": true,
+              "avg_time": 16,
+              "min_time": 11,
+              "max_time": 25,
+              "packet_loss": "0%",
+              "raw_times": [
+                14,
+                25,
+                14,
+                11
+              ]
+            }
+          }
+        },
+        {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 86,
+          "timestamp": "2025-08-06T01:22:09.824022",
+          "tests": {
+            "ping": {
+              "success": true,
+              "avg_time": 18.75,
+              "min_time": 15,
+              "max_time": 22,
+              "packet_loss": "0%",
+              "raw_times": [
+                21,
+                22,
+                17,
+                15
+              ]
+            }
+          }
+        }
+      ],
+      "client_network_info": {
+        "client_ip": null,
+        "gateway": null,
+        "dns_servers": [],
+        "interface_name": null,
+        "subnet_mask": null,
+        "timestamp": 1754454142.7374096
+      },
+      "ap_summary": {
+        "total_aps_found": 2,
+        "strongest_ap": {
+          "ssid": "Puma",
+          "bssid": "b8:dd:71:e3:9c:3a",
+          "signal": 99,
+          "signal_dbm": -30.5,
+          "channel": 1,
+          "band": "2.4GHz"
+        },
+        "client_ip": null,
+        "gateway": null,
+        "ap_list": [
+          {
+            "ssid": "Puma",
+            "bssid": "b8:dd:71:e3:9c:3a",
+            "signal_percentage": 99,
+            "signal_dbm": -30.5,
+            "snr_db": 64.5,
+            "channel": 1,
+            "band": "2.4GHz",
+            "signal_quality": "Excellent",
+            "authentication": "WPA2-Personal"
+          },
+          {
+            "ssid": "Pumita",
+            "bssid": "b8:dd:71:e3:9c:3c",
+            "signal_percentage": 86,
+            "signal_dbm": -39.0,
+            "snr_db": 61.0,
+            "channel": 149,
+            "band": "5GHz",
+            "signal_quality": "Excellent",
+            "authentication": "WPA2-Personal"
+          }
+        ]
+      }
+    },
+    {
+      "id": 31,
+      "timestamp": "2025-08-06T01:25:29.353250",
+      "location": null,
+      "networks": [
+        {
+          "ssid": "Puma",
+          "bssid": "b8:dd:71:e3:9c:3a",
+          "signal": 90,
+          "signal_dbm": -35.0,
+          "snr_db": 60.0,
+          "signal_quality": "Excellent",
+          "channel": 1,
+          "band": "2.4GHz",
+          "authentication": "WPA2-Personal"
+        },
+        {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 99,
+          "signal_dbm": -30.5,
+          "snr_db": 69.5,
+          "signal_quality": "Excellent",
+          "channel": 149,
+          "band": "5GHz",
+          "authentication": "WPA2-Personal"
+        }
+      ],
+      "tests": {},
+      "all_network_tests": [
+        {
+          "ssid": "Puma",
+          "bssid": "b8:dd:71:e3:9c:3a",
+          "signal": 90,
+          "timestamp": "2025-08-06T01:25:37.308106",
+          "tests": {
+            "ping": {
+              "success": true,
+              "avg_time": 12.25,
+              "min_time": 11,
+              "max_time": 15,
+              "packet_loss": "0%",
+              "raw_times": [
+                12,
+                11,
+                15,
+                11
+              ]
+            }
+          }
+        },
+        {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 99,
+          "timestamp": "2025-08-06T01:26:01.959844",
+          "tests": {
+            "ping": {
+              "success": true,
+              "avg_time": 14.5,
+              "min_time": 12,
+              "max_time": 21,
+              "packet_loss": "0%",
+              "raw_times": [
+                21,
+                12,
+                13,
+                12
+              ]
+            }
+          }
+        }
+      ],
+      "client_network_info": {
+        "client_ip": null,
+        "gateway": null,
+        "dns_servers": [],
+        "interface_name": null,
+        "subnet_mask": null,
+        "timestamp": 1754454366.7962952
+      },
+      "ap_summary": {
+        "total_aps_found": 2,
+        "strongest_ap": {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 99,
+          "signal_dbm": -30.5,
+          "channel": 149,
+          "band": "5GHz"
+        },
+        "client_ip": null,
+        "gateway": null,
+        "ap_list": [
+          {
+            "ssid": "Pumita",
+            "bssid": "b8:dd:71:e3:9c:3c",
+            "signal_percentage": 99,
+            "signal_dbm": -30.5,
+            "snr_db": 69.5,
+            "channel": 149,
+            "band": "5GHz",
+            "signal_quality": "Excellent",
+            "authentication": "WPA2-Personal"
+          },
+          {
+            "ssid": "Puma",
+            "bssid": "b8:dd:71:e3:9c:3a",
+            "signal_percentage": 90,
+            "signal_dbm": -35.0,
+            "snr_db": 60.0,
+            "channel": 1,
+            "band": "2.4GHz",
+            "signal_quality": "Excellent",
+            "authentication": "WPA2-Personal"
+          }
+        ]
+      }
+    },
+    {
+      "id": 32,
+      "timestamp": "2025-08-06T01:26:57.548410",
+      "location": null,
+      "networks": [
+        {
+          "ssid": "Puma",
+          "bssid": "b8:dd:71:e3:9c:3a",
+          "signal": 90,
+          "signal_dbm": -35.0,
+          "snr_db": 60.0,
+          "signal_quality": "Excellent",
+          "channel": 1,
+          "band": "2.4GHz",
+          "authentication": "WPA2-Personal"
+        },
+        {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 99,
+          "signal_dbm": -30.5,
+          "snr_db": 69.5,
+          "signal_quality": "Excellent",
+          "channel": 149,
+          "band": "5GHz",
+          "authentication": "WPA2-Personal"
+        }
+      ],
+      "tests": {},
+      "all_network_tests": [
+        {
+          "ssid": "Puma",
+          "bssid": "b8:dd:71:e3:9c:3a",
+          "signal": 90,
+          "timestamp": "2025-08-06T01:27:05.410300",
+          "tests": {
+            "ping": {
+              "success": true,
+              "avg_time": 14.25,
+              "min_time": 11,
+              "max_time": 19,
+              "packet_loss": "0%",
+              "raw_times": [
+                19,
+                15,
+                12,
+                11
+              ]
+            }
+          }
+        },
+        {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 99,
+          "timestamp": "2025-08-06T01:27:18.971959",
+          "tests": {
+            "ping": {
+              "success": true,
+              "avg_time": 12.25,
+              "min_time": 12,
+              "max_time": 13,
+              "packet_loss": "0%",
+              "raw_times": [
+                13,
+                12,
+                12,
+                12
+              ]
+            }
+          }
+        }
+      ],
+      "client_network_info": {
+        "client_ip": null,
+        "gateway": null,
+        "dns_servers": [],
+        "interface_name": null,
+        "subnet_mask": null,
+        "connection_status": "connected",
+        "timestamp": 1754454443.590858,
+        "connected_ssid": "Pumita"
+      },
+      "ap_summary": {
+        "total_aps_found": 2,
+        "strongest_ap": {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 99,
+          "signal_dbm": -30.5,
+          "channel": 149,
+          "band": "5GHz"
+        },
+        "client_ip": null,
+        "gateway": null,
+        "ap_list": [
+          {
+            "ssid": "Pumita",
+            "bssid": "b8:dd:71:e3:9c:3c",
+            "signal_percentage": 99,
+            "signal_dbm": -30.5,
+            "snr_db": 69.5,
+            "channel": 149,
+            "band": "5GHz",
+            "signal_quality": "Excellent",
+            "authentication": "WPA2-Personal"
+          },
+          {
+            "ssid": "Puma",
+            "bssid": "b8:dd:71:e3:9c:3a",
+            "signal_percentage": 90,
+            "signal_dbm": -35.0,
+            "snr_db": 60.0,
+            "channel": 1,
+            "band": "2.4GHz",
+            "signal_quality": "Excellent",
+            "authentication": "WPA2-Personal"
+          }
+        ]
+      }
+    },
+    {
+      "id": 33,
+      "timestamp": "2025-08-06T01:33:44.215398",
+      "location": null,
+      "networks": [
+        {
+          "ssid": "Puma",
+          "bssid": "b8:dd:71:e3:9c:3a",
+          "signal": 88,
+          "signal_dbm": -37.0,
+          "snr_db": 58.0,
+          "signal_quality": "Excellent",
+          "channel": 1,
+          "band": "2.4GHz",
+          "authentication": "WPA2-Personal"
+        },
+        {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 99,
+          "signal_dbm": -30.5,
+          "snr_db": 69.5,
+          "signal_quality": "Excellent",
+          "channel": 149,
+          "band": "5GHz",
+          "authentication": "WPA2-Personal"
+        }
+      ],
+      "tests": {},
+      "all_network_tests": [
+        {
+          "ssid": "Puma",
+          "bssid": "b8:dd:71:e3:9c:3a",
+          "signal": 88,
+          "timestamp": "2025-08-06T01:33:52.424902",
+          "tests": {
+            "ping": {
+              "success": true,
+              "avg_time": 16.25,
+              "min_time": 11,
+              "max_time": 27,
+              "packet_loss": "0%",
+              "raw_times": [
+                27,
+                12,
+                15,
+                11
+              ]
+            }
+          }
+        },
+        {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 99,
+          "timestamp": "2025-08-06T01:34:16.674570",
+          "tests": {
+            "ping": {
+              "success": true,
+              "avg_time": 14.25,
+              "min_time": 12,
+              "max_time": 17,
+              "packet_loss": "0%",
+              "raw_times": [
+                17,
+                15,
+                13,
+                12
+              ]
+            }
+          }
+        }
+      ],
+      "client_network_info": {
+        "client_ip": null,
+        "gateway": null,
+        "dns_servers": [],
+        "interface_name": null,
+        "subnet_mask": null,
+        "timestamp": 1754454862.1020985
+      },
+      "ap_summary": {
+        "total_aps_found": 2,
+        "strongest_ap": {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 99,
+          "signal_dbm": -30.5,
+          "channel": 149,
+          "band": "5GHz"
+        },
+        "client_ip": null,
+        "gateway": null,
+        "ap_list": [
+          {
+            "ssid": "Pumita",
+            "bssid": "b8:dd:71:e3:9c:3c",
+            "signal_percentage": 99,
+            "signal_dbm": -30.5,
+            "snr_db": 69.5,
+            "channel": 149,
+            "band": "5GHz",
+            "signal_quality": "Excellent",
+            "authentication": "WPA2-Personal"
+          },
+          {
+            "ssid": "Puma",
+            "bssid": "b8:dd:71:e3:9c:3a",
+            "signal_percentage": 88,
+            "signal_dbm": -37.0,
+            "snr_db": 58.0,
+            "channel": 1,
+            "band": "2.4GHz",
+            "signal_quality": "Excellent",
+            "authentication": "WPA2-Personal"
+          }
+        ]
+      }
+    },
+    {
+      "id": 34,
+      "timestamp": "2025-08-06T01:40:00.600419",
+      "location": null,
+      "networks": [
+        {
+          "ssid": "Puma",
+          "bssid": "b8:dd:71:e3:9c:3a",
+          "signal": 91,
+          "signal_dbm": -34.5,
+          "snr_db": 60.5,
+          "signal_quality": "Excellent",
+          "channel": 1,
+          "band": "2.4GHz",
+          "authentication": "WPA2-Personal"
+        },
+        {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 90,
+          "signal_dbm": -35.0,
+          "snr_db": 65.0,
+          "signal_quality": "Excellent",
+          "channel": 149,
+          "band": "5GHz",
+          "authentication": "WPA2-Personal"
+        }
+      ],
+      "tests": {},
+      "all_network_tests": [
+        {
+          "ssid": "Puma",
+          "bssid": "b8:dd:71:e3:9c:3a",
+          "signal": 91,
+          "timestamp": "2025-08-06T01:40:08.577527",
+          "tests": {
+            "ping": {
+              "success": true,
+              "avg_time": 16,
+              "min_time": 11,
+              "max_time": 24,
+              "packet_loss": "0%",
+              "raw_times": [
+                17,
+                24,
+                11,
+                12
+              ]
+            }
+          }
+        },
+        {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 90,
+          "timestamp": "2025-08-06T01:40:29.244954",
+          "tests": {
+            "ping": {
+              "success": true,
+              "avg_time": 15.5,
+              "min_time": 12,
+              "max_time": 23,
+              "packet_loss": "0%",
+              "raw_times": [
+                15,
+                23,
+                12,
+                12
+              ]
+            }
+          }
+        }
+      ],
+      "client_network_info": {
+        "client_ip": null,
+        "gateway": null,
+        "dns_servers": [],
+        "interface_name": null,
+        "subnet_mask": null,
+        "timestamp": 1754455236.138236
+      },
+      "ap_summary": {
+        "total_aps_found": 2,
+        "strongest_ap": {
+          "ssid": "Puma",
+          "bssid": "b8:dd:71:e3:9c:3a",
+          "signal": 91,
+          "signal_dbm": -34.5,
+          "channel": 1,
+          "band": "2.4GHz"
+        },
+        "client_ip": null,
+        "gateway": null,
+        "ap_list": [
+          {
+            "ssid": "Puma",
+            "bssid": "b8:dd:71:e3:9c:3a",
+            "signal_percentage": 91,
+            "signal_dbm": -34.5,
+            "snr_db": 60.5,
+            "channel": 1,
+            "band": "2.4GHz",
+            "signal_quality": "Excellent",
+            "authentication": "WPA2-Personal"
+          },
+          {
+            "ssid": "Pumita",
+            "bssid": "b8:dd:71:e3:9c:3c",
+            "signal_percentage": 90,
+            "signal_dbm": -35.0,
+            "snr_db": 65.0,
+            "channel": 149,
+            "band": "5GHz",
+            "signal_quality": "Excellent",
+            "authentication": "WPA2-Personal"
+          }
+        ]
+      }
+    },
+    {
+      "id": 35,
+      "timestamp": "2025-08-06T01:49:22.218906",
+      "location": null,
+      "networks": [
+        {
+          "ssid": "Puma",
+          "bssid": "b8:dd:71:e3:9c:3a",
+          "signal": 99,
+          "signal_dbm": -30.5,
+          "snr_db": 64.5,
+          "signal_quality": "Excellent",
+          "channel": 1,
+          "band": "2.4GHz",
+          "authentication": "WPA2-Personal"
+        },
+        {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 88,
+          "signal_dbm": -37.0,
+          "snr_db": 63.0,
+          "signal_quality": "Excellent",
+          "channel": 149,
+          "band": "5GHz",
+          "authentication": "WPA2-Personal"
+        }
+      ],
+      "tests": {},
+      "all_network_tests": [
+        {
+          "ssid": "Puma",
+          "bssid": "b8:dd:71:e3:9c:3a",
+          "signal": 99,
+          "timestamp": "2025-08-06T01:49:31.210535",
+          "tests": {
+            "ping": {
+              "success": true,
+              "avg_time": 14,
+              "min_time": 11,
+              "max_time": 19,
+              "packet_loss": "0%",
+              "raw_times": [
+                19,
+                11,
+                14,
+                12
+              ]
+            },
+            "speedtest": {
+              "success": true,
+              "download_mbps": 3.494211,
+              "upload_mbps": 2.961605,
+              "ping_ms": 4.007,
+              "server": "Antel",
+              "raw_data": {
+                "type": "result",
+                "timestamp": "2025-08-06T04:49:53Z",
+                "ping": {
+                  "jitter": 1.423,
+                  "latency": 4.007,
+                  "low": 3.324,
+                  "high": 5.485
+                },
+                "download": {
+                  "bandwidth": 3494211,
+                  "bytes": 18624071,
+                  "elapsed": 5319,
+                  "latency": {
+                    "iqm": 124.29,
+                    "low": 33.197,
+                    "high": 258.798,
+                    "jitter": 34.381
+                  }
+                },
+                "upload": {
+                  "bandwidth": 2961605,
+                  "bytes": 23998637,
+                  "elapsed": 8174,
+                  "latency": {
+                    "iqm": 438.737,
+                    "low": 77.999,
+                    "high": 1093.606,
+                    "jitter": 95.265
+                  }
+                },
+                "packetLoss": 0,
+                "isp": "Antel Uruguay",
+                "interface": {
+                  "internalIp": "2800:a4:1d03:8c00:b86e:df38:49b2:4159",
+                  "name": "",
+                  "macAddr": "D8:FC:93:BC:E1:16",
+                  "isVpn": false,
+                  "externalIp": "2800:a4:1d03:8c00:b86e:df38:49b2:4159"
+                },
+                "server": {
+                  "id": 40741,
+                  "host": "testdevelocidad.com.uy",
+                  "port": 8080,
+                  "name": "Antel",
+                  "location": "Montevideo",
+                  "country": "Uruguay",
+                  "ip": "2800:a0:1:c828:1e00:1800:0:8"
+                },
+                "result": {
+                  "id": "f046e475-8858-40ba-901c-a45bff9507a6",
+                  "url": "https://www.speedtest.net/result/c/f046e475-8858-40ba-901c-a45bff9507a6",
+                  "persisted": true
+                }
+              }
+            },
+            "iperf_suite": {
+              "success": true,
+              "server": "iperf.he.net",
+              "tests": {
+                "tcp_forward": {
+                  "download_mbps": 4.22886,
+                  "upload_mbps": 4.22886,
+                  "download_gbps": 0.00422886,
+                  "upload_gbps": 0.00422886
+                },
+                "tcp_reverse": {
+                  "download_mbps": 2.48481,
+                  "upload_mbps": 2.83123,
+                  "download_gbps": 0.00248481,
+                  "upload_gbps": 0.00283123
+                },
+                "udp_forward_tests": {
+                  "udp_forward_1M": {
+                    "target_mbps": 1.0,
+                    "actual_mbps": 0.989895,
+                    "jitter_ms": 0.348048,
+                    "lost_percent": 0,
+                    "total_packets": 885,
+                    "lost_packets": 0,
+                    "quality": "EXCELENTE"
+                  },
+                  "udp_forward_5M": {
+                    "target_mbps": 5.0,
+                    "actual_mbps": 4.95661,
+                    "jitter_ms": 0.310139,
+                    "lost_percent": 0,
+                    "total_packets": 4427,
+                    "lost_packets": 0,
+                    "quality": "EXCELENTE"
+                  },
+                  "udp_forward_10M": {
+                    "target_mbps": 10.0,
+                    "actual_mbps": 9.96472,
+                    "jitter_ms": 0.474656,
+                    "lost_percent": 0,
+                    "total_packets": 8905,
+                    "lost_packets": 0,
+                    "quality": "EXCELENTE"
+                  }
+                },
+                "udp_reverse_tests": {
+                  "udp_reverse_1M": {
+                    "target_mbps": 1.0,
+                    "actual_mbps": 1.02547,
+                    "jitter_ms": 0.721435,
+                    "lost_percent": 0,
+                    "total_packets": 916,
+                    "lost_packets": 0,
+                    "quality": "EXCELENTE"
+                  },
+                  "udp_reverse_5M": {
+                    "target_mbps": 5.0,
+                    "actual_mbps": 5.1036,
+                    "jitter_ms": 0.59069,
+                    "lost_percent": 0,
+                    "total_packets": 4557,
+                    "lost_packets": 0,
+                    "quality": "EXCELENTE"
+                  },
+                  "udp_reverse_10M": {
+                    "target_mbps": 10.0,
+                    "actual_mbps": 10.2462,
+                    "jitter_ms": 0.997551,
+                    "lost_percent": 0,
+                    "total_packets": 9149,
+                    "lost_packets": 0,
+                    "quality": "EXCELENTE"
+                  }
+                },
+                "udp_bidirectional": {
+                  "error": "UDP bidirectional test failed"
+                }
+              },
+              "raw_output": [
+                "Connecting to host iperf.he.net, port 5201\n",
+                "[  4] local 2800:a4:1d03:8c00:b86e:df38:49b2:4159 port 49291 connected to 2001:470:0:236::2 port 5201\n",
+                "[ ID] Interval           Transfer     Bandwidth\n",
+                "[  4]   0.00-1.01   sec   189 KBytes  1.53 Mbits/sec                  \n",
+                "[  4]   1.01-2.00   sec   504 KBytes  4.17 Mbits/sec                  \n",
+                "[  4]   2.00-3.00   sec   630 KBytes  5.16 Mbits/sec                  \n",
+                "[  4]   3.00-4.02   sec   504 KBytes  4.06 Mbits/sec                  \n",
+                "[  4]   4.02-5.01   sec   504 KBytes  4.15 Mbits/sec                  \n",
+                "[  4]   5.01-6.01   sec   504 KBytes  4.15 Mbits/sec                  \n",
+                "[  4]   6.01-7.01   sec   567 KBytes  4.65 Mbits/sec                  \n",
+                "[  4]   7.01-8.01   sec   504 KBytes  4.10 Mbits/sec                  \n",
+                "[  4]   8.01-9.00   sec   567 KBytes  4.71 Mbits/sec                  \n",
+                "[  4]   9.00-10.00  sec   504 KBytes  4.13 Mbits/sec                  \n",
+                "- - - - - - - - - - - - - - - - - - - - - - - - -\n",
+                "[ ID] Interval           Transfer     Bandwidth\n",
+                "[  4]   0.00-10.00  sec  4.86 MBytes  4.08 Mbits/sec                  sender\n",
+                "[  4]   0.00-10.00  sec  4.86 MBytes  4.08 Mbits/sec                  receiver\n",
+                "\n",
+                "iperf Done.\n",
+                "Connecting to host iperf.he.net, port 5201\n",
+                "Reverse mode, remote host iperf.he.net is sending\n",
+                "[  4] local 2800:a4:1d03:8c00:b86e:df38:49b2:4159 port 49341 connected to 2001:470:0:236::2 port 5201\n",
+                "[ ID] Interval           Transfer     Bandwidth\n",
+                "[  4]   0.00-1.01   sec   224 KBytes  1.81 Mbits/sec                  \n",
+                "[  4]   1.01-2.01   sec   315 KBytes  2.60 Mbits/sec                  \n",
+                "[  4]   2.01-3.01   sec   315 KBytes  2.56 Mbits/sec                  \n",
+                "[  4]   3.01-4.01   sec   315 KBytes  2.58 Mbits/sec                  \n",
+                "[  4]   4.01-5.00   sec   259 KBytes  2.14 Mbits/sec                  \n",
+                "[  4]   5.00-6.01   sec   308 KBytes  2.49 Mbits/sec                  \n",
+                "[  4]   6.01-7.01   sec   308 KBytes  2.53 Mbits/sec                  \n",
+                "[  4]   7.01-8.00   sec   308 KBytes  2.53 Mbits/sec                  \n",
+                "[  4]   8.00-9.00   sec   288 KBytes  2.37 Mbits/sec                  \n",
+                "[  4]   9.00-10.01  sec   287 KBytes  2.34 Mbits/sec                  \n",
+                "- - - - - - - - - - - - - - - - - - - - - - - - -\n",
+                "[ ID] Interval           Transfer     Bandwidth       Retr\n",
+                "[  4]   0.00-10.01  sec  3.71 MBytes  3.11 Mbits/sec    0             sender\n",
+                "[  4]   0.00-10.01  sec  2.98 MBytes  2.50 Mbits/sec                  receiver\n",
+                "\n",
+                "iperf Done.\n",
+                "Connecting to host iperf.he.net, port 5201\n",
+                "[  4] local 2800:a4:1d03:8c00:b86e:df38:49b2:4159 port 56891 connected to 2001:470:0:236::2 port 5201\n",
+                "[ ID] Interval           Transfer     Bandwidth       Total Datagrams\n",
+                "[  4]   0.00-1.01   sec   112 KBytes   910 Kbits/sec  82  \n",
+                "[  4]   1.01-2.01   sec   122 KBytes   996 Kbits/sec  89  \n",
+                "[  4]   2.01-3.01   sec   122 KBytes   993 Kbits/sec  89  \n",
+                "[  4]   3.01-4.01   sec   122 KBytes  1.00 Mbits/sec  89  \n",
+                "[  4]   4.01-5.01   sec   124 KBytes  1.02 Mbits/sec  91  \n",
+                "[  4]   5.01-6.01   sec   122 KBytes   997 Kbits/sec  89  \n",
+                "[  4]   6.01-7.01   sec   120 KBytes   984 Kbits/sec  88  \n",
+                "[  4]   7.01-8.01   sec   122 KBytes   993 Kbits/sec  89  \n",
+                "[  4]   8.01-9.01   sec   124 KBytes  1.02 Mbits/sec  91  \n",
+                "[  4]   9.01-10.01  sec   122 KBytes   996 Kbits/sec  89  \n",
+                "- - - - - - - - - - - - - - - - - - - - - - - - -\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-10.01  sec  1.18 MBytes   991 Kbits/sec  0.384 ms  0/886 (0%)  \n",
+                "[  4] Sent 886 datagrams\n",
+                "\n",
+                "iperf Done.\n",
+                "Connecting to host iperf.he.net, port 5201\n",
+                "[  4] local 2800:a4:1d03:8c00:b86e:df38:49b2:4159 port 56687 connected to 2001:470:0:236::2 port 5201\n",
+                "[ ID] Interval           Transfer     Bandwidth       Total Datagrams\n",
+                "[  4]   0.00-1.01   sec   559 KBytes  4.52 Mbits/sec  409  \n",
+                "[  4]   1.01-2.01   sec   621 KBytes  5.10 Mbits/sec  454  \n",
+                "[  4]   2.01-3.00   sec   606 KBytes  5.00 Mbits/sec  443  \n",
+                "[  4]   3.00-4.01   sec   603 KBytes  4.88 Mbits/sec  441  \n",
+                "[  4]   4.01-5.01   sec   608 KBytes  4.99 Mbits/sec  445  \n",
+                "[  4]   5.01-6.01   sec   619 KBytes  5.07 Mbits/sec  453  \n",
+                "[  4]   6.01-7.01   sec   612 KBytes  5.03 Mbits/sec  448  \n",
+                "[  4]   7.01-8.01   sec   607 KBytes  4.98 Mbits/sec  444  \n",
+                "[  4]   8.01-9.00   sec   621 KBytes  5.12 Mbits/sec  454  \n",
+                "[  4]   9.00-10.00  sec   600 KBytes  4.92 Mbits/sec  439  \n",
+                "- - - - - - - - - - - - - - - - - - - - - - - - -\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-10.00  sec  5.91 MBytes  4.96 Mbits/sec  0.242 ms  0/4430 (0%)  \n",
+                "[  4] Sent 4430 datagrams\n",
+                "\n",
+                "iperf Done.\n",
+                "Connecting to host iperf.he.net, port 5201\n",
+                "[  4] local 2800:a4:1d03:8c00:b86e:df38:49b2:4159 port 54268 connected to 2001:470:0:236::2 port 5201\n",
+                "[ ID] Interval           Transfer     Bandwidth       Total Datagrams\n",
+                "[  4]   0.00-1.01   sec  1.15 MBytes  9.55 Mbits/sec  859  \n",
+                "[  4]   1.01-2.00   sec  1.18 MBytes  9.92 Mbits/sec  882  \n",
+                "[  4]   2.00-3.01   sec  1.15 MBytes  9.52 Mbits/sec  859  \n",
+                "[  4]   3.01-4.01   sec  1.23 MBytes  10.4 Mbits/sec  921  \n",
+                "[  4]   4.01-5.00   sec  1.16 MBytes  9.79 Mbits/sec  870  \n",
+                "[  4]   5.00-6.00   sec  1.23 MBytes  10.3 Mbits/sec  918  \n",
+                "[  4]   6.00-7.01   sec  1.18 MBytes  9.84 Mbits/sec  886  \n",
+                "[  4]   7.01-8.00   sec  1.19 MBytes  10.0 Mbits/sec  889  \n",
+                "[  4]   8.00-9.01   sec  1.16 MBytes  9.67 Mbits/sec  871  \n",
+                "[  4]   9.01-10.00  sec  1.27 MBytes  10.7 Mbits/sec  948  \n",
+                "- - - - - - - - - - - - - - - - - - - - - - - - -\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-10.00  sec  11.9 MBytes  9.97 Mbits/sec  0.220 ms  0/8903 (0%)  \n",
+                "[  4] Sent 8903 datagrams\n",
+                "\n",
+                "iperf Done.\n",
+                "Connecting to host iperf.he.net, port 5201\n",
+                "Reverse mode, remote host iperf.he.net is sending\n",
+                "[  4] local 2800:a4:1d03:8c00:b86e:df38:49b2:4159 port 53865 connected to 2001:470:0:236::2 port 5201\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-1.00   sec   130 KBytes  1.06 Mbits/sec  253479444.737 ms  0/95 (0%)  \n",
+                "[  4]   1.00-2.00   sec   122 KBytes   994 Kbits/sec  811683.611 ms  0/89 (0%)  \n",
+                "[  4]   2.00-3.00   sec   122 KBytes   998 Kbits/sec  2599.956 ms  0/89 (0%)  \n",
+                "[  4]   3.00-4.00   sec   122 KBytes   998 Kbits/sec  9.044 ms  0/89 (0%)  \n",
+                "[  4]   4.00-5.00   sec   123 KBytes  1.01 Mbits/sec  3.016 ms  0/90 (0%)  \n",
+                "[  4]   5.00-6.01   sec   123 KBytes  1.00 Mbits/sec  1.090 ms  0/90 (0%)  \n",
+                "[  4]   6.01-7.01   sec   122 KBytes  1000 Kbits/sec  1.413 ms  0/89 (0%)  \n",
+                "[  4]   7.01-8.00   sec   122 KBytes  1.00 Mbits/sec  0.837 ms  0/89 (0%)  \n",
+                "[  4]   8.00-9.00   sec   122 KBytes   997 Kbits/sec  1.003 ms  0/89 (0%)  \n",
+                "[  4]   9.00-10.01  sec   123 KBytes  1.00 Mbits/sec  0.800 ms  0/90 (0%)  \n",
+                "- - - - - - - - - - - - - - - - - - - - - - - - -\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-10.01  sec  1.22 MBytes  1.03 Mbits/sec  1.074 ms  0/916 (0%)  \n",
+                "[  4] Sent 916 datagrams\n",
+                "\n",
+                "iperf Done.\n",
+                "Connecting to host iperf.he.net, port 5201\n",
+                "Reverse mode, remote host iperf.he.net is sending\n",
+                "[  4] local 2800:a4:1d03:8c00:b86e:df38:49b2:4159 port 59910 connected to 2001:470:0:236::2 port 5201\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-1.00   sec   643 KBytes  5.26 Mbits/sec  1.055 ms  0/470 (0%)  \n",
+                "[  4]   1.00-2.00   sec   610 KBytes  4.99 Mbits/sec  0.888 ms  0/446 (0%)  \n",
+                "[  4]   2.00-3.00   sec   611 KBytes  5.01 Mbits/sec  0.613 ms  0/447 (0%)  \n",
+                "[  4]   3.00-4.00   sec   610 KBytes  5.00 Mbits/sec  0.953 ms  0/446 (0%)  \n",
+                "[  4]   4.00-5.00   sec   610 KBytes  5.00 Mbits/sec  1.164 ms  0/446 (0%)  \n",
+                "[  4]   5.00-6.00   sec   611 KBytes  5.00 Mbits/sec  0.714 ms  0/447 (0%)  \n",
+                "[  4]   6.00-7.00   sec   611 KBytes  5.00 Mbits/sec  0.889 ms  0/447 (0%)  \n",
+                "[  4]   7.00-8.00   sec   610 KBytes  5.00 Mbits/sec  1.081 ms  0/446 (0%)  \n",
+                "[  4]   8.00-9.00   sec   611 KBytes  5.00 Mbits/sec  0.568 ms  0/447 (0%)  \n",
+                "[  4]   9.00-10.00  sec   610 KBytes  5.00 Mbits/sec  1.274 ms  0/446 (0%)  \n",
+                "- - - - - - - - - - - - - - - - - - - - - - - - -\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-10.00  sec  6.11 MBytes  5.13 Mbits/sec  1.248 ms  0/4576 (0%)  \n",
+                "[  4] Sent 4576 datagrams\n",
+                "\n",
+                "iperf Done.\n",
+                "Connecting to host iperf.he.net, port 5201\n",
+                "Reverse mode, remote host iperf.he.net is sending\n",
+                "[  4] local 2800:a4:1d03:8c00:b86e:df38:49b2:4159 port 59915 connected to 2001:470:0:236::2 port 5201\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-1.00   sec  1.25 MBytes  10.5 Mbits/sec  0.737 ms  0/934 (0%)  \n",
+                "[  4]   1.00-2.00   sec  1.19 MBytes  9.99 Mbits/sec  0.780 ms  0/893 (0%)  \n",
+                "[  4]   2.00-3.00   sec  1.19 MBytes  9.99 Mbits/sec  0.358 ms  0/892 (0%)  \n",
+                "[  4]   3.00-4.00   sec  1.19 MBytes  10.0 Mbits/sec  0.610 ms  0/893 (0%)  \n",
+                "[  4]   4.00-5.00   sec  1.19 MBytes  10.0 Mbits/sec  0.676 ms  0/893 (0%)  \n",
+                "[  4]   5.00-6.00   sec  1.19 MBytes  9.99 Mbits/sec  0.725 ms  0/891 (0%)  \n",
+                "[  4]   6.00-7.00   sec  1.20 MBytes  10.0 Mbits/sec  0.578 ms  0/896 (0%)  \n",
+                "[  4]   7.00-8.00   sec  1.19 MBytes  9.99 Mbits/sec  0.757 ms  0/892 (0%)  \n",
+                "[  4]   8.00-9.00   sec  1.19 MBytes  10.0 Mbits/sec  0.436 ms  0/893 (0%)  \n",
+                "[  4]   9.00-10.00  sec  1.19 MBytes  9.98 Mbits/sec  0.580 ms  0/893 (0%)  \n",
+                "- - - - - - - - - - - - - - - - - - - - - - - - -\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-10.00  sec  12.2 MBytes  10.2 Mbits/sec  0.489 ms  0/9151 (0%)  \n",
+                "[  4] Sent 9151 datagrams\n",
+                "\n",
+                "iperf Done.\n"
+              ],
+              "client_network_info": {
+                "client_ip": "192.168.1.11",
+                "gateway": "192.168.1.1",
+                "dns_servers": [],
+                "interface_name": "Adaptador de LAN inal\u00a0mbrica Wi-Fi 2:",
+                "subnet_mask": "255.255.255.0",
+                "timestamp": 1754455796.1786869
+              }
+            }
+          }
+        },
+        {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 88,
+          "timestamp": "2025-08-06T01:53:42.821919",
+          "tests": {
+            "ping": {
+              "success": true,
+              "avg_time": 12.75,
+              "min_time": 12,
+              "max_time": 14,
+              "packet_loss": "0%",
+              "raw_times": [
+                14,
+                12,
+                12,
+                13
+              ]
+            }
+          }
+        }
+      ],
+      "client_network_info": {
+        "client_ip": "192.168.1.11",
+        "gateway": "192.168.1.1",
+        "dns_servers": [],
+        "interface_name": "Adaptador de LAN inal\u00a0mbrica Wi-Fi 2:",
+        "subnet_mask": "255.255.255.0",
+        "timestamp": 1754456022.6252356
+      },
+      "ap_summary": {
+        "total_aps_found": 2,
+        "strongest_ap": {
+          "ssid": "Puma",
+          "bssid": "b8:dd:71:e3:9c:3a",
+          "signal": 99,
+          "signal_dbm": -30.5,
+          "channel": 1,
+          "band": "2.4GHz"
+        },
+        "client_ip": "192.168.1.11",
+        "gateway": "192.168.1.1",
+        "ap_list": [
+          {
+            "ssid": "Puma",
+            "bssid": "b8:dd:71:e3:9c:3a",
+            "signal_percentage": 99,
+            "signal_dbm": -30.5,
+            "snr_db": 64.5,
+            "channel": 1,
+            "band": "2.4GHz",
+            "signal_quality": "Excellent",
+            "authentication": "WPA2-Personal"
+          },
+          {
+            "ssid": "Pumita",
+            "bssid": "b8:dd:71:e3:9c:3c",
+            "signal_percentage": 88,
+            "signal_dbm": -37.0,
+            "snr_db": 63.0,
+            "channel": 149,
+            "band": "5GHz",
+            "signal_quality": "Excellent",
+            "authentication": "WPA2-Personal"
+          }
+        ]
+      }
     }
   ],
   "ap_data": {},
   "network_test_results": {},
   "id_mapping": {},
-  "next_measurement_id": 28,
-  "last_updated": "2025-08-06T00:47:36.288845"
+  "next_measurement_id": 36,
+  "last_updated": "2025-08-06T01:53:49.537123"
 }
