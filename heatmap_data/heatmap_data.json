@@ -7170,11 +7170,1402 @@
           }
         ]
       }
+    },
+    {
+      "id": 36,
+      "timestamp": "2025-08-06T08:42:57.412117",
+      "location": null,
+      "networks": [
+        {
+          "ssid": "Puma",
+          "bssid": "b8:dd:71:e3:9c:3a",
+          "signal": 99,
+          "signal_dbm": -30.5,
+          "snr_db": 64.5,
+          "signal_quality": "Excellent",
+          "channel": 1,
+          "band": "2.4GHz",
+          "authentication": "WPA2-Personal"
+        },
+        {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 99,
+          "signal_dbm": -30.5,
+          "snr_db": 69.5,
+          "signal_quality": "Excellent",
+          "channel": 149,
+          "band": "5GHz",
+          "authentication": "WPA2-Personal"
+        }
+      ],
+      "tests": {},
+      "all_network_tests": [
+        {
+          "ssid": "Puma",
+          "bssid": "b8:dd:71:e3:9c:3a",
+          "signal": 99,
+          "timestamp": "2025-08-06T08:43:18.738561",
+          "tests": {
+            "ping": {
+              "success": true,
+              "avg_time": 13.75,
+              "min_time": 12,
+              "max_time": 19,
+              "packet_loss": "0%",
+              "raw_times": [
+                12,
+                19,
+                12,
+                12
+              ]
+            },
+            "speedtest": {
+              "success": true,
+              "download_mbps": 2.812953,
+              "upload_mbps": 2.417044,
+              "ping_ms": 3.955,
+              "server": "Antel",
+              "raw_data": {
+                "type": "result",
+                "timestamp": "2025-08-06T11:46:47Z",
+                "ping": {
+                  "jitter": 0.487,
+                  "latency": 3.955,
+                  "low": 3.047,
+                  "high": 4.806
+                },
+                "download": {
+                  "bandwidth": 2812953,
+                  "bytes": 17470400,
+                  "elapsed": 6206,
+                  "latency": {
+                    "iqm": 33.909,
+                    "low": 7.721,
+                    "high": 202.618,
+                    "jitter": 16.529
+                  }
+                },
+                "upload": {
+                  "bandwidth": 2417044,
+                  "bytes": 9784052,
+                  "elapsed": 4031
+                },
+                "packetLoss": 4.132231404958677,
+                "isp": "Antel Uruguay",
+                "interface": {
+                  "internalIp": "2800:a4:1ce4:b700:9a6:6740:f2e8:98fe",
+                  "name": "",
+                  "macAddr": "D8:FC:93:BC:E1:16",
+                  "isVpn": false,
+                  "externalIp": "2800:a4:1ce4:b700:9a6:6740:f2e8:98fe"
+                },
+                "server": {
+                  "id": 40741,
+                  "host": "testdevelocidad.com.uy",
+                  "port": 8080,
+                  "name": "Antel",
+                  "location": "Montevideo",
+                  "country": "Uruguay",
+                  "ip": "2800:a0:1:c828:1e00:1800:0:8"
+                },
+                "result": {
+                  "id": "bff13584-68a4-4e3f-b30c-6ff9c3d48349",
+                  "url": "https://www.speedtest.net/result/c/bff13584-68a4-4e3f-b30c-6ff9c3d48349",
+                  "persisted": true
+                }
+              }
+            },
+            "iperf_suite": {
+              "success": true,
+              "server": "167.62.110.20",
+              "tests": {
+                "tcp_forward": {
+                  "download_mbps": 12.2818,
+                  "upload_mbps": 12.2818,
+                  "download_gbps": 0.0122818,
+                  "upload_gbps": 0.0122818
+                },
+                "tcp_reverse": {
+                  "download_mbps": 22.9011,
+                  "upload_mbps": 23.3643,
+                  "download_gbps": 0.0229011,
+                  "upload_gbps": 0.0233643
+                },
+                "udp_forward_tests": {
+                  "udp_forward_1M": {
+                    "target_mbps": 1.0,
+                    "actual_mbps": 0.991096,
+                    "jitter_ms": 0.594382,
+                    "lost_percent": 0,
+                    "total_packets": 885,
+                    "lost_packets": 0,
+                    "quality": "EXCELENTE"
+                  },
+                  "udp_forward_5M": {
+                    "target_mbps": 5.0,
+                    "actual_mbps": 4.95432,
+                    "jitter_ms": 0.595311,
+                    "lost_percent": 0,
+                    "total_packets": 4424,
+                    "lost_packets": 0,
+                    "quality": "EXCELENTE"
+                  },
+                  "udp_forward_10M": {
+                    "target_mbps": 10.0,
+                    "actual_mbps": 9.95268,
+                    "jitter_ms": 1.00864,
+                    "lost_percent": 0,
+                    "total_packets": 8888,
+                    "lost_packets": 0,
+                    "quality": "EXCELENTE"
+                  }
+                },
+                "udp_reverse_tests": {
+                  "udp_reverse_1M": {
+                    "target_mbps": 1.0,
+                    "actual_mbps": 1.00122,
+                    "jitter_ms": 1.25397,
+                    "lost_percent": 0,
+                    "total_packets": 894,
+                    "lost_packets": 0,
+                    "quality": "EXCELENTE"
+                  },
+                  "udp_reverse_5M": {
+                    "target_mbps": 5.0,
+                    "actual_mbps": 5.0069,
+                    "jitter_ms": 1.01308,
+                    "lost_percent": 0,
+                    "total_packets": 4471,
+                    "lost_packets": 0,
+                    "quality": "EXCELENTE"
+                  },
+                  "udp_reverse_10M": {
+                    "target_mbps": 10.0,
+                    "actual_mbps": 10.0099,
+                    "jitter_ms": 1.22336,
+                    "lost_percent": 0,
+                    "total_packets": 8938,
+                    "lost_packets": 0,
+                    "quality": "EXCELENTE"
+                  }
+                }
+              },
+              "raw_output": [
+                "Connecting to host 167.62.110.20, port 5201\n",
+                "[  4] local 192.168.1.11 port 51477 connected to 167.62.110.20 port 5201\n",
+                "[ ID] Interval           Transfer     Bandwidth\n",
+                "[  4]   0.00-1.00   sec  1.54 MBytes  12.9 Mbits/sec                  \n",
+                "[  4]   1.00-2.00   sec  1.54 MBytes  12.9 Mbits/sec                  \n",
+                "[  4]   2.00-3.03   sec  1.48 MBytes  12.0 Mbits/sec                  \n",
+                "[  4]   3.03-4.00   sec  1.54 MBytes  13.3 Mbits/sec                  \n",
+                "[  4]   4.00-5.00   sec  1.42 MBytes  11.8 Mbits/sec                  \n",
+                "[  4]   5.00-6.00   sec  1.54 MBytes  12.9 Mbits/sec                  \n",
+                "[  4]   6.00-7.00   sec  1.54 MBytes  12.9 Mbits/sec                  \n",
+                "[  4]   7.00-8.00   sec  1.29 MBytes  10.8 Mbits/sec                  \n",
+                "[  4]   8.00-9.00   sec  1.29 MBytes  10.8 Mbits/sec                  \n",
+                "[  4]   9.00-10.00  sec  1.23 MBytes  10.3 Mbits/sec                  \n",
+                "- - - - - - - - - - - - - - - - - - - - - - - - -\n",
+                "[ ID] Interval           Transfer     Bandwidth\n",
+                "[  4]   0.00-10.00  sec  14.4 MBytes  12.1 Mbits/sec                  sender\n",
+                "[  4]   0.00-10.00  sec  14.4 MBytes  12.1 Mbits/sec                  receiver\n",
+                "\n",
+                "iperf Done.\n",
+                "Connecting to host 167.62.110.20, port 5201\n",
+                "Reverse mode, remote host 167.62.110.20 is sending\n",
+                "[  4] local 192.168.1.11 port 51482 connected to 167.62.110.20 port 5201\n",
+                "[ ID] Interval           Transfer     Bandwidth\n",
+                "[  4]   0.00-1.00   sec  2.45 MBytes  20.5 Mbits/sec                  \n",
+                "[  4]   1.00-2.00   sec  2.33 MBytes  19.5 Mbits/sec                  \n",
+                "[  4]   2.00-3.00   sec  2.45 MBytes  20.5 Mbits/sec                  \n",
+                "[  4]   3.00-4.00   sec  2.66 MBytes  22.3 Mbits/sec                  \n",
+                "[  4]   4.00-5.00   sec  2.72 MBytes  22.8 Mbits/sec                  \n",
+                "[  4]   5.00-6.00   sec  2.59 MBytes  21.8 Mbits/sec                  \n",
+                "[  4]   6.00-7.00   sec  2.75 MBytes  23.0 Mbits/sec                  \n",
+                "[  4]   7.00-8.00   sec  2.76 MBytes  23.2 Mbits/sec                  \n",
+                "[  4]   8.00-9.00   sec  2.65 MBytes  22.3 Mbits/sec                  \n",
+                "[  4]   9.00-10.00  sec  2.62 MBytes  22.0 Mbits/sec                  \n",
+                "- - - - - - - - - - - - - - - - - - - - - - - - -\n",
+                "[ ID] Interval           Transfer     Bandwidth       Retr\n",
+                "[  4]   0.00-10.00  sec  26.7 MBytes  22.4 Mbits/sec    0             sender\n",
+                "[  4]   0.00-10.00  sec  26.1 MBytes  21.9 Mbits/sec                  receiver\n",
+                "\n",
+                "iperf Done.\n",
+                "Connecting to host 167.62.110.20, port 5201\n",
+                "[  4] local 192.168.1.11 port 64377 connected to 167.62.110.20 port 5201\n",
+                "[ ID] Interval           Transfer     Bandwidth       Total Datagrams\n",
+                "[  4]   0.00-1.00   sec   111 KBytes   906 Kbits/sec  81  \n",
+                "[  4]   1.00-2.00   sec   122 KBytes   996 Kbits/sec  89  \n",
+                "[  4]   2.00-3.00   sec   123 KBytes  1.01 Mbits/sec  90  \n",
+                "[  4]   3.00-4.00   sec   122 KBytes   997 Kbits/sec  89  \n",
+                "[  4]   4.00-5.00   sec   122 KBytes   997 Kbits/sec  89  \n",
+                "[  4]   5.00-6.00   sec   122 KBytes   997 Kbits/sec  89  \n",
+                "[  4]   6.00-7.00   sec   123 KBytes  1.01 Mbits/sec  90  \n",
+                "[  4]   7.00-8.00   sec   122 KBytes   996 Kbits/sec  89  \n",
+                "[  4]   8.00-9.00   sec   122 KBytes   997 Kbits/sec  89  \n",
+                "[  4]   9.00-10.00  sec   123 KBytes  1.01 Mbits/sec  90  \n",
+                "- - - - - - - - - - - - - - - - - - - - - - - - -\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-10.00  sec  1.18 MBytes   991 Kbits/sec  1.140 ms  0/885 (0%)  \n",
+                "[  4] Sent 885 datagrams\n",
+                "\n",
+                "iperf Done.\n",
+                "Connecting to host 167.62.110.20, port 5201\n",
+                "[  4] local 192.168.1.11 port 60192 connected to 167.62.110.20 port 5201\n",
+                "[ ID] Interval           Transfer     Bandwidth       Total Datagrams\n",
+                "[  4]   0.00-1.00   sec   555 KBytes  4.55 Mbits/sec  406  \n",
+                "[  4]   1.00-2.00   sec   611 KBytes  5.01 Mbits/sec  447  \n",
+                "[  4]   2.00-3.00   sec   611 KBytes  5.01 Mbits/sec  447  \n",
+                "[  4]   3.00-4.00   sec   610 KBytes  4.99 Mbits/sec  446  \n",
+                "[  4]   4.00-5.00   sec   610 KBytes  5.00 Mbits/sec  446  \n",
+                "[  4]   5.00-6.00   sec   608 KBytes  4.98 Mbits/sec  445  \n",
+                "[  4]   6.00-7.00   sec   611 KBytes  5.01 Mbits/sec  447  \n",
+                "[  4]   7.00-8.00   sec   611 KBytes  5.01 Mbits/sec  447  \n",
+                "[  4]   8.00-9.00   sec   610 KBytes  4.99 Mbits/sec  446  \n",
+                "[  4]   9.00-10.00  sec   610 KBytes  5.00 Mbits/sec  446  \n",
+                "- - - - - - - - - - - - - - - - - - - - - - - - -\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-10.00  sec  5.91 MBytes  4.95 Mbits/sec  0.846 ms  0/4423 (0%)  \n",
+                "[  4] Sent 4423 datagrams\n",
+                "\n",
+                "iperf Done.\n",
+                "Connecting to host 167.62.110.20, port 5201\n",
+                "[  4] local 192.168.1.11 port 51535 connected to 167.62.110.20 port 5201\n",
+                "[ ID] Interval           Transfer     Bandwidth       Total Datagrams\n",
+                "[  4]   0.00-1.00   sec  1.19 MBytes  9.96 Mbits/sec  890  \n",
+                "[  4]   1.00-2.00   sec  1.16 MBytes  9.70 Mbits/sec  866  \n",
+                "[  4]   2.00-3.00   sec  1.12 MBytes  9.39 Mbits/sec  839  \n",
+                "[  4]   3.00-4.00   sec  1.29 MBytes  10.8 Mbits/sec  969  \n",
+                "[  4]   4.00-5.00   sec  1.17 MBytes  9.79 Mbits/sec  875  \n",
+                "[  4]   5.00-6.00   sec  1.17 MBytes  9.82 Mbits/sec  874  \n",
+                "[  4]   6.00-7.00   sec  1.24 MBytes  10.4 Mbits/sec  928  \n",
+                "[  4]   7.00-8.01   sec  1.11 MBytes  9.25 Mbits/sec  830  \n",
+                "[  4]   8.01-9.00   sec  1.27 MBytes  10.7 Mbits/sec  954  \n",
+                "[  4]   9.00-10.00  sec  1.09 MBytes  9.14 Mbits/sec  816  \n",
+                "- - - - - - - - - - - - - - - - - - - - - - - - -\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-10.00  sec  11.8 MBytes  9.90 Mbits/sec  1.224 ms  0/8841 (0%)  \n",
+                "[  4] Sent 8841 datagrams\n",
+                "\n",
+                "iperf Done.\n",
+                "Connecting to host 167.62.110.20, port 5201\n",
+                "Reverse mode, remote host 167.62.110.20 is sending\n",
+                "[  4] local 192.168.1.11 port 60095 connected to 167.62.110.20 port 5201\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-1.00   sec   123 KBytes  1.01 Mbits/sec  351104763.224 ms  0/90 (0%)  \n",
+                "[  4]   1.00-2.00   sec   122 KBytes   997 Kbits/sec  1124295.867 ms  0/89 (0%)  \n",
+                "[  4]   2.00-3.00   sec   123 KBytes  1.01 Mbits/sec  3376.533 ms  0/90 (0%)  \n",
+                "[  4]   3.00-4.00   sec   122 KBytes   998 Kbits/sec  11.833 ms  0/89 (0%)  \n",
+                "[  4]   4.00-5.00   sec   123 KBytes  1.01 Mbits/sec  2.199 ms  0/90 (0%)  \n",
+                "[  4]   5.00-6.00   sec   122 KBytes   997 Kbits/sec  1.682 ms  0/89 (0%)  \n",
+                "[  4]   6.00-7.00   sec   122 KBytes   996 Kbits/sec  1.903 ms  0/89 (0%)  \n",
+                "[  4]   7.00-8.00   sec   123 KBytes  1.01 Mbits/sec  1.521 ms  0/90 (0%)  \n",
+                "[  4]   8.00-9.00   sec   122 KBytes   996 Kbits/sec  1.373 ms  0/89 (0%)  \n",
+                "[  4]   9.00-10.00  sec   122 KBytes   997 Kbits/sec  1.563 ms  0/89 (0%)  \n",
+                "- - - - - - - - - - - - - - - - - - - - - - - - -\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-10.00  sec  1.19 MBytes  1.00 Mbits/sec  1.563 ms  0/894 (0%)  \n",
+                "[  4] Sent 894 datagrams\n",
+                "\n",
+                "iperf Done.\n",
+                "Connecting to host 167.62.110.20, port 5201\n",
+                "Reverse mode, remote host 167.62.110.20 is sending\n",
+                "[  4] local 192.168.1.11 port 57417 connected to 167.62.110.20 port 5201\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-1.00   sec   617 KBytes  5.05 Mbits/sec  1.263 ms  0/451 (0%)  \n",
+                "[  4]   1.00-2.00   sec   610 KBytes  4.99 Mbits/sec  1.574 ms  0/446 (0%)  \n",
+                "[  4]   2.00-3.00   sec   610 KBytes  5.00 Mbits/sec  0.937 ms  0/446 (0%)  \n",
+                "[  4]   3.00-4.00   sec   610 KBytes  5.00 Mbits/sec  2.170 ms  0/446 (0%)  \n",
+                "[  4]   4.00-5.00   sec   611 KBytes  5.01 Mbits/sec  1.337 ms  0/447 (0%)  \n",
+                "[  4]   5.00-6.00   sec   610 KBytes  4.99 Mbits/sec  2.080 ms  0/446 (0%)  \n",
+                "[  4]   6.00-7.00   sec   394 KBytes  3.23 Mbits/sec  2.326 ms  158/446 (35%)  \n",
+                "[  4]   7.00-8.01   sec   608 KBytes  4.95 Mbits/sec  1.999 ms  0/445 (0%)  \n",
+                "[  4]   8.01-9.00   sec   603 KBytes  4.96 Mbits/sec  2.849 ms  5/446 (1.1%)  \n",
+                "[  4]   9.00-10.00  sec   612 KBytes  5.03 Mbits/sec  2.252 ms  0/448 (0%)  \n",
+                "- - - - - - - - - - - - - - - - - - - - - - - - -\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-10.00  sec  5.97 MBytes  5.01 Mbits/sec  2.160 ms  163/4470 (3.6%)  \n",
+                "[  4] Sent 4470 datagrams\n",
+                "\n",
+                "iperf Done.\n",
+                "Connecting to host 167.62.110.20, port 5201\n",
+                "Reverse mode, remote host 167.62.110.20 is sending\n",
+                "[  4] local 192.168.1.11 port 62123 connected to 167.62.110.20 port 5201\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-1.00   sec  1.20 MBytes  10.1 Mbits/sec  1.044 ms  0/899 (0%)  \n",
+                "[  4]   1.00-2.00   sec  1.19 MBytes  10.0 Mbits/sec  0.641 ms  0/894 (0%)  \n",
+                "[  4]   2.00-3.00   sec  1.19 MBytes  10.0 Mbits/sec  0.878 ms  0/893 (0%)  \n",
+                "[  4]   3.00-4.00   sec  1.19 MBytes  10.0 Mbits/sec  0.666 ms  0/893 (0%)  \n",
+                "[  4]   4.00-5.00   sec  1.19 MBytes  9.99 Mbits/sec  0.715 ms  0/892 (0%)  \n",
+                "[  4]   5.00-6.00   sec  1.19 MBytes  10.0 Mbits/sec  1.022 ms  0/894 (0%)  \n",
+                "[  4]   6.00-7.00   sec  1.19 MBytes  9.98 Mbits/sec  1.038 ms  0/891 (0%)  \n",
+                "[  4]   7.00-8.00   sec  1.19 MBytes  10.0 Mbits/sec  0.748 ms  0/893 (0%)  \n",
+                "[  4]   8.00-9.00   sec  1.19 MBytes  10.0 Mbits/sec  1.080 ms  0/894 (0%)  \n",
+                "[  4]   9.00-10.00  sec  1.19 MBytes  9.96 Mbits/sec  1.085 ms  0/889 (0%)  \n",
+                "- - - - - - - - - - - - - - - - - - - - - - - - -\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-10.00  sec  11.9 MBytes  10.0 Mbits/sec  1.127 ms  0/8938 (0%)  \n",
+                "[  4] Sent 8938 datagrams\n",
+                "\n",
+                "iperf Done.\n"
+              ],
+              "client_network_info": {
+                "client_ip": "192.168.1.11",
+                "gateway": "192.168.1.1",
+                "dns_servers": [],
+                "interface_name": "Adaptador de LAN inal\u00a0mbrica Wi-Fi 2:",
+                "subnet_mask": "255.255.255.0",
+                "timestamp": 1754481092.885189
+              }
+            }
+          }
+        },
+        {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 99,
+          "timestamp": "2025-08-06T08:54:38.697648",
+          "tests": {
+            "ping": {
+              "success": true,
+              "avg_time": 13,
+              "min_time": 13,
+              "max_time": 13,
+              "packet_loss": "0%",
+              "raw_times": [
+                13,
+                13,
+                13,
+                13
+              ]
+            },
+            "speedtest": {
+              "success": true,
+              "download_mbps": 50.20448,
+              "upload_mbps": 5.178193,
+              "ping_ms": 3.456,
+              "server": "Antel",
+              "raw_data": {
+                "type": "result",
+                "timestamp": "2025-08-06T12:06:29Z",
+                "ping": {
+                  "jitter": 0.072,
+                  "latency": 3.456,
+                  "low": 3.386,
+                  "high": 3.614
+                },
+                "download": {
+                  "bandwidth": 50204480,
+                  "bytes": 601754369,
+                  "elapsed": 13423,
+                  "latency": {
+                    "iqm": 33.117,
+                    "low": 4.905,
+                    "high": 318.918,
+                    "jitter": 13.189
+                  }
+                },
+                "upload": {
+                  "bandwidth": 5178193,
+                  "bytes": 20743025,
+                  "elapsed": 4031,
+                  "latency": {
+                    "iqm": 335.335,
+                    "low": 7.309,
+                    "high": 484.582,
+                    "jitter": 79.579
+                  }
+                },
+                "packetLoss": 0,
+                "isp": "Antel Uruguay",
+                "interface": {
+                  "internalIp": "2800:a4:1ce4:b700:9a6:6740:f2e8:98fe",
+                  "name": "",
+                  "macAddr": "D8:FC:93:BC:E1:16",
+                  "isVpn": false,
+                  "externalIp": "2800:a4:1ce4:b700:9a6:6740:f2e8:98fe"
+                },
+                "server": {
+                  "id": 40741,
+                  "host": "testdevelocidad.com.uy",
+                  "port": 8080,
+                  "name": "Antel",
+                  "location": "Montevideo",
+                  "country": "Uruguay",
+                  "ip": "2800:a0:1:c828:1e00:1800:0:8"
+                },
+                "result": {
+                  "id": "b57e5761-eaf4-4222-8063-a19491009cef",
+                  "url": "https://www.speedtest.net/result/c/b57e5761-eaf4-4222-8063-a19491009cef",
+                  "persisted": true
+                }
+              }
+            },
+            "iperf_suite": {
+              "success": true,
+              "server": "167.62.110.20",
+              "tests": {
+                "tcp_forward": {
+                  "download_mbps": 42.2621,
+                  "upload_mbps": 42.2621,
+                  "download_gbps": 0.0422621,
+                  "upload_gbps": 0.0422621
+                },
+                "tcp_reverse": {
+                  "download_mbps": 31.1733,
+                  "upload_mbps": 31.5703,
+                  "download_gbps": 0.0311733,
+                  "upload_gbps": 0.0315703
+                },
+                "udp_forward_tests": {
+                  "udp_forward_1M": {
+                    "target_mbps": 1.0,
+                    "actual_mbps": 0.991177,
+                    "jitter_ms": 0.306676,
+                    "lost_percent": 0,
+                    "total_packets": 885,
+                    "lost_packets": 0,
+                    "quality": "EXCELENTE"
+                  },
+                  "udp_forward_5M": {
+                    "target_mbps": 5.0,
+                    "actual_mbps": 4.95478,
+                    "jitter_ms": 0.252761,
+                    "lost_percent": 0,
+                    "total_packets": 4424,
+                    "lost_packets": 0,
+                    "quality": "EXCELENTE"
+                  },
+                  "udp_forward_10M": {
+                    "target_mbps": 10.0,
+                    "actual_mbps": 9.91384,
+                    "jitter_ms": 0.238117,
+                    "lost_percent": 0,
+                    "total_packets": 8853,
+                    "lost_packets": 0,
+                    "quality": "EXCELENTE"
+                  }
+                },
+                "udp_reverse_tests": {
+                  "udp_reverse_1M": {
+                    "target_mbps": 1.0,
+                    "actual_mbps": 1.00119,
+                    "jitter_ms": 0.461122,
+                    "lost_percent": 0,
+                    "total_packets": 894,
+                    "lost_packets": 0,
+                    "quality": "EXCELENTE"
+                  },
+                  "udp_reverse_5M": {
+                    "target_mbps": 5.0,
+                    "actual_mbps": 5.00498,
+                    "jitter_ms": 0.399412,
+                    "lost_percent": 0,
+                    "total_packets": 4469,
+                    "lost_packets": 0,
+                    "quality": "EXCELENTE"
+                  },
+                  "udp_reverse_10M": {
+                    "target_mbps": 10.0,
+                    "actual_mbps": 10.0097,
+                    "jitter_ms": 0.393313,
+                    "lost_percent": 0,
+                    "total_packets": 8939,
+                    "lost_packets": 0,
+                    "quality": "EXCELENTE"
+                  }
+                }
+              },
+              "raw_output": [
+                "Connecting to host 167.62.110.20, port 5201\n",
+                "[  4] local 192.168.1.11 port 51757 connected to 167.62.110.20 port 5201\n",
+                "[ ID] Interval           Transfer     Bandwidth\n",
+                "[  4]   0.00-1.00   sec  5.11 MBytes  42.8 Mbits/sec                  \n",
+                "[  4]   1.00-2.00   sec  4.92 MBytes  41.3 Mbits/sec                  \n",
+                "[  4]   2.00-3.00   sec  3.76 MBytes  31.5 Mbits/sec                  \n",
+                "[  4]   3.00-4.00   sec  4.92 MBytes  41.4 Mbits/sec                  \n",
+                "[  4]   4.00-5.00   sec  5.04 MBytes  42.3 Mbits/sec                  \n",
+                "[  4]   5.00-6.00   sec  5.04 MBytes  42.3 Mbits/sec                  \n",
+                "[  4]   6.00-7.00   sec  5.04 MBytes  42.3 Mbits/sec                  \n",
+                "[  4]   7.00-8.00   sec  5.04 MBytes  42.4 Mbits/sec                  \n",
+                "[  4]   8.00-9.00   sec  5.04 MBytes  42.3 Mbits/sec                  \n",
+                "[  4]   9.00-10.00  sec  5.04 MBytes  42.3 Mbits/sec                  \n",
+                "- - - - - - - - - - - - - - - - - - - - - - - - -\n",
+                "[ ID] Interval           Transfer     Bandwidth\n",
+                "[  4]   0.00-10.00  sec  49.0 MBytes  41.1 Mbits/sec                  sender\n",
+                "[  4]   0.00-10.00  sec  49.0 MBytes  41.1 Mbits/sec                  receiver\n",
+                "\n",
+                "iperf Done.\n",
+                "Connecting to host 167.62.110.20, port 5201\n",
+                "Reverse mode, remote host 167.62.110.20 is sending\n",
+                "[  4] local 192.168.1.11 port 51765 connected to 167.62.110.20 port 5201\n",
+                "[ ID] Interval           Transfer     Bandwidth\n",
+                "[  4]   0.00-1.00   sec  3.70 MBytes  31.0 Mbits/sec                  \n",
+                "[  4]   1.00-2.00   sec  3.70 MBytes  31.1 Mbits/sec                  \n",
+                "[  4]   2.00-3.00   sec  3.70 MBytes  31.1 Mbits/sec                  \n",
+                "[  4]   3.00-4.00   sec  3.70 MBytes  31.0 Mbits/sec                  \n",
+                "[  4]   4.00-5.00   sec  3.71 MBytes  31.1 Mbits/sec                  \n",
+                "[  4]   5.00-6.00   sec  3.71 MBytes  31.1 Mbits/sec                  \n",
+                "[  4]   6.00-7.00   sec  3.70 MBytes  31.0 Mbits/sec                  \n",
+                "[  4]   7.00-8.00   sec  3.70 MBytes  31.0 Mbits/sec                  \n",
+                "[  4]   8.00-9.00   sec  3.70 MBytes  31.0 Mbits/sec                  \n",
+                "[  4]   9.00-10.00  sec  3.70 MBytes  31.0 Mbits/sec                  \n",
+                "- - - - - - - - - - - - - - - - - - - - - - - - -\n",
+                "[ ID] Interval           Transfer     Bandwidth       Retr\n",
+                "[  4]   0.00-10.00  sec  37.7 MBytes  31.6 Mbits/sec    0             sender\n",
+                "[  4]   0.00-10.00  sec  37.1 MBytes  31.2 Mbits/sec                  receiver\n",
+                "\n",
+                "iperf Done.\n",
+                "Connecting to host 167.62.110.20, port 5201\n",
+                "[  4] local 192.168.1.11 port 52641 connected to 167.62.110.20 port 5201\n",
+                "[ ID] Interval           Transfer     Bandwidth       Total Datagrams\n",
+                "[  4]   0.00-1.00   sec   111 KBytes   906 Kbits/sec  81  \n",
+                "[  4]   1.00-2.00   sec   122 KBytes   996 Kbits/sec  89  \n",
+                "[  4]   2.00-3.00   sec   123 KBytes  1.01 Mbits/sec  90  \n",
+                "[  4]   3.00-4.00   sec   122 KBytes   998 Kbits/sec  89  \n",
+                "[  4]   4.00-5.00   sec   122 KBytes   997 Kbits/sec  89  \n",
+                "[  4]   5.00-6.00   sec   123 KBytes  1.01 Mbits/sec  90  \n",
+                "[  4]   6.00-7.00   sec   122 KBytes   997 Kbits/sec  89  \n",
+                "[  4]   7.00-8.00   sec   122 KBytes   996 Kbits/sec  89  \n",
+                "[  4]   8.00-9.00   sec   122 KBytes   997 Kbits/sec  89  \n",
+                "[  4]   9.00-10.00  sec   123 KBytes  1.01 Mbits/sec  90  \n",
+                "- - - - - - - - - - - - - - - - - - - - - - - - -\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-10.00  sec  1.18 MBytes   991 Kbits/sec  0.255 ms  0/885 (0%)  \n",
+                "[  4] Sent 885 datagrams\n",
+                "\n",
+                "iperf Done.\n",
+                "Connecting to host 167.62.110.20, port 5201\n",
+                "[  4] local 192.168.1.11 port 59387 connected to 167.62.110.20 port 5201\n",
+                "[ ID] Interval           Transfer     Bandwidth       Total Datagrams\n",
+                "[  4]   0.00-1.00   sec   555 KBytes  4.54 Mbits/sec  406  \n",
+                "[  4]   1.00-2.00   sec   611 KBytes  5.01 Mbits/sec  447  \n",
+                "[  4]   2.00-3.00   sec   611 KBytes  5.01 Mbits/sec  447  \n",
+                "[  4]   3.00-4.00   sec   608 KBytes  4.99 Mbits/sec  445  \n",
+                "[  4]   4.00-5.00   sec   611 KBytes  5.01 Mbits/sec  447  \n",
+                "[  4]   5.00-6.00   sec   611 KBytes  5.00 Mbits/sec  447  \n",
+                "[  4]   6.00-7.00   sec   611 KBytes  5.01 Mbits/sec  447  \n",
+                "[  4]   7.00-8.00   sec   608 KBytes  4.98 Mbits/sec  445  \n",
+                "[  4]   8.00-9.00   sec   611 KBytes  5.01 Mbits/sec  447  \n",
+                "[  4]   9.00-10.00  sec   610 KBytes  5.00 Mbits/sec  446  \n",
+                "- - - - - - - - - - - - - - - - - - - - - - - - -\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-10.00  sec  5.91 MBytes  4.95 Mbits/sec  0.256 ms  0/4424 (0%)  \n",
+                "[  4] Sent 4424 datagrams\n",
+                "\n",
+                "iperf Done.\n",
+                "Connecting to host 167.62.110.20, port 5201\n",
+                "[  4] local 192.168.1.11 port 57407 connected to 167.62.110.20 port 5201\n",
+                "[ ID] Interval           Transfer     Bandwidth       Total Datagrams\n",
+                "[  4]   0.00-1.00   sec  1.09 MBytes  9.17 Mbits/sec  819  \n",
+                "[  4]   1.00-2.00   sec  1.19 MBytes  9.98 Mbits/sec  892  \n",
+                "[  4]   2.00-3.00   sec  1.19 MBytes  10.0 Mbits/sec  893  \n",
+                "[  4]   3.00-4.00   sec  1.19 MBytes  10.0 Mbits/sec  893  \n",
+                "[  4]   4.00-5.00   sec  1.19 MBytes  10.0 Mbits/sec  895  \n",
+                "[  4]   5.00-6.00   sec  1.19 MBytes  9.97 Mbits/sec  890  \n",
+                "[  4]   6.00-7.00   sec  1.19 MBytes  9.98 Mbits/sec  891  \n",
+                "[  4]   7.00-8.00   sec  1.20 MBytes  10.0 Mbits/sec  897  \n",
+                "[  4]   8.00-9.00   sec  1.19 MBytes  9.96 Mbits/sec  888  \n",
+                "[  4]   9.00-10.00  sec  1.22 MBytes  10.2 Mbits/sec  911  \n",
+                "- - - - - - - - - - - - - - - - - - - - - - - - -\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-10.00  sec  11.8 MBytes  9.93 Mbits/sec  0.276 ms  0/8869 (0%)  \n",
+                "[  4] Sent 8869 datagrams\n",
+                "\n",
+                "iperf Done.\n",
+                "Connecting to host 167.62.110.20, port 5201\n",
+                "Reverse mode, remote host 167.62.110.20 is sending\n",
+                "[  4] local 192.168.1.11 port 60164 connected to 167.62.110.20 port 5201\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-1.00   sec   123 KBytes  1.01 Mbits/sec  351104762.317 ms  0/90 (0%)  \n",
+                "[  4]   1.00-2.00   sec   123 KBytes  1.01 Mbits/sec  1054027.121 ms  0/90 (0%)  \n",
+                "[  4]   2.00-3.00   sec   122 KBytes   997 Kbits/sec  3375.675 ms  0/89 (0%)  \n",
+                "[  4]   3.00-4.00   sec   122 KBytes   997 Kbits/sec  11.487 ms  0/89 (0%)  \n",
+                "[  4]   4.00-5.00   sec   122 KBytes   997 Kbits/sec  0.965 ms  0/89 (0%)  \n",
+                "[  4]   5.00-6.00   sec   123 KBytes  1.01 Mbits/sec  0.567 ms  0/90 (0%)  \n",
+                "[  4]   6.00-7.00   sec   122 KBytes   997 Kbits/sec  0.506 ms  0/89 (0%)  \n",
+                "[  4]   7.00-8.00   sec   122 KBytes   995 Kbits/sec  0.828 ms  0/89 (0%)  \n",
+                "[  4]   8.00-9.00   sec   123 KBytes  1.01 Mbits/sec  0.227 ms  0/90 (0%)  \n",
+                "[  4]   9.00-10.00  sec   122 KBytes   997 Kbits/sec  0.747 ms  0/89 (0%)  \n",
+                "- - - - - - - - - - - - - - - - - - - - - - - - -\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-10.00  sec  1.19 MBytes  1.00 Mbits/sec  0.747 ms  0/894 (0%)  \n",
+                "[  4] Sent 894 datagrams\n",
+                "\n",
+                "iperf Done.\n",
+                "Connecting to host 167.62.110.20, port 5201\n",
+                "Reverse mode, remote host 167.62.110.20 is sending\n",
+                "[  4] local 192.168.1.11 port 63605 connected to 167.62.110.20 port 5201\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-1.00   sec   615 KBytes  5.03 Mbits/sec  0.294 ms  0/450 (0%)  \n",
+                "[  4]   1.00-2.00   sec   610 KBytes  5.00 Mbits/sec  0.192 ms  0/446 (0%)  \n",
+                "[  4]   2.00-3.00   sec   610 KBytes  4.99 Mbits/sec  0.289 ms  0/446 (0%)  \n",
+                "[  4]   3.00-4.00   sec   611 KBytes  5.00 Mbits/sec  0.210 ms  0/447 (0%)  \n",
+                "[  4]   4.00-5.00   sec   610 KBytes  5.00 Mbits/sec  0.515 ms  0/446 (0%)  \n",
+                "[  4]   5.00-6.00   sec   611 KBytes  5.00 Mbits/sec  1.041 ms  0/447 (0%)  \n",
+                "[  4]   6.00-7.00   sec   610 KBytes  5.00 Mbits/sec  0.345 ms  0/446 (0%)  \n",
+                "[  4]   7.00-8.00   sec   611 KBytes  5.01 Mbits/sec  0.468 ms  0/447 (0%)  \n",
+                "[  4]   8.00-9.00   sec   611 KBytes  5.00 Mbits/sec  0.352 ms  0/447 (0%)  \n",
+                "[  4]   9.00-10.00  sec   610 KBytes  4.99 Mbits/sec  0.349 ms  0/446 (0%)  \n",
+                "- - - - - - - - - - - - - - - - - - - - - - - - -\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-10.00  sec  5.97 MBytes  5.01 Mbits/sec  0.312 ms  0/4470 (0%)  \n",
+                "[  4] Sent 4470 datagrams\n",
+                "\n",
+                "iperf Done.\n",
+                "Connecting to host 167.62.110.20, port 5201\n",
+                "Reverse mode, remote host 167.62.110.20 is sending\n",
+                "[  4] local 192.168.1.11 port 50976 connected to 167.62.110.20 port 5201\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-1.00   sec  1.20 MBytes  10.1 Mbits/sec  0.205 ms  0/902 (0%)  \n",
+                "[  4]   1.00-2.00   sec  1.19 MBytes  10.0 Mbits/sec  0.319 ms  0/892 (0%)  \n",
+                "[  4]   2.00-3.00   sec  1.19 MBytes  10.0 Mbits/sec  0.237 ms  0/894 (0%)  \n",
+                "[  4]   3.00-4.00   sec  1.19 MBytes  10.0 Mbits/sec  0.295 ms  0/893 (0%)  \n",
+                "[  4]   4.00-5.00   sec  1.19 MBytes  10.0 Mbits/sec  0.150 ms  0/893 (0%)  \n",
+                "[  4]   5.00-6.00   sec  1.19 MBytes  9.99 Mbits/sec  0.386 ms  0/892 (0%)  \n",
+                "[  4]   6.00-7.00   sec  1.19 MBytes  10.0 Mbits/sec  0.290 ms  0/894 (0%)  \n",
+                "[  4]   7.00-8.00   sec  1.19 MBytes  9.99 Mbits/sec  0.126 ms  0/893 (0%)  \n",
+                "[  4]   8.00-9.00   sec  1.19 MBytes  10.0 Mbits/sec  0.274 ms  0/891 (0%)  \n",
+                "[  4]   9.00-10.00  sec  1.19 MBytes  10.0 Mbits/sec  0.224 ms  0/893 (0%)  \n",
+                "- - - - - - - - - - - - - - - - - - - - - - - - -\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-10.00  sec  11.9 MBytes  10.0 Mbits/sec  0.232 ms  0/8941 (0%)  \n",
+                "[  4] Sent 8941 datagrams\n",
+                "\n",
+                "iperf Done.\n"
+              ],
+              "client_network_info": {
+                "client_ip": "192.168.1.11",
+                "gateway": "192.168.1.1",
+                "dns_servers": [],
+                "interface_name": "Adaptador de LAN inal\u00a0mbrica Wi-Fi 2:",
+                "subnet_mask": "255.255.255.0",
+                "timestamp": 1754481997.1355753
+              }
+            }
+          }
+        }
+      ],
+      "client_network_info": {
+        "client_ip": "192.168.1.11",
+        "gateway": "192.168.1.1",
+        "dns_servers": [],
+        "interface_name": "Adaptador de LAN inal\u00a0mbrica Wi-Fi 2:",
+        "subnet_mask": "255.255.255.0",
+        "timestamp": 1754481278.430647
+      },
+      "ap_summary": {
+        "total_aps_found": 2,
+        "strongest_ap": {
+          "ssid": "Puma",
+          "bssid": "b8:dd:71:e3:9c:3a",
+          "signal": 99,
+          "signal_dbm": -30.5,
+          "channel": 1,
+          "band": "2.4GHz"
+        },
+        "client_ip": "192.168.1.11",
+        "gateway": "192.168.1.1",
+        "ap_list": [
+          {
+            "ssid": "Puma",
+            "bssid": "b8:dd:71:e3:9c:3a",
+            "signal_percentage": 99,
+            "signal_dbm": -30.5,
+            "snr_db": 64.5,
+            "channel": 1,
+            "band": "2.4GHz",
+            "signal_quality": "Excellent",
+            "authentication": "WPA2-Personal"
+          },
+          {
+            "ssid": "Pumita",
+            "bssid": "b8:dd:71:e3:9c:3c",
+            "signal_percentage": 99,
+            "signal_dbm": -30.5,
+            "snr_db": 69.5,
+            "channel": 149,
+            "band": "5GHz",
+            "signal_quality": "Excellent",
+            "authentication": "WPA2-Personal"
+          }
+        ]
+      }
+    },
+    {
+      "id": 37,
+      "timestamp": "2025-08-06T09:12:41.183837",
+      "location": null,
+      "networks": [
+        {
+          "ssid": "Puma",
+          "bssid": "b8:dd:71:e3:9c:3a",
+          "signal": 85,
+          "signal_dbm": -40.0,
+          "snr_db": 55.0,
+          "signal_quality": "Excellent",
+          "channel": 1,
+          "band": "2.4GHz",
+          "authentication": "WPA2-Personal"
+        },
+        {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 99,
+          "signal_dbm": -30.5,
+          "snr_db": 69.5,
+          "signal_quality": "Excellent",
+          "channel": 149,
+          "band": "5GHz",
+          "authentication": "WPA2-Personal"
+        }
+      ],
+      "tests": {},
+      "all_network_tests": [
+        {
+          "ssid": "Puma",
+          "bssid": "b8:dd:71:e3:9c:3a",
+          "signal": 85,
+          "timestamp": "2025-08-06T09:12:50.445142",
+          "tests": {
+            "ping": {
+              "success": true,
+              "avg_time": 12.5,
+              "min_time": 12,
+              "max_time": 13,
+              "packet_loss": "0%",
+              "raw_times": [
+                13,
+                12,
+                12,
+                13
+              ]
+            },
+            "speedtest": {
+              "success": true,
+              "download_mbps": 3.066376,
+              "upload_mbps": 2.456769,
+              "ping_ms": 3.923,
+              "server": "Antel",
+              "raw_data": {
+                "type": "result",
+                "timestamp": "2025-08-06T12:13:12Z",
+                "ping": {
+                  "jitter": 0.896,
+                  "latency": 3.923,
+                  "low": 3.447,
+                  "high": 5.444
+                },
+                "download": {
+                  "bandwidth": 3066376,
+                  "bytes": 29699763,
+                  "elapsed": 9811,
+                  "latency": {
+                    "iqm": 220.084,
+                    "low": 41.689,
+                    "high": 376.951,
+                    "jitter": 60.82
+                  }
+                },
+                "upload": {
+                  "bandwidth": 2456769,
+                  "bytes": 9648174,
+                  "elapsed": 3918,
+                  "latency": {
+                    "iqm": 389.911,
+                    "low": 19.722,
+                    "high": 622.937,
+                    "jitter": 83.222
+                  }
+                },
+                "packetLoss": 0,
+                "isp": "Antel Uruguay",
+                "interface": {
+                  "internalIp": "2800:a4:1ce4:b700:9a6:6740:f2e8:98fe",
+                  "name": "",
+                  "macAddr": "D8:FC:93:BC:E1:16",
+                  "isVpn": false,
+                  "externalIp": "2800:a4:1ce4:b700:9a6:6740:f2e8:98fe"
+                },
+                "server": {
+                  "id": 40741,
+                  "host": "testdevelocidad.com.uy",
+                  "port": 8080,
+                  "name": "Antel",
+                  "location": "Montevideo",
+                  "country": "Uruguay",
+                  "ip": "2800:a0:1:c828:1e00:1800:0:8"
+                },
+                "result": {
+                  "id": "c7e9ca17-b2e6-4655-9e56-95c7aeab58df",
+                  "url": "https://www.speedtest.net/result/c/c7e9ca17-b2e6-4655-9e56-95c7aeab58df",
+                  "persisted": true
+                }
+              }
+            },
+            "iperf_suite": {
+              "success": true,
+              "server": "167.62.110.20",
+              "tests": {
+                "tcp_forward": {
+                  "download_mbps": 12.4886,
+                  "upload_mbps": 12.4886,
+                  "download_gbps": 0.0124886,
+                  "upload_gbps": 0.0124886
+                },
+                "tcp_reverse": {
+                  "download_mbps": 18.4419,
+                  "upload_mbps": 18.7634,
+                  "download_gbps": 0.0184419,
+                  "upload_gbps": 0.0187634
+                },
+                "udp_forward_tests": {
+                  "udp_forward_5M": {
+                    "target_mbps": 5.0,
+                    "actual_mbps": 4.95435,
+                    "jitter_ms": 0.812481,
+                    "lost_percent": 0,
+                    "total_packets": 4424,
+                    "lost_packets": 0,
+                    "quality": "EXCELENTE"
+                  },
+                  "udp_forward_10M": {
+                    "target_mbps": 10.0,
+                    "actual_mbps": 9.98429,
+                    "jitter_ms": 0.891901,
+                    "lost_percent": 0,
+                    "total_packets": 8917,
+                    "lost_packets": 0,
+                    "quality": "EXCELENTE"
+                  }
+                },
+                "udp_reverse_tests": {
+                  "udp_reverse_5M": {
+                    "target_mbps": 5.0,
+                    "actual_mbps": 5.00782,
+                    "jitter_ms": 1.07869,
+                    "lost_percent": 0,
+                    "total_packets": 4472,
+                    "lost_packets": 0,
+                    "quality": "EXCELENTE"
+                  },
+                  "udp_reverse_10M": {
+                    "target_mbps": 10.0,
+                    "actual_mbps": 10.0116,
+                    "jitter_ms": 0.932668,
+                    "lost_percent": 0,
+                    "total_packets": 8939,
+                    "lost_packets": 0,
+                    "quality": "EXCELENTE"
+                  }
+                }
+              },
+              "raw_output": [
+                "Connecting to host 167.62.110.20, port 5201\n",
+                "[  4] local 192.168.1.11 port 51937 connected to 167.62.110.20 port 5201\n",
+                "[ ID] Interval           Transfer     Bandwidth\n",
+                "[  4]   0.00-1.00   sec  1.48 MBytes  12.4 Mbits/sec                  \n",
+                "[  4]   1.00-2.00   sec  1.54 MBytes  12.9 Mbits/sec                  \n",
+                "[  4]   2.00-3.00   sec  1.42 MBytes  11.9 Mbits/sec                  \n",
+                "[  4]   3.00-4.00   sec  1.48 MBytes  12.4 Mbits/sec                  \n",
+                "[  4]   4.00-5.00   sec  1.48 MBytes  12.4 Mbits/sec                  \n",
+                "[  4]   5.00-6.00   sec  1.54 MBytes  12.9 Mbits/sec                  \n",
+                "[  4]   6.00-7.00   sec  1.54 MBytes  12.9 Mbits/sec                  \n",
+                "[  4]   7.00-8.00   sec  1.05 MBytes  8.77 Mbits/sec                  \n",
+                "[  4]   8.00-9.00   sec  1.54 MBytes  12.9 Mbits/sec                  \n",
+                "[  4]   9.00-10.00  sec  1.54 MBytes  12.9 Mbits/sec                  \n",
+                "- - - - - - - - - - - - - - - - - - - - - - - - -\n",
+                "[ ID] Interval           Transfer     Bandwidth\n",
+                "[  4]   0.00-10.00  sec  14.6 MBytes  12.2 Mbits/sec                  sender\n",
+                "[  4]   0.00-10.00  sec  14.6 MBytes  12.2 Mbits/sec                  receiver\n",
+                "\n",
+                "iperf Done.\n",
+                "Connecting to host 167.62.110.20, port 5201\n",
+                "Reverse mode, remote host 167.62.110.20 is sending\n",
+                "[  4] local 192.168.1.11 port 51947 connected to 167.62.110.20 port 5201\n",
+                "[ ID] Interval           Transfer     Bandwidth\n",
+                "[  4]   0.00-1.00   sec  2.55 MBytes  21.3 Mbits/sec                  \n",
+                "[  4]   1.00-2.00   sec  2.49 MBytes  20.9 Mbits/sec                  \n",
+                "[  4]   2.00-3.00   sec  2.63 MBytes  22.0 Mbits/sec                  \n",
+                "[  4]   3.00-4.00   sec  2.71 MBytes  22.7 Mbits/sec                  \n",
+                "[  4]   4.00-5.00   sec  2.68 MBytes  22.5 Mbits/sec                  \n",
+                "[  4]   5.00-6.00   sec  2.63 MBytes  22.0 Mbits/sec                  \n",
+                "[  4]   6.00-7.00   sec  2.72 MBytes  22.9 Mbits/sec                  \n",
+                "[  4]   7.00-8.00   sec  2.45 MBytes  20.5 Mbits/sec                  \n",
+                "[  4]   8.00-9.00   sec  2.53 MBytes  21.2 Mbits/sec                  \n",
+                "[  4]   9.00-10.00  sec  2.68 MBytes  22.4 Mbits/sec                  \n",
+                "- - - - - - - - - - - - - - - - - - - - - - - - -\n",
+                "[ ID] Interval           Transfer     Bandwidth       Retr\n",
+                "[  4]   0.00-10.00  sec  26.8 MBytes  22.5 Mbits/sec    0             sender\n",
+                "[  4]   0.00-10.00  sec  26.2 MBytes  22.0 Mbits/sec                  receiver\n",
+                "\n",
+                "iperf Done.\n",
+                "Connecting to host 167.62.110.20, port 5201\n",
+                "[  4] local 192.168.1.11 port 54238 connected to 167.62.110.20 port 5201\n",
+                "[ ID] Interval           Transfer     Bandwidth       Total Datagrams\n",
+                "[  4]   0.00-1.00   sec   555 KBytes  4.54 Mbits/sec  406  \n",
+                "[  4]   1.00-2.00   sec   610 KBytes  5.00 Mbits/sec  446  \n",
+                "[  4]   2.00-3.00   sec   612 KBytes  5.02 Mbits/sec  448  \n",
+                "[  4]   3.00-4.00   sec   608 KBytes  4.98 Mbits/sec  445  \n",
+                "[  4]   4.00-5.00   sec   608 KBytes  4.98 Mbits/sec  445  \n",
+                "[  4]   5.00-6.00   sec   614 KBytes  5.03 Mbits/sec  449  \n",
+                "[  4]   6.00-7.00   sec   608 KBytes  4.98 Mbits/sec  445  \n",
+                "[  4]   7.00-8.00   sec   611 KBytes  5.01 Mbits/sec  447  \n",
+                "[  4]   8.00-9.00   sec   611 KBytes  5.01 Mbits/sec  447  \n",
+                "[  4]   9.00-10.00  sec   610 KBytes  5.00 Mbits/sec  446  \n",
+                "- - - - - - - - - - - - - - - - - - - - - - - - -\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-10.00  sec  5.91 MBytes  4.95 Mbits/sec  0.590 ms  0/4424 (0%)  \n",
+                "[  4] Sent 4424 datagrams\n",
+                "\n",
+                "iperf Done.\n",
+                "Connecting to host 167.62.110.20, port 5201\n",
+                "[  4] local 192.168.1.11 port 50854 connected to 167.62.110.20 port 5201\n",
+                "[ ID] Interval           Transfer     Bandwidth       Total Datagrams\n",
+                "[  4]   0.00-1.00   sec  1.18 MBytes  9.92 Mbits/sec  886  \n",
+                "[  4]   1.00-2.00   sec  1.09 MBytes  9.13 Mbits/sec  815  \n",
+                "[  4]   2.00-3.00   sec  1.19 MBytes  9.98 Mbits/sec  890  \n",
+                "[  4]   3.00-4.00   sec  1.30 MBytes  10.9 Mbits/sec  976  \n",
+                "[  4]   4.00-5.00   sec  1.18 MBytes  9.92 Mbits/sec  886  \n",
+                "[  4]   5.00-6.00   sec  1.13 MBytes  9.44 Mbits/sec  843  \n",
+                "[  4]   6.00-7.00   sec  1.20 MBytes  10.1 Mbits/sec  901  \n",
+                "[  4]   7.00-8.00   sec  1.26 MBytes  10.6 Mbits/sec  945  \n",
+                "[  4]   8.00-9.00   sec  1.08 MBytes  9.02 Mbits/sec  806  \n",
+                "[  4]   9.00-10.00  sec  1.26 MBytes  10.6 Mbits/sec  946  \n",
+                "- - - - - - - - - - - - - - - - - - - - - - - - -\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-10.00  sec  11.9 MBytes  9.96 Mbits/sec  0.672 ms  0/8894 (0%)  \n",
+                "[  4] Sent 8894 datagrams\n",
+                "\n",
+                "iperf Done.\n",
+                "Connecting to host 167.62.110.20, port 5201\n",
+                "Reverse mode, remote host 167.62.110.20 is sending\n",
+                "[  4] local 192.168.1.11 port 59448 connected to 167.62.110.20 port 5201\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-1.00   sec   612 KBytes  5.02 Mbits/sec  0.886 ms  0/448 (0%)  \n",
+                "[  4]   1.00-2.00   sec   614 KBytes  5.03 Mbits/sec  0.884 ms  0/449 (0%)  \n",
+                "[  4]   2.00-3.00   sec   611 KBytes  5.01 Mbits/sec  0.746 ms  0/447 (0%)  \n",
+                "[  4]   3.00-4.00   sec   611 KBytes  5.01 Mbits/sec  0.875 ms  0/447 (0%)  \n",
+                "[  4]   4.00-5.00   sec   610 KBytes  4.99 Mbits/sec  0.705 ms  0/446 (0%)  \n",
+                "[  4]   5.00-6.00   sec   611 KBytes  5.01 Mbits/sec  0.983 ms  0/447 (0%)  \n",
+                "[  4]   6.00-7.00   sec   608 KBytes  4.98 Mbits/sec  1.122 ms  0/445 (0%)  \n",
+                "[  4]   7.00-8.00   sec   611 KBytes  5.01 Mbits/sec  0.907 ms  0/447 (0%)  \n",
+                "[  4]   8.00-9.00   sec   611 KBytes  5.01 Mbits/sec  1.395 ms  0/447 (0%)  \n",
+                "[  4]   9.00-10.00  sec   610 KBytes  4.99 Mbits/sec  0.648 ms  0/446 (0%)  \n",
+                "- - - - - - - - - - - - - - - - - - - - - - - - -\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-10.00  sec  5.97 MBytes  5.01 Mbits/sec  0.851 ms  0/4471 (0%)  \n",
+                "[  4] Sent 4471 datagrams\n",
+                "\n",
+                "iperf Done.\n",
+                "Connecting to host 167.62.110.20, port 5201\n",
+                "Reverse mode, remote host 167.62.110.20 is sending\n",
+                "[  4] local 192.168.1.11 port 52182 connected to 167.62.110.20 port 5201\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-1.00   sec  1.20 MBytes  10.1 Mbits/sec  0.975 ms  0/900 (0%)  \n",
+                "[  4]   1.00-2.00   sec  1.19 MBytes  10.0 Mbits/sec  0.854 ms  0/893 (0%)  \n",
+                "[  4]   2.00-3.00   sec  1.19 MBytes  10.0 Mbits/sec  0.794 ms  0/893 (0%)  \n",
+                "[  4]   3.00-4.00   sec  1.19 MBytes  9.99 Mbits/sec  0.672 ms  0/892 (0%)  \n",
+                "[  4]   4.00-5.00   sec  1.19 MBytes  10.0 Mbits/sec  1.010 ms  0/893 (0%)  \n",
+                "[  4]   5.00-6.00   sec  1.19 MBytes  9.98 Mbits/sec  0.885 ms  0/893 (0%)  \n",
+                "[  4]   6.00-7.00   sec  1.19 MBytes  10.0 Mbits/sec  0.722 ms  0/894 (0%)  \n",
+                "[  4]   7.00-8.00   sec  1.19 MBytes  9.97 Mbits/sec  0.714 ms  0/890 (0%)  \n",
+                "[  4]   8.00-9.00   sec  1.20 MBytes  10.0 Mbits/sec  0.833 ms  0/896 (0%)  \n",
+                "[  4]   9.00-10.00  sec  1.19 MBytes  9.96 Mbits/sec  0.950 ms  0/890 (0%)  \n",
+                "- - - - - - - - - - - - - - - - - - - - - - - - -\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-10.00  sec  11.9 MBytes  10.0 Mbits/sec  0.896 ms  0/8940 (0%)  \n",
+                "[  4] Sent 8940 datagrams\n",
+                "\n",
+                "iperf Done.\n"
+              ],
+              "client_network_info": {
+                "client_ip": "192.168.1.11",
+                "gateway": "192.168.1.1",
+                "dns_servers": [],
+                "interface_name": "Adaptador de LAN inal\u00a0mbrica Wi-Fi 2:",
+                "subnet_mask": "255.255.255.0",
+                "timestamp": 1754482394.1454182
+              }
+            }
+          }
+        },
+        {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 99,
+          "timestamp": "2025-08-06T09:15:27.066802",
+          "tests": {
+            "ping": {
+              "success": true,
+              "avg_time": 13,
+              "min_time": 12,
+              "max_time": 14,
+              "packet_loss": "0%",
+              "raw_times": [
+                13,
+                13,
+                14,
+                12
+              ]
+            }
+          }
+        }
+      ],
+      "client_network_info": {
+        "client_ip": "192.168.1.11",
+        "gateway": "192.168.1.1",
+        "dns_servers": [],
+        "interface_name": "Adaptador de LAN inal\u00a0mbrica Wi-Fi 2:",
+        "subnet_mask": "255.255.255.0",
+        "timestamp": 1754482525.9017467
+      },
+      "ap_summary": {
+        "total_aps_found": 2,
+        "strongest_ap": {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 99,
+          "signal_dbm": -30.5,
+          "channel": 149,
+          "band": "5GHz"
+        },
+        "client_ip": "192.168.1.11",
+        "gateway": "192.168.1.1",
+        "ap_list": [
+          {
+            "ssid": "Pumita",
+            "bssid": "b8:dd:71:e3:9c:3c",
+            "signal_percentage": 99,
+            "signal_dbm": -30.5,
+            "snr_db": 69.5,
+            "channel": 149,
+            "band": "5GHz",
+            "signal_quality": "Excellent",
+            "authentication": "WPA2-Personal"
+          },
+          {
+            "ssid": "Puma",
+            "bssid": "b8:dd:71:e3:9c:3a",
+            "signal_percentage": 85,
+            "signal_dbm": -40.0,
+            "snr_db": 55.0,
+            "channel": 1,
+            "band": "2.4GHz",
+            "signal_quality": "Excellent",
+            "authentication": "WPA2-Personal"
+          }
+        ]
+      }
+    },
+    {
+      "id": 38,
+      "timestamp": "2025-08-06T09:32:05.413474",
+      "location": null,
+      "networks": [
+        {
+          "ssid": "Puma",
+          "bssid": "b8:dd:71:e3:9c:3a",
+          "signal": 93,
+          "signal_dbm": -33.5,
+          "snr_db": 61.5,
+          "signal_quality": "Excellent",
+          "channel": 1,
+          "band": "2.4GHz",
+          "authentication": "WPA2-Personal"
+        },
+        {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 99,
+          "signal_dbm": -30.5,
+          "snr_db": 69.5,
+          "signal_quality": "Excellent",
+          "channel": 149,
+          "band": "5GHz",
+          "authentication": "WPA2-Personal"
+        }
+      ],
+      "tests": {},
+      "all_network_tests": [
+        {
+          "ssid": "Puma",
+          "bssid": "b8:dd:71:e3:9c:3a",
+          "signal": 93,
+          "timestamp": "2025-08-06T09:32:13.764055",
+          "tests": {
+            "ping": {
+              "success": true,
+              "avg_time": 16.75,
+              "min_time": 12,
+              "max_time": 22,
+              "packet_loss": "0%",
+              "raw_times": [
+                21,
+                12,
+                22,
+                12
+              ]
+            },
+            "iperf_suite": {
+              "success": true,
+              "server": "167.62.110.20",
+              "tests": {
+                "tcp_forward": {
+                  "download_mbps": 15.8233,
+                  "upload_mbps": 15.8233,
+                  "download_gbps": 0.0158233,
+                  "upload_gbps": 0.0158233
+                },
+                "tcp_reverse": {
+                  "download_mbps": 26.523,
+                  "upload_mbps": 26.9396,
+                  "download_gbps": 0.026523,
+                  "upload_gbps": 0.0269396
+                },
+                "udp_forward_tests": {
+                  "udp_forward_3M": {
+                    "target_mbps": 3.0,
+                    "actual_mbps": 2.96999,
+                    "jitter_ms": 0.494885,
+                    "lost_percent": 0,
+                    "total_packets": 2654,
+                    "lost_packets": 0,
+                    "quality": "EXCELENTE"
+                  },
+                  "udp_forward_7.9M": {
+                    "target_mbps": 7.9,
+                    "actual_mbps": 7.82164,
+                    "jitter_ms": 0.469225,
+                    "lost_percent": 0,
+                    "total_packets": 6993,
+                    "lost_packets": 0,
+                    "quality": "EXCELENTE"
+                  }
+                },
+                "udp_reverse_tests": {
+                  "udp_reverse_3M": {
+                    "target_mbps": 3.0,
+                    "actual_mbps": 3.0037,
+                    "jitter_ms": 1.23488,
+                    "lost_percent": 0,
+                    "total_packets": 2682,
+                    "lost_packets": 0,
+                    "quality": "EXCELENTE"
+                  },
+                  "udp_reverse_13.3M": {
+                    "target_mbps": 13.3,
+                    "actual_mbps": 13.3222,
+                    "jitter_ms": 0.478989,
+                    "lost_percent": 0,
+                    "total_packets": 11895,
+                    "lost_packets": 0,
+                    "quality": "EXCELENTE"
+                  }
+                }
+              },
+              "raw_output": [
+                "Connecting to host 167.62.110.20, port 5201\n",
+                "[  4] local 192.168.1.11 port 51115 connected to 167.62.110.20 port 5201\n",
+                "[ ID] Interval           Transfer     Bandwidth\n",
+                "[  4]   0.00-1.01   sec  1.97 MBytes  16.4 Mbits/sec                  \n",
+                "[  4]   1.01-2.01   sec  2.03 MBytes  17.0 Mbits/sec                  \n",
+                "[  4]   2.01-3.01   sec  1.97 MBytes  16.4 Mbits/sec                  \n",
+                "[  4]   3.01-4.00   sec  1.85 MBytes  15.7 Mbits/sec                  \n",
+                "[  4]   4.00-5.01   sec  1.97 MBytes  16.4 Mbits/sec                  \n",
+                "[  4]   5.01-6.01   sec  1.97 MBytes  16.5 Mbits/sec                  \n",
+                "[  4]   6.01-7.00   sec  1.85 MBytes  15.6 Mbits/sec                  \n",
+                "[  4]   7.00-8.01   sec  1.97 MBytes  16.4 Mbits/sec                  \n",
+                "[  4]   8.01-9.02   sec  1.97 MBytes  16.4 Mbits/sec                  \n",
+                "[  4]   9.02-10.01  sec  1.85 MBytes  15.5 Mbits/sec                  \n",
+                "- - - - - - - - - - - - - - - - - - - - - - - - -\n",
+                "[ ID] Interval           Transfer     Bandwidth\n",
+                "[  4]   0.00-10.01  sec  19.4 MBytes  16.2 Mbits/sec                  sender\n",
+                "[  4]   0.00-10.01  sec  19.4 MBytes  16.2 Mbits/sec                  receiver\n",
+                "\n",
+                "iperf Done.\n",
+                "Connecting to host 167.62.110.20, port 5201\n",
+                "Reverse mode, remote host 167.62.110.20 is sending\n",
+                "[  4] local 192.168.1.11 port 51128 connected to 167.62.110.20 port 5201\n",
+                "[ ID] Interval           Transfer     Bandwidth\n",
+                "[  4]   0.00-1.00   sec  2.80 MBytes  23.5 Mbits/sec                  \n",
+                "[  4]   1.00-2.00   sec  2.90 MBytes  24.2 Mbits/sec                  \n",
+                "[  4]   2.00-3.00   sec  3.17 MBytes  26.6 Mbits/sec                  \n",
+                "[  4]   3.00-4.00   sec  3.12 MBytes  26.2 Mbits/sec                  \n",
+                "[  4]   4.00-5.00   sec  3.08 MBytes  25.9 Mbits/sec                  \n",
+                "[  4]   5.00-6.00   sec  3.11 MBytes  26.1 Mbits/sec                  \n",
+                "[  4]   6.00-7.00   sec  3.13 MBytes  26.3 Mbits/sec                  \n",
+                "[  4]   7.00-8.00   sec  3.20 MBytes  26.8 Mbits/sec                  \n",
+                "[  4]   8.00-9.00   sec  3.09 MBytes  25.9 Mbits/sec                  \n",
+                "[  4]   9.00-10.00  sec  3.12 MBytes  26.2 Mbits/sec                  \n",
+                "- - - - - - - - - - - - - - - - - - - - - - - - -\n",
+                "[ ID] Interval           Transfer     Bandwidth       Retr\n",
+                "[  4]   0.00-10.00  sec  31.4 MBytes  26.3 Mbits/sec    0             sender\n",
+                "[  4]   0.00-10.00  sec  30.9 MBytes  25.9 Mbits/sec                  receiver\n",
+                "\n",
+                "iperf Done.\n",
+                "Connecting to host 167.62.110.20, port 5201\n",
+                "[  4] local 192.168.1.11 port 64910 connected to 167.62.110.20 port 5201\n",
+                "[ ID] Interval           Transfer     Bandwidth       Total Datagrams\n",
+                "[  4]   0.00-1.00   sec   335 KBytes  2.74 Mbits/sec  245  \n",
+                "[  4]   1.00-2.00   sec   369 KBytes  3.03 Mbits/sec  270  \n",
+                "[  4]   2.00-3.01   sec   365 KBytes  2.96 Mbits/sec  267  \n",
+                "[  4]   3.01-4.01   sec   371 KBytes  3.04 Mbits/sec  271  \n",
+                "[  4]   4.01-5.01   sec   368 KBytes  3.02 Mbits/sec  269  \n",
+                "[  4]   5.01-6.01   sec   361 KBytes  2.96 Mbits/sec  264  \n",
+                "[  4]   6.01-7.01   sec   372 KBytes  3.05 Mbits/sec  272  \n",
+                "[  4]   7.01-8.00   sec   360 KBytes  2.95 Mbits/sec  263  \n",
+                "[  4]   8.00-9.00   sec   366 KBytes  3.01 Mbits/sec  268  \n",
+                "[  4]   9.00-10.01  sec   366 KBytes  2.97 Mbits/sec  268  \n",
+                "- - - - - - - - - - - - - - - - - - - - - - - - -\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-10.01  sec  3.55 MBytes  2.97 Mbits/sec  0.277 ms  0/2657 (0%)  \n",
+                "[  4] Sent 2657 datagrams\n",
+                "\n",
+                "iperf Done.\n",
+                "Connecting to host 167.62.110.20, port 5201\n",
+                "[  4] local 192.168.1.11 port 52541 connected to 167.62.110.20 port 5201\n",
+                "[ ID] Interval           Transfer     Bandwidth       Total Datagrams\n",
+                "[  4]   0.00-1.00   sec   882 KBytes  7.19 Mbits/sec  645  \n",
+                "[  4]   1.00-2.00   sec   969 KBytes  7.95 Mbits/sec  709  \n",
+                "[  4]   2.00-3.02   sec   958 KBytes  7.76 Mbits/sec  701  \n",
+                "[  4]   3.02-4.01   sec  1009 KBytes  8.32 Mbits/sec  738  \n",
+                "[  4]   4.01-5.01   sec   921 KBytes  7.52 Mbits/sec  674  \n",
+                "[  4]   5.01-6.00   sec   967 KBytes  8.01 Mbits/sec  707  \n",
+                "[  4]   6.00-7.01   sec   968 KBytes  7.86 Mbits/sec  708  \n",
+                "[  4]   7.01-8.00   sec   968 KBytes  7.98 Mbits/sec  708  \n",
+                "[  4]   8.00-9.00   sec   984 KBytes  8.07 Mbits/sec  720  \n",
+                "[  4]   9.00-10.00  sec   934 KBytes  7.66 Mbits/sec  683  \n",
+                "- - - - - - - - - - - - - - - - - - - - - - - - -\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-10.00  sec  9.34 MBytes  7.83 Mbits/sec  0.450 ms  0/6993 (0%)  \n",
+                "[  4] Sent 6993 datagrams\n",
+                "\n",
+                "iperf Done.\n",
+                "Connecting to host 167.62.110.20, port 5201\n",
+                "Reverse mode, remote host 167.62.110.20 is sending\n",
+                "[  4] local 192.168.1.11 port 53397 connected to 167.62.110.20 port 5201\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-1.00   sec   372 KBytes  3.04 Mbits/sec  2782.730 ms  0/272 (0%)  \n",
+                "[  4]   1.00-2.00   sec   369 KBytes  3.02 Mbits/sec  0.592 ms  0/270 (0%)  \n",
+                "[  4]   2.00-3.00   sec   365 KBytes  3.00 Mbits/sec  0.646 ms  0/267 (0%)  \n",
+                "[  4]   3.00-4.00   sec   365 KBytes  2.99 Mbits/sec  0.933 ms  0/267 (0%)  \n",
+                "[  4]   4.00-5.00   sec   368 KBytes  3.01 Mbits/sec  1.451 ms  0/269 (0%)  \n",
+                "[  4]   5.00-6.00   sec   365 KBytes  2.99 Mbits/sec  0.678 ms  0/267 (0%)  \n",
+                "[  4]   6.00-7.00   sec   368 KBytes  3.01 Mbits/sec  0.973 ms  0/269 (0%)  \n",
+                "[  4]   7.00-8.00   sec   366 KBytes  3.00 Mbits/sec  1.163 ms  0/268 (0%)  \n",
+                "[  4]   8.00-9.00   sec   365 KBytes  3.00 Mbits/sec  0.778 ms  0/267 (0%)  \n",
+                "[  4]   9.00-10.00  sec   366 KBytes  3.00 Mbits/sec  1.180 ms  0/268 (0%)  \n",
+                "- - - - - - - - - - - - - - - - - - - - - - - - -\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-10.00  sec  3.58 MBytes  3.01 Mbits/sec  1.126 ms  0/2685 (0%)  \n",
+                "[  4] Sent 2685 datagrams\n",
+                "\n",
+                "iperf Done.\n",
+                "Connecting to host 167.62.110.20, port 5201\n",
+                "Reverse mode, remote host 167.62.110.20 is sending\n",
+                "[  4] local 192.168.1.11 port 52969 connected to 167.62.110.20 port 5201\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-1.00   sec  1.61 MBytes  13.5 Mbits/sec  1.075 ms  0/1206 (0%)  \n",
+                "[  4]   1.00-2.01   sec  1.58 MBytes  13.2 Mbits/sec  1.266 ms  0/1187 (0%)  \n",
+                "[  4]   2.01-3.01   sec  1.59 MBytes  13.3 Mbits/sec  0.932 ms  0/1190 (0%)  \n",
+                "[  4]   3.01-4.00   sec  1.59 MBytes  13.4 Mbits/sec  0.481 ms  0/1189 (0%)  \n",
+                "[  4]   4.00-5.00   sec  1.58 MBytes  13.3 Mbits/sec  0.680 ms  0/1186 (0%)  \n",
+                "[  4]   5.00-6.00   sec  1.58 MBytes  13.3 Mbits/sec  0.948 ms  0/1185 (0%)  \n",
+                "[  4]   6.00-7.01   sec  1.58 MBytes  13.1 Mbits/sec  1.397 ms  0/1180 (0%)  \n",
+                "[  4]   7.01-8.00   sec  1.60 MBytes  13.5 Mbits/sec  0.585 ms  0/1199 (0%)  \n",
+                "[  4]   8.00-9.00   sec  1.58 MBytes  13.3 Mbits/sec  0.635 ms  0/1185 (0%)  \n",
+                "[  4]   9.00-10.00  sec  1.59 MBytes  13.3 Mbits/sec  0.598 ms  0/1190 (0%)  \n",
+                "- - - - - - - - - - - - - - - - - - - - - - - - -\n",
+                "[ ID] Interval           Transfer     Bandwidth       Jitter    Lost/Total Datagrams\n",
+                "[  4]   0.00-10.00  sec  15.9 MBytes  13.3 Mbits/sec  0.598 ms  0/11897 (0%)  \n",
+                "[  4] Sent 11897 datagrams\n",
+                "\n",
+                "iperf Done.\n"
+              ],
+              "client_network_info": {
+                "client_ip": "192.168.1.11",
+                "gateway": "192.168.1.1",
+                "dns_servers": [],
+                "interface_name": "Adaptador de LAN inal\u00a0mbrica Wi-Fi 2:",
+                "subnet_mask": "255.255.255.0",
+                "timestamp": 1754483539.071263
+              }
+            }
+          }
+        },
+        {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 99,
+          "timestamp": "2025-08-06T09:34:30.609830",
+          "tests": {
+            "ping": {
+              "success": true,
+              "avg_time": 15.5,
+              "min_time": 12,
+              "max_time": 25,
+              "packet_loss": "0%",
+              "raw_times": [
+                25,
+                12,
+                12,
+                13
+              ]
+            }
+          }
+        }
+      ],
+      "client_network_info": {
+        "client_ip": "192.168.1.11",
+        "gateway": "192.168.1.1",
+        "dns_servers": [],
+        "interface_name": "Adaptador de LAN inal\u00a0mbrica Wi-Fi 2:",
+        "subnet_mask": "255.255.255.0",
+        "timestamp": 1754483670.463831
+      },
+      "ap_summary": {
+        "total_aps_found": 2,
+        "strongest_ap": {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 99,
+          "signal_dbm": -30.5,
+          "channel": 149,
+          "band": "5GHz"
+        },
+        "client_ip": "192.168.1.11",
+        "gateway": "192.168.1.1",
+        "ap_list": [
+          {
+            "ssid": "Pumita",
+            "bssid": "b8:dd:71:e3:9c:3c",
+            "signal_percentage": 99,
+            "signal_dbm": -30.5,
+            "snr_db": 69.5,
+            "channel": 149,
+            "band": "5GHz",
+            "signal_quality": "Excellent",
+            "authentication": "WPA2-Personal"
+          },
+          {
+            "ssid": "Puma",
+            "bssid": "b8:dd:71:e3:9c:3a",
+            "signal_percentage": 93,
+            "signal_dbm": -33.5,
+            "snr_db": 61.5,
+            "channel": 1,
+            "band": "2.4GHz",
+            "signal_quality": "Excellent",
+            "authentication": "WPA2-Personal"
+          }
+        ]
+      }
     }
   ],
   "ap_data": {},
   "network_test_results": {},
   "id_mapping": {},
-  "next_measurement_id": 36,
-  "last_updated": "2025-08-06T01:53:49.537123"
+  "next_measurement_id": 39,
+  "last_updated": "2025-08-06T09:34:35.806022"
 }

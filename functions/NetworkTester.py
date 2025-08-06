@@ -165,15 +165,14 @@ class NetworkTester:
                         current_interface = line
                         client_info['interface_name'] = current_interface
                         in_wifi_section = True
-                        print(f"   🎯 Adaptador WiFi real: {current_interface[:60]}...")
                         continue
                     else:
-                        print(f"   ⏭️  Adaptador virtual ignorado: {line[:50]}...")
+                        print(f"   ⚠️ Ignorando adaptador virtual: {line[:60]}...")
+                        continue
                 
                 # Detectar fin de sección de adaptador
                 elif (('adapter' in line.lower() or 'adaptador' in line.lower()) and 
                     ':' in line and in_wifi_section):
-                    print(f"   📤 Fin de sección WiFi actual")
                     in_wifi_section = False
                     current_interface = None
                     continue
@@ -198,7 +197,6 @@ class NetworkTester:
                             ip = extract_ipv4(value)
                             if ip and is_private_ip(ip) and not client_info['client_ip']:
                                 client_info['client_ip'] = ip
-                                print(f"   ✅ IP encontrada: {ip}")
                         
                         # Subnet Mask (múltiples patrones y encodings)
                         elif any(pattern in key_norm for pattern in [
@@ -208,7 +206,6 @@ class NetworkTester:
                             mask = extract_ipv4(value)
                             if mask and not client_info['subnet_mask']:
                                 client_info['subnet_mask'] = mask
-                                print(f"   ✅ Máscara encontrada: {mask}")
                         
                         # Default Gateway (manejar IPv4 e IPv6)
                         elif any(pattern in key_norm for pattern in [
@@ -219,7 +216,6 @@ class NetworkTester:
                             gateway_ipv4 = extract_ipv4(value)
                             if gateway_ipv4 and not client_info['gateway']:
                                 client_info['gateway'] = gateway_ipv4
-                                print(f"   ✅ Gateway IPv4: {gateway_ipv4}")
                             elif gateway_ipv4:
                                 potential_gateways.append(gateway_ipv4)
                         
@@ -230,7 +226,6 @@ class NetworkTester:
                             dhcp_ip = extract_ipv4(value)
                             if dhcp_ip:
                                 dhcp_servers.append(dhcp_ip)
-                                print(f"   📝 Servidor DHCP: {dhcp_ip}")
                         
                         # DNS Servers (solo IPv4)
                         elif any(pattern in key_norm for pattern in [
@@ -239,7 +234,6 @@ class NetworkTester:
                             dns_ip = extract_ipv4(value)
                             if dns_ip and dns_ip not in client_info['dns_servers']:
                                 client_info['dns_servers'].append(dns_ip)
-                                print(f"   ✅ DNS encontrado: {dns_ip}")
                         
                     except ValueError:
                         continue
@@ -290,7 +284,6 @@ class NetworkTester:
             # Método 3: arp -a (último recurso)
             if not client_info['gateway'] and client_info['client_ip']:
                 try:
-                    print("   🔄 Buscando gateway con arp...")
                     arp_result = subprocess.run(
                         ["arp", "-a"],
                         capture_output=True,
@@ -304,7 +297,6 @@ class NetworkTester:
                             gateway = extract_ipv4(line)
                             if gateway and gateway.endswith('.1'):
                                 client_info['gateway'] = gateway
-                                print(f"   ✅ Gateway desde ARP: {gateway}")
                                 break
                 except:
                     pass
@@ -543,10 +535,26 @@ class NetworkTester:
                     "download_gbps": dl_bps / 1_000_000_000,
                     "upload_gbps": ul_bps / 1_000_000_000
                 }
-
-            # 3. MÚLTIPLES TESTS UDP FORWARD (NUEVO)
-            udp_forward_rates = ["1M", "5M", "10M"]
+            
+            # 3. MÚLTIPLES TESTS UDP FORWARD (CON RATE DINÁMICO)
+            # Dynamic rate calculation based on TCP forward results
+            udp_forward_rates = ["3M"]  # Start with 3M as baseline
+            
+            if "tcp_forward" in results["tests"]:
+                tcp_fwd_data = results["tests"]["tcp_forward"]
+                # Get minimum of upload and download from TCP forward
+                min_tcp_rate = min(tcp_fwd_data["upload_mbps"], tcp_fwd_data["download_mbps"])
+                # Format as string with M suffix, rounded to 1 decimal
+                dynamic_rate = f"{min_tcp_rate/2:.1f}M"
+                udp_forward_rates.append(dynamic_rate)
+                print(f"\n   📈 Dynamic UDP forward rate based on TCP: {dynamic_rate}")
+            else:
+                # Fallback if TCP forward failed
+                udp_forward_rates.append("10M")
+                print(f"\n   ⚠️ Using default 10M rate (TCP forward unavailable)")
+            
             print(f"\n3. UDP FORWARD TESTS (cliente -> servidor)")
+            print(f"   Testing rates: {', '.join(udp_forward_rates)}")
             results["tests"]["udp_forward_tests"] = {}
             
             for rate in udp_forward_rates:
@@ -605,9 +613,25 @@ class NetworkTester:
                         "error": f"Failed UDP forward test {rate}"
                     }
 
-            # 4. MÚLTIPLES TESTS UDP REVERSE (MEJORADO)
-            udp_reverse_rates = ["1M", "5M", "10M"]
+            # 4. MÚLTIPLES TESTS UDP REVERSE (CON RATE DINÁMICO)
+            # Dynamic rate calculation based on TCP reverse results
+            udp_reverse_rates = ["3M"]  # Start with 3M as baseline
+            
+            if "tcp_reverse" in results["tests"]:
+                tcp_rev_data = results["tests"]["tcp_reverse"]
+                # Get minimum of upload and download from TCP reverse
+                min_tcp_rate = min(tcp_rev_data["upload_mbps"], tcp_rev_data["download_mbps"])
+                # Format as string with M suffix, rounded to 1 decimal
+                dynamic_rate = f"{min_tcp_rate/2:.1f}M"
+                udp_reverse_rates.append(dynamic_rate)
+                print(f"\n   📈 Dynamic UDP reverse rate based on TCP: {dynamic_rate}")
+            else:
+                # Fallback if TCP reverse failed
+                udp_reverse_rates.append("10M")
+                print(f"\n   ⚠️ Using default 10M rate (TCP reverse unavailable)")
+            
             print(f"\n4. UDP REVERSE TESTS (servidor -> cliente)")
+            print(f"   Testing rates: {', '.join(udp_reverse_rates)}")
             results["tests"]["udp_reverse_tests"] = {}
             
             for rate in udp_reverse_rates:
@@ -665,8 +689,6 @@ class NetworkTester:
                     results["tests"]["udp_reverse_tests"][f"udp_reverse_{rate}"] = {
                         "error": f"Failed UDP reverse test {rate}"
                     }
-
-           
 
             # Resumen final
             print("\n" + "=" * 70)

@@ -6,7 +6,7 @@ class Config:
     # Paths
     IPERF_PATH = "C:\\iperf3\\iperf3.exe\\iperf3.exe"
     SPEEDTEST_PATH = "C:\\Users\\Usuario\\speedtest.exe"
-    IPERF_SERVER = "iperf.he.net" 
+    IPERF_SERVER = "167.62.110.20" 
 
     # House dimensions
     HOUSE_WIDTH = 15
