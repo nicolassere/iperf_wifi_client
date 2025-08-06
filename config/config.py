@@ -6,7 +6,7 @@ class Config:
     # Paths
     IPERF_PATH = "C:\\iperf3\\iperf3.exe\\iperf3.exe"
     SPEEDTEST_PATH = "C:\\Users\\Usuario\\speedtest.exe"
-    IPERF_SERVER = "179.26.51.71" 
+    IPERF_SERVER = "iperf.he.net" 
 
     # House dimensions
     HOUSE_WIDTH = 15
@@ -33,7 +33,7 @@ class Config:
     ]
 
     # Si está vacío, monitorea TODAS las redes
-    MONITOR_ALL_NETWORKS = True  # Cambiar a True para monitorear todo
+    MONITOR_ALL_NETWORKS = False  # Cambiar a True para monitorear todo
     
     # NUEVAS CONFIGURACIONES
     
