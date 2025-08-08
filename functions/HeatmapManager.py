@@ -792,8 +792,6 @@ class HeatmapManager:
         
         return measurement
     
-    # Agregar estos métodos a la clase HeatmapManager en HeatmapManager.py
-
     def scan_wifi_only(self, measurement_id: int = None):
         """Solo escanear WiFi sin tests."""
         if measurement_id is None:
@@ -802,23 +800,26 @@ class HeatmapManager:
         
         print(f"\n📍 MEDICIÓN ID: {measurement_id}")
         print(f"⏰ Hora: {datetime.now().strftime('%H:%M:%S')}")
+        print("   Remember to note this ID on your floor plan!")
         
         # Escanear redes
         networks = self.scanner.scan_networks(force_refresh=True)
         
+        # Create base measurement structure like test_all_networks_by_id
         measurement = {
             'id': measurement_id,
             'timestamp': datetime.now().isoformat(),
-            'location': None,
+            'location': None,  # Will be mapped later
             'networks': [],
             'tests': {},  # Vacío - sin tests
+            'all_network_tests': [],  # Empty for this function
             'client_network_info': self.get_current_client_ip_info(),
             'test_type': 'wifi_only'
         }
         
         print(f"📊 Redes encontradas: {len(networks)}")
         
-        # Guardar info de redes
+        # Store all visible networks info (same structure as test_all_networks_by_id)
         for network in networks:
             if network['bssid'] != "Unknown":
                 net_data = {
@@ -835,7 +836,7 @@ class HeatmapManager:
                 measurement['networks'].append(net_data)
                 print(f"  📡 {network['ssid']} - {network['signal_percentage']}% - Ch{network['channel']}")
         
-        # Guardar
+        # Guardar igual que test_all_networks_by_id
         self.save_individual_measurement(measurement)
         self.save_ap_details(measurement)
         self.measurements.append(measurement)
@@ -844,18 +845,62 @@ class HeatmapManager:
         print(f"✅ Escaneo WiFi completado - ID: {measurement_id}")
         return measurement
 
-    def run_speedtest_only(self):
-        """Solo ejecutar SpeedTest."""
+    def run_speedtest_only(self, measurement_id: int = None):
+        """Solo ejecutar SpeedTest con estructura completa de datos."""
+        if measurement_id is None:
+            measurement_id = self.next_measurement_id
+            self.next_measurement_id += 1
+        
         current = self.scanner.get_current_connection_info()
         if 'error' in current or 'ssid' not in current:
             print("❌ No hay conexión WiFi para SpeedTest")
             return None
         
+        print(f"\n🚀 SPEEDTEST ONLY - ID: {measurement_id}")
+        print(f"   Time: {datetime.now().strftime('%H:%M:%S')}")
         print(f"📶 Conectado a: {current['ssid']} ({current.get('signal_percentage', 'N/A')}%)")
-        print("\n🚀 Ejecutando SpeedTest...")
+        print("   Remember to note this ID on your floor plan!")
         
+        # Get current network info for networks array
+        networks = self.scanner.scan_networks(force_refresh=True)
+        current_network = None
+        for net in networks:
+            if net['ssid'] == current['ssid']:
+                current_network = net
+                break
+        
+        # Create measurement structure
+        measurement = {
+            'id': measurement_id,
+            'timestamp': datetime.now().isoformat(),
+            'location': None,  # Will be mapped later
+            'networks': [],
+            'tests': {},
+            'all_network_tests': [],
+            'client_network_info': self.get_current_client_ip_info(),
+            'test_type': 'speedtest_only'
+        }
+        
+        # Add current network to networks array if found
+        if current_network and current_network['bssid'] != "Unknown":
+            net_data = {
+                'ssid': current_network['ssid'],
+                'bssid': current_network['bssid'],
+                'signal': current_network['signal_percentage'],
+                'signal_dbm': current_network.get('signal_dbm'),
+                'snr_db': current_network.get('snr_db'),
+                'signal_quality': current_network.get('signal_quality'),
+                'channel': current_network['channel'],
+                'band': current_network.get('band'),
+                'authentication': current_network['authentication']
+            }
+            measurement['networks'].append(net_data)
+        
+        print("\n🚀 Ejecutando SpeedTest...")
         result = self.tester.run_speedtest()
+        
         if result['success']:
+            measurement['tests']['speedtest'] = result
             print(f"✅ Download: {result['download_mbps']:.1f} Mbps")
             print(f"✅ Upload: {result['upload_mbps']:.1f} Mbps")
             print(f"✅ Ping: {result['ping_ms']:.1f} ms")
@@ -863,98 +908,300 @@ class HeatmapManager:
         else:
             print(f"❌ Error: {result['error']}")
         
-        return result
+        # Save like test_all_networks_by_id
+        self.save_individual_measurement(measurement)
+        self.save_ap_details(measurement)
+        self.measurements.append(measurement)
+        self.save_data()
+        
+        print(f"\n✅ SpeedTest completed for ID {measurement_id}")
+        return measurement
 
-    def run_iperf_only(self):
-        """Solo ejecutar iPerf."""
+    def run_iperf_only(self, measurement_id: int = None):
+        """Solo ejecutar iPerf con estructura completa de datos."""
+        if measurement_id is None:
+            measurement_id = self.next_measurement_id
+            self.next_measurement_id += 1
+        
         current = self.scanner.get_current_connection_info()
         if 'error' in current or 'ssid' not in current:
             print("❌ No hay conexión WiFi para iPerf")
             return None
         
+        print(f"\n📊 IPERF ONLY - ID: {measurement_id}")
+        print(f"   Time: {datetime.now().strftime('%H:%M:%S')}")
         print(f"📶 Conectado a: {current['ssid']} ({current.get('signal_percentage', 'N/A')}%)")
         print(f"🌐 Servidor iPerf: {self.tester.iperf_server}")
+        print("   Remember to note this ID on your floor plan!")
+        
+        # Get current network info for networks array
+        networks = self.scanner.scan_networks(force_refresh=True)
+        current_network = None
+        for net in networks:
+            if net['ssid'] == current['ssid']:
+                current_network = net
+                break
+        
+        # Create measurement structure
+        measurement = {
+            'id': measurement_id,
+            'timestamp': datetime.now().isoformat(),
+            'location': None,  # Will be mapped later
+            'networks': [],
+            'tests': {},
+            'all_network_tests': [],
+            'client_network_info': self.get_current_client_ip_info(),
+            'test_type': 'iperf_only'
+        }
+        
+        # Add current network to networks array if found
+        if current_network and current_network['bssid'] != "Unknown":
+            net_data = {
+                'ssid': current_network['ssid'],
+                'bssid': current_network['bssid'],
+                'signal': current_network['signal_percentage'],
+                'signal_dbm': current_network.get('signal_dbm'),
+                'snr_db': current_network.get('snr_db'),
+                'signal_quality': current_network.get('signal_quality'),
+                'channel': current_network['channel'],
+                'band': current_network.get('band'),
+                'authentication': current_network['authentication']
+            }
+            measurement['networks'].append(net_data)
         
         result = self.tester.run_iperf_suite()
         if result['success']:
+            measurement['tests']['iperf_suite'] = result
             print("✅ iPerf completado")
         else:
             print(f"❌ Error: {result['error']}")
         
-        return result
+        # Save like test_all_networks_by_id
+        self.save_individual_measurement(measurement)
+        self.save_ap_details(measurement)
+        self.measurements.append(measurement)
+        self.save_data()
+        
+        print(f"\n✅ iPerf completed for ID {measurement_id}")
+        return measurement
 
-    def wifi_and_speedtest(self):
+    def wifi_and_speedtest(self, measurement_id: int = None):
         """WiFi scan + SpeedTest."""
-        # Primero WiFi
-        measurement = self.scan_wifi_only()
+        if measurement_id is None:
+            measurement_id = self.next_measurement_id
+            self.next_measurement_id += 1
         
-        # Luego SpeedTest
-        speed_result = self.run_speedtest_only()
-        if speed_result and speed_result['success']:
-            measurement['tests']['speedtest'] = speed_result
-            measurement['test_type'] = 'wifi_speedtest'
+        print(f"\n📡 WIFI + SPEEDTEST - ID: {measurement_id}")
+        print(f"   Time: {datetime.now().strftime('%H:%M:%S')}")
+        print("   Remember to note this ID on your floor plan!")
+        
+        # Escanear redes primero
+        networks = self.scanner.scan_networks(force_refresh=True)
+        
+        # Create measurement structure
+        measurement = {
+            'id': measurement_id,
+            'timestamp': datetime.now().isoformat(),
+            'location': None,  # Will be mapped later
+            'networks': [],
+            'tests': {},
+            'all_network_tests': [],
+            'client_network_info': self.get_current_client_ip_info(),
+            'test_type': 'wifi_speedtest'
+        }
+        
+        print(f"📊 Redes encontradas: {len(networks)}")
+        
+        # Store all visible networks info
+        for network in networks:
+            if network['bssid'] != "Unknown":
+                net_data = {
+                    'ssid': network['ssid'],
+                    'bssid': network['bssid'],
+                    'signal': network['signal_percentage'],
+                    'signal_dbm': network.get('signal_dbm'),
+                    'snr_db': network.get('snr_db'),
+                    'signal_quality': network.get('signal_quality'),
+                    'channel': network['channel'],
+                    'band': network.get('band'),
+                    'authentication': network['authentication']
+                }
+                measurement['networks'].append(net_data)
+                print(f"  📡 {network['ssid']} - {network['signal_percentage']}% - Ch{network['channel']}")
+        
+        # Run SpeedTest if connected
+        current = self.scanner.get_current_connection_info()
+        if 'error' not in current and 'ssid' in current:
+            print(f"\n📶 Conectado a: {current['ssid']} ({current.get('signal_percentage', 'N/A')}%)")
+            print("🚀 Ejecutando SpeedTest...")
             
-            # Actualizar guardado
-            self.save_individual_measurement(measurement)
-            self.save_data()
+            speed_result = self.tester.run_speedtest()
+            if speed_result['success']:
+                measurement['tests']['speedtest'] = speed_result
+                print(f"✅ Download: {speed_result['download_mbps']:.1f} Mbps")
+                print(f"✅ Upload: {speed_result['upload_mbps']:.1f} Mbps")
+                print(f"✅ Ping: {speed_result['ping_ms']:.1f} ms")
+            else:
+                print(f"❌ SpeedTest Error: {speed_result['error']}")
+        else:
+            print("⚠️  No hay conexión WiFi para SpeedTest")
         
+        # Save like test_all_networks_by_id
+        self.save_individual_measurement(measurement)
+        self.save_ap_details(measurement)
+        self.measurements.append(measurement)
+        self.save_data()
+        
+        print(f"\n✅ WiFi + SpeedTest completed for ID {measurement_id}")
         return measurement
 
-    def wifi_and_iperf(self):
+    def wifi_and_iperf(self, measurement_id: int = None):
         """WiFi scan + iPerf."""
-        # Primero WiFi
-        measurement = self.scan_wifi_only()
+        if measurement_id is None:
+            measurement_id = self.next_measurement_id
+            self.next_measurement_id += 1
         
+        print(f"\n📡 WIFI + IPERF - ID: {measurement_id}")
+        print(f"   Time: {datetime.now().strftime('%H:%M:%S')}")
+        print("   Remember to note this ID on your floor plan!")
         
-        # Luego iPerf
-        iperf_result = self.run_iperf_only()
-        if iperf_result and iperf_result['success']:
-            measurement['tests']['iperf_suite'] = iperf_result
-            measurement['test_type'] = 'wifi_iperf'
+        # Escanear redes primero
+        networks = self.scanner.scan_networks(force_refresh=True)
+        
+        # Create measurement structure
+        measurement = {
+            'id': measurement_id,
+            'timestamp': datetime.now().isoformat(),
+            'location': None,  # Will be mapped later
+            'networks': [],
+            'tests': {},
+            'all_network_tests': [],
+            'client_network_info': self.get_current_client_ip_info(),
+            'test_type': 'wifi_iperf'
+        }
+        
+        print(f"📊 Redes encontradas: {len(networks)}")
+        
+        # Store all visible networks info
+        for network in networks:
+            if network['bssid'] != "Unknown":
+                net_data = {
+                    'ssid': network['ssid'],
+                    'bssid': network['bssid'],
+                    'signal': network['signal_percentage'],
+                    'signal_dbm': network.get('signal_dbm'),
+                    'snr_db': network.get('snr_db'),
+                    'signal_quality': network.get('signal_quality'),
+                    'channel': network['channel'],
+                    'band': network.get('band'),
+                    'authentication': network['authentication']
+                }
+                measurement['networks'].append(net_data)
+                print(f"  📡 {network['ssid']} - {network['signal_percentage']}% - Ch{network['channel']}")
+        
+        # Run iPerf if connected
+        current = self.scanner.get_current_connection_info()
+        if 'error' not in current and 'ssid' in current:
+            print(f"\n📶 Conectado a: {current['ssid']} ({current.get('signal_percentage', 'N/A')}%)")
+            print(f"🌐 Servidor iPerf: {self.tester.iperf_server}")
             
-            # Actualizar guardado
-            self.save_individual_measurement(measurement)
-            self.save_data()
+            iperf_result = self.tester.run_iperf_suite()
+            if iperf_result['success']:
+                measurement['tests']['iperf_suite'] = iperf_result
+                print("✅ iPerf completado")
+            else:
+                print(f"❌ iPerf Error: {iperf_result['error']}")
+        else:
+            print("⚠️  No hay conexión WiFi para iPerf")
         
+        # Save like test_all_networks_by_id
+        self.save_individual_measurement(measurement)
+        self.save_ap_details(measurement)
+        self.measurements.append(measurement)
+        self.save_data()
+        
+        print(f"\n✅ WiFi + iPerf completed for ID {measurement_id}")
         return measurement
 
-    def iperf_and_speedtest(self):
-        """iPerf + SpeedTest (sin WiFi scan)."""
+    def iperf_and_speedtest(self, measurement_id: int = None):
+        """iPerf + SpeedTest (sin WiFi scan completo)."""
+        if measurement_id is None:
+            measurement_id = self.next_measurement_id
+            self.next_measurement_id += 1
+        
         current = self.scanner.get_current_connection_info()
         if 'error' in current or 'ssid' not in current:
             print("❌ Se requiere conexión WiFi")
             return None
         
-        results = {
+        print(f"\n🚀 IPERF + SPEEDTEST - ID: {measurement_id}")
+        print(f"   Time: {datetime.now().strftime('%H:%M:%S')}")
+        print(f"📶 Conectado a: {current['ssid']} ({current.get('signal_percentage', 'N/A')}%)")
+        print("   Remember to note this ID on your floor plan!")
+        
+        # Get current network info for networks array
+        networks = self.scanner.scan_networks(force_refresh=True)
+        current_network = None
+        for net in networks:
+            if net['ssid'] == current['ssid']:
+                current_network = net
+                break
+        
+        # Create measurement structure
+        measurement = {
+            'id': measurement_id,
             'timestamp': datetime.now().isoformat(),
-            'connection': current,
-            'tests': {}
+            'location': None,  # Will be mapped later
+            'networks': [],
+            'tests': {},
+            'all_network_tests': [],
+            'client_network_info': self.get_current_client_ip_info(),
+            'test_type': 'iperf_speedtest'
         }
         
-        # SpeedTest
-        speed = self.run_speedtest_only()
-        if speed and speed['success']:
-            results['tests']['speedtest'] = speed
-        
-
-        
-        iperf = self.run_iperf_only()
-        if iperf and iperf['success']:
-            results['tests']['iperf_suite'] = iperf
-        
-        # Guardar como medición especial
-        if results['tests']:
-            measurement = {
-                'id': f"tests_{int(time.time())}",
-                'timestamp': results['timestamp'],
-                'test_type': 'iperf_speedtest',
-                'connection_info': current,
-                'client_network_info': self.get_current_client_ip_info(),
-                'tests': results['tests']
+        # Add current network to networks array if found
+        if current_network and current_network['bssid'] != "Unknown":
+            net_data = {
+                'ssid': current_network['ssid'],
+                'bssid': current_network['bssid'],
+                'signal': current_network['signal_percentage'],
+                'signal_dbm': current_network.get('signal_dbm'),
+                'snr_db': current_network.get('snr_db'),
+                'signal_quality': current_network.get('signal_quality'),
+                'channel': current_network['channel'],
+                'band': current_network.get('band'),
+                'authentication': current_network['authentication']
             }
-            self.save_individual_measurement(measurement)
+            measurement['networks'].append(net_data)
         
-        return results
+        # Run SpeedTest
+        print("🚀 Ejecutando SpeedTest...")
+        speed = self.tester.run_speedtest()
+        if speed['success']:
+            measurement['tests']['speedtest'] = speed
+            print(f"✅ Download: {speed['download_mbps']:.1f} Mbps")
+            print(f"✅ Upload: {speed['upload_mbps']:.1f} Mbps")
+            print(f"✅ Ping: {speed['ping_ms']:.1f} ms")
+        else:
+            print(f"❌ SpeedTest Error: {speed['error']}")
+        
+        # Run iPerf
+        print(f"🌐 Ejecutando iPerf (Servidor: {self.tester.iperf_server})...")
+        iperf = self.tester.run_iperf_suite()
+        if iperf['success']:
+            measurement['tests']['iperf_suite'] = iperf
+            print("✅ iPerf completado")
+        else:
+            print(f"❌ iPerf Error: {iperf['error']}")
+        
+        # Save like test_all_networks_by_id
+        self.save_individual_measurement(measurement)
+        self.save_ap_details(measurement)
+        self.measurements.append(measurement)
+        self.save_data()
+        
+        print(f"\n✅ iPerf + SpeedTest completed for ID {measurement_id}")
+        return measurement
 
     def map_network_test_id_to_coordinates(self, measurement_id: int, x: float, y: float):
         """Map a network test ID to coordinates and update all related data."""

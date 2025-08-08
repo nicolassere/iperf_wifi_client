@@ -499,17 +499,35 @@ class NetworkTester:
             print("=" * 70)
 
             # 1. TCP FORWARD
+            # En run_iperf_suite:
+
+# 1. TCP FORWARD
             print("\n1. TCP FORWARD (cliente -> servidor)")
             tcp_fwd_lines = stream_process([
                 Config.IPERF_PATH, "-c", self.iperf_server, "-t", str(duration), "-i", "1"
-            ], "TCP FORWARD (streaming)")
+            ], "TCP FORWARD")
             results["raw_output"].extend(tcp_fwd_lines)
-            tcp_fwd_json = run_json([
-                Config.IPERF_PATH, "-c", self.iperf_server, "-J", "-t", str(duration)
-            ])
-            if tcp_fwd_json:
-                dl_bps = tcp_fwd_json.get("end", {}).get("sum_received", {}).get("bits_per_second", 0)
-                ul_bps = tcp_fwd_json.get("end", {}).get("sum_sent", {}).get("bits_per_second", 0)
+
+            # PARSEAR DEL RAW OUTPUT
+            for line in tcp_fwd_lines:
+                if "sender" in line.lower():
+                    match = re.search(r'([\d.]+)\s+([KMG])bits/sec', line)
+                    if match:
+                        value = float(match.group(1))
+                        unit = match.group(2)
+                        ul_bps = (value * 1_000_000_000 if unit == 'G' else 
+                                value * 1_000_000 if unit == 'M' else 
+                                value * 1_000)
+                elif "receiver" in line.lower():
+                    match = re.search(r'([\d.]+)\s+([KMG])bits/sec', line)
+                    if match:
+                        value = float(match.group(1))
+                        unit = match.group(2)
+                        dl_bps = (value * 1_000_000_000 if unit == 'G' else 
+                                value * 1_000_000 if unit == 'M' else 
+                                value * 1_000)
+
+            if 'dl_bps' in locals() and 'ul_bps' in locals():
                 results["tests"]["tcp_forward"] = {
                     "download_mbps": dl_bps / 1_000_000,
                     "upload_mbps": ul_bps / 1_000_000,
@@ -517,178 +535,173 @@ class NetworkTester:
                     "upload_gbps": ul_bps / 1_000_000_000
                 }
 
+            # ELIMINAR run_json:
+            # tcp_fwd_json = run_json([...])  <-- BORRAR
+
             # 2. TCP REVERSE
             print("\n2. TCP REVERSE (servidor -> cliente)")
             tcp_rev_lines = stream_process([
                 Config.IPERF_PATH, "-c", self.iperf_server, "-R", "-t", str(duration), "-i", "1"
-            ], "TCP REVERSE (streaming)")
+            ], "TCP REVERSE")
             results["raw_output"].extend(tcp_rev_lines)
-            tcp_rev_json = run_json([
-                Config.IPERF_PATH, "-c", self.iperf_server, "-J", "-R", "-t", str(duration)
-            ])
-            if tcp_rev_json:
-                dl_bps = tcp_rev_json.get("end", {}).get("sum_received", {}).get("bits_per_second", 0)
-                ul_bps = tcp_rev_json.get("end", {}).get("sum_sent", {}).get("bits_per_second", 0)
+
+            # PARSEAR DEL RAW OUTPUT
+            for line in tcp_rev_lines:
+                if "sender" in line.lower():
+                    match = re.search(r'([\d.]+)\s+([KMG])bits/sec', line)
+                    if match:
+                        value = float(match.group(1))
+                        unit = match.group(2)
+                        ul_bps = (value * 1_000_000_000 if unit == 'G' else 
+                                value * 1_000_000 if unit == 'M' else 
+                                value * 1_000)
+                elif "receiver" in line.lower():
+                    match = re.search(r'([\d.]+)\s+([KMG])bits/sec', line)
+                    if match:
+                        value = float(match.group(1))
+                        unit = match.group(2)
+                        dl_bps = (value * 1_000_000_000 if unit == 'G' else 
+                                value * 1_000_000 if unit == 'M' else 
+                                value * 1_000)
+
+            if 'dl_bps' in locals() and 'ul_bps' in locals():
                 results["tests"]["tcp_reverse"] = {
                     "download_mbps": dl_bps / 1_000_000,
                     "upload_mbps": ul_bps / 1_000_000,
                     "download_gbps": dl_bps / 1_000_000_000,
                     "upload_gbps": ul_bps / 1_000_000_000
                 }
-            
-            # 3. MÚLTIPLES TESTS UDP FORWARD (CON RATE DINÁMICO)
-            # Dynamic rate calculation based on TCP forward results
-            udp_forward_rates = ["3M"]  # Start with 3M as baseline
-            
+
+            # 3. UDP FORWARD
+            results["tests"]["udp_forward_tests"] = {}
+            udp_forward_rates = ["3M"]  # Rate base
+
+            # Calcular rate dinámico basado en TCP Forward
             if "tcp_forward" in results["tests"]:
                 tcp_fwd_data = results["tests"]["tcp_forward"]
-                # Get minimum of upload and download from TCP forward
                 min_tcp_rate = min(tcp_fwd_data["upload_mbps"], tcp_fwd_data["download_mbps"])
-                # Format as string with M suffix, rounded to 1 decimal
                 dynamic_rate = f"{min_tcp_rate/2:.1f}M"
                 udp_forward_rates.append(dynamic_rate)
-                print(f"\n   📈 Dynamic UDP forward rate based on TCP: {dynamic_rate}")
+                print(f"\n   📈 Dynamic UDP forward rate: {dynamic_rate}")
             else:
-                # Fallback if TCP forward failed
+                # Si no hay TCP, usar default
                 udp_forward_rates.append("10M")
-                print(f"\n   ⚠️ Using default 10M rate (TCP forward unavailable)")
-            
-            print(f"\n3. UDP FORWARD TESTS (cliente -> servidor)")
-            print(f"   Testing rates: {', '.join(udp_forward_rates)}")
-            results["tests"]["udp_forward_tests"] = {}
-            
             for rate in udp_forward_rates:
-                print(f"\n   3.{udp_forward_rates.index(rate)+1}. UDP FORWARD {rate}")
-                print("-" * 40)
-                
-                # Streaming
                 udp_fwd_lines = stream_process([
-                    Config.IPERF_PATH, "-c", self.iperf_server, "-u", "-b", rate, 
+                    Config.IPERF_PATH, "-c", self.iperf_server, "-u", "-b", rate,
                     "-t", str(duration), "-i", "1", "-l", "1400"
-                ], f"UDP FORWARD {rate} (streaming)")
+                ], f"UDP FORWARD {rate}")
                 results["raw_output"].extend(udp_fwd_lines)
                 
-                # JSON
-                udp_fwd_json = run_json([
-                    Config.IPERF_PATH, "-c", self.iperf_server, "-u", "-b", rate, 
-                    "-t", str(duration), "-J", "-l", "1400"
-                ])
-                
-                if udp_fwd_json is None:
-                    # Fallback IPv4
-                    print(f"   ⚠️ Reintentando UDP FORWARD {rate} con IPv4")
-                    udp_fwd_json = run_json([
-                        Config.IPERF_PATH, "-4", "-c", self.iperf_server, "-u", "-b", rate,
-                        "-t", str(duration), "-J", "-l", "1400"
-                    ])
-                
-                if udp_fwd_json:
-                    sum_info = udp_fwd_json.get("end", {}).get("sum", {})
-                    actual_bps = sum_info.get("bits_per_second", 0)
-                    lost = sum_info.get("lost_percent", 0)
-                    jitter = sum_info.get("jitter_ms", 0)
-                    
-                    # Calcular calidad
-                    if lost < 0.1 and jitter < 2.0:
-                        quality = "EXCELENTE"
-                    elif lost < 0.5 and jitter < 5.0:
-                        quality = "BUENA"
-                    elif lost < 1.0:
-                        quality = "ACEPTABLE"
-                    else:
-                        quality = "PROBLEMÁTICA"
-                    
-                    results["tests"]["udp_forward_tests"][f"udp_forward_{rate}"] = {
-                        "target_mbps": float(rate.rstrip("M")),
-                        "actual_mbps": actual_bps / 1_000_000,
-                        "jitter_ms": jitter,
-                        "lost_percent": lost,
-                        "total_packets": sum_info.get("packets", 0),
-                        "lost_packets": sum_info.get("lost_packets", 0),
-                        "quality": quality,
-                    }
-                    print(f"   ✅ UDP FORWARD {rate}: {actual_bps/1_000_000:.1f} Mbps, {lost:.2f}% loss, calidad: {quality}")
-                else:
-                    results["tests"]["udp_forward_tests"][f"udp_forward_{rate}"] = {
-                        "error": f"Failed UDP forward test {rate}"
-                    }
+                # PARSEAR DEL RAW OUTPUT
+                for line in udp_fwd_lines:
+                    if "0.00-" in line or "0.0-" in line:  # Línea final con resumen
+                        if "ms" in line and "%" in line:  # Línea con todos los datos
+                            # Throughput
+                            match_bw = re.search(r'([\d.]+)\s+([KMG])bits/sec', line)
+                            if match_bw:
+                                value = float(match_bw.group(1))
+                                unit = match_bw.group(2)
+                                actual_bps = (value * 1_000_000_000 if unit == 'G' else 
+                                            value * 1_000_000 if unit == 'M' else 
+                                            value * 1_000)
+                            
+                            # Jitter
+                            match_jitter = re.search(r'([\d.]+)\s+ms', line)
+                            jitter = float(match_jitter.group(1)) if match_jitter else 0
+                            
+                            # Loss
+                            match_loss = re.search(r'\(([\d.]+)%\)', line)
+                            lost_percent = float(match_loss.group(1)) if match_loss else 0
+                            
+                            # Packets
+                            match_packets = re.search(r'(\d+)/(\d+)', line)
+                            if match_packets:
+                                lost_packets = int(match_packets.group(1))
+                                total_packets = int(match_packets.group(2))
+                            else:
+                                lost_packets = 0
+                                total_packets = 0
+                            
+                            # Quality
+                            quality = ("EXCELENTE" if lost_percent < 0.1 and jitter < 2.0 else
+                                    "BUENA" if lost_percent < 0.5 and jitter < 5.0 else
+                                    "ACEPTABLE" if lost_percent < 1.0 else
+                                    "PROBLEMÁTICA")
+                            
+                            results["tests"]["udp_forward_tests"][f"udp_forward_{rate}"] = {
+                                "target_mbps": float(rate.rstrip("M")),
+                                "actual_mbps": actual_bps / 1_000_000,
+                                "jitter_ms": jitter,
+                                "lost_percent": lost_percent,
+                                "total_packets": total_packets,
+                                "lost_packets": lost_packets,
+                                "quality": quality
+                            }
+                            break
 
-            # 4. MÚLTIPLES TESTS UDP REVERSE (CON RATE DINÁMICO)
-            # Dynamic rate calculation based on TCP reverse results
-            udp_reverse_rates = ["3M"]  # Start with 3M as baseline
-            
+                        # 4. UDP REVERSE - igual que forward
+            results["tests"]["udp_reverse_tests"] = {}
+            udp_reverse_rates = ["3M"]  # Rate base
+
+            # Calcular rate dinámico basado en TCP Reverse
             if "tcp_reverse" in results["tests"]:
                 tcp_rev_data = results["tests"]["tcp_reverse"]
-                # Get minimum of upload and download from TCP reverse
                 min_tcp_rate = min(tcp_rev_data["upload_mbps"], tcp_rev_data["download_mbps"])
-                # Format as string with M suffix, rounded to 1 decimal
                 dynamic_rate = f"{min_tcp_rate/2:.1f}M"
                 udp_reverse_rates.append(dynamic_rate)
-                print(f"\n   📈 Dynamic UDP reverse rate based on TCP: {dynamic_rate}")
             else:
-                # Fallback if TCP reverse failed
+                # Si no hay TCP, usar default
                 udp_reverse_rates.append("10M")
-                print(f"\n   ⚠️ Using default 10M rate (TCP reverse unavailable)")
-            
-            print(f"\n4. UDP REVERSE TESTS (servidor -> cliente)")
-            print(f"   Testing rates: {', '.join(udp_reverse_rates)}")
-            results["tests"]["udp_reverse_tests"] = {}
-            
             for rate in udp_reverse_rates:
-                print(f"\n   4.{udp_reverse_rates.index(rate)+1}. UDP REVERSE {rate}")
-                print("-" * 40)
-                
-                # Streaming
                 udp_rev_lines = stream_process([
                     Config.IPERF_PATH, "-c", self.iperf_server, "-u", "-R", "-b", rate,
                     "-t", str(duration), "-i", "1", "-l", "1400"
-                ], f"UDP REVERSE {rate} (streaming)")
+                ], f"UDP REVERSE {rate}")
                 results["raw_output"].extend(udp_rev_lines)
                 
-                # JSON
-                udp_rev_json = run_json([
-                    Config.IPERF_PATH, "-c", self.iperf_server, "-u", "-R", "-b", rate,
-                    "-t", str(duration), "-J", "-l", "1400"
-                ])
-                
-                if udp_rev_json is None:
-                    # Fallback IPv4
-                    print(f"   ⚠️ Reintentando UDP REVERSE {rate} con IPv4")
-                    udp_rev_json = run_json([
-                        Config.IPERF_PATH, "-4", "-c", self.iperf_server, "-u", "-R", "-b", rate,
-                        "-t", str(duration), "-J", "-l", "1400"
-                    ])
-                
-                if udp_rev_json:
-                    sum_info = udp_rev_json.get("end", {}).get("sum", {})
-                    actual_bps = sum_info.get("bits_per_second", 0)
-                    lost = sum_info.get("lost_percent", 0)
-                    jitter = sum_info.get("jitter_ms", 0)
-                    
-                    # Calcular calidad
-                    if lost < 0.1 and jitter < 2.0:
-                        quality = "EXCELENTE"
-                    elif lost < 0.5 and jitter < 5.0:
-                        quality = "BUENA"
-                    elif lost < 1.0:
-                        quality = "ACEPTABLE"
-                    else:
-                        quality = "PROBLEMÁTICA"
-                    
-                    results["tests"]["udp_reverse_tests"][f"udp_reverse_{rate}"] = {
-                        "target_mbps": float(rate.rstrip("M")),
-                        "actual_mbps": actual_bps / 1_000_000,
-                        "jitter_ms": jitter,
-                        "lost_percent": lost,
-                        "total_packets": sum_info.get("packets", 0),
-                        "lost_packets": sum_info.get("lost_packets", 0),
-                        "quality": quality,
-                    }
-                    print(f"   ✅ UDP REVERSE {rate}: {actual_bps/1_000_000:.1f} Mbps, {lost:.2f}% loss, calidad: {quality}")
-                else:
-                    results["tests"]["udp_reverse_tests"][f"udp_reverse_{rate}"] = {
-                        "error": f"Failed UDP reverse test {rate}"
-                    }
+                # PARSEAR DEL RAW OUTPUT (mismo código que forward)
+                for line in udp_rev_lines:
+                    if "0.00-" in line or "0.0-" in line:
+                        if "ms" in line and "%" in line:
+                            # (mismo parseo que forward)
+                            match_bw = re.search(r'([\d.]+)\s+([KMG])bits/sec', line)
+                            if match_bw:
+                                value = float(match_bw.group(1))
+                                unit = match_bw.group(2)
+                                actual_bps = (value * 1_000_000_000 if unit == 'G' else 
+                                            value * 1_000_000 if unit == 'M' else 
+                                            value * 1_000)
+                            
+                            match_jitter = re.search(r'([\d.]+)\s+ms', line)
+                            jitter = float(match_jitter.group(1)) if match_jitter else 0
+                            
+                            match_loss = re.search(r'\(([\d.]+)%\)', line)
+                            lost_percent = float(match_loss.group(1)) if match_loss else 0
+                            
+                            match_packets = re.search(r'(\d+)/(\d+)', line)
+                            if match_packets:
+                                lost_packets = int(match_packets.group(1))
+                                total_packets = int(match_packets.group(2))
+                            else:
+                                lost_packets = 0
+                                total_packets = 0
+                            
+                            quality = ("EXCELENTE" if lost_percent < 0.1 and jitter < 2.0 else
+                                    "BUENA" if lost_percent < 0.5 and jitter < 5.0 else
+                                    "ACEPTABLE" if lost_percent < 1.0 else
+                                    "PROBLEMÁTICA")
+                            
+                            results["tests"]["udp_reverse_tests"][f"udp_reverse_{rate}"] = {
+                                "target_mbps": float(rate.rstrip("M")),
+                                "actual_mbps": actual_bps / 1_000_000,
+                                "jitter_ms": jitter,
+                                "lost_percent": lost_percent,
+                                "total_packets": total_packets,
+                                "lost_packets": lost_packets,
+                                "quality": quality
+                            }
+                            break
 
             # Resumen final
             print("\n" + "=" * 70)
