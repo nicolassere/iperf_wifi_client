@@ -8561,11 +8561,466 @@
           }
         ]
       }
+    },
+    {
+      "id": 39,
+      "timestamp": "2025-08-07T17:40:00.718310",
+      "location": null,
+      "networks": [
+        {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 99,
+          "signal_dbm": -30.5,
+          "snr_db": 69.5,
+          "signal_quality": "Excellent",
+          "channel": 149,
+          "band": "5GHz",
+          "authentication": "WPA2-Personal"
+        },
+        {
+          "ssid": "Puma",
+          "bssid": "b8:dd:71:e3:9c:3a",
+          "signal": 99,
+          "signal_dbm": -30.5,
+          "snr_db": 64.5,
+          "signal_quality": "Excellent",
+          "channel": 1,
+          "band": "2.4GHz",
+          "authentication": "WPA2-Personal"
+        }
+      ],
+      "tests": {},
+      "client_network_info": null
+    },
+    {
+      "id": 40,
+      "timestamp": "2025-08-08T00:26:37.414226",
+      "location": null,
+      "networks": [
+        {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 99,
+          "signal_dbm": -30.5,
+          "snr_db": 69.5,
+          "signal_quality": "Excellent",
+          "channel": 149,
+          "band": "5GHz",
+          "authentication": "WPA2-Personal"
+        },
+        {
+          "ssid": "Puma",
+          "bssid": "b8:dd:71:e3:9c:3a",
+          "signal": 88,
+          "signal_dbm": -37.0,
+          "snr_db": 58.0,
+          "signal_quality": "Excellent",
+          "channel": 1,
+          "band": "2.4GHz",
+          "authentication": "WPA2-Personal"
+        }
+      ],
+      "tests": {},
+      "client_network_info": null
+    },
+    {
+      "id": 41,
+      "timestamp": "2025-08-08T00:26:47.835293",
+      "location": null,
+      "networks": [
+        {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 99,
+          "signal_dbm": -30.5,
+          "snr_db": 69.5,
+          "signal_quality": "Excellent",
+          "channel": 149,
+          "band": "5GHz",
+          "authentication": "WPA2-Personal"
+        },
+        {
+          "ssid": "Puma",
+          "bssid": "b8:dd:71:e3:9c:3a",
+          "signal": 88,
+          "signal_dbm": -37.0,
+          "snr_db": 58.0,
+          "signal_quality": "Excellent",
+          "channel": 1,
+          "band": "2.4GHz",
+          "authentication": "WPA2-Personal"
+        }
+      ],
+      "tests": {},
+      "client_network_info": null
+    },
+    {
+      "id": 42,
+      "timestamp": "2025-08-08T00:33:03.474506",
+      "location": null,
+      "networks": [
+        {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 99,
+          "signal_dbm": -30.5,
+          "snr_db": 69.5,
+          "signal_quality": "Excellent",
+          "channel": 149,
+          "band": "5GHz",
+          "authentication": "WPA2-Personal"
+        },
+        {
+          "ssid": "Puma",
+          "bssid": "b8:dd:71:e3:9c:3a",
+          "signal": 88,
+          "signal_dbm": -37.0,
+          "snr_db": 58.0,
+          "signal_quality": "Excellent",
+          "channel": 1,
+          "band": "2.4GHz",
+          "authentication": "WPA2-Personal"
+        }
+      ],
+      "tests": {},
+      "client_network_info": null
+    },
+    {
+      "id": 43,
+      "timestamp": "2025-08-08T00:33:09.125069",
+      "location": null,
+      "networks": [
+        {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 99,
+          "signal_dbm": -30.5,
+          "snr_db": 69.5,
+          "signal_quality": "Excellent",
+          "channel": 149,
+          "band": "5GHz",
+          "authentication": "WPA2-Personal"
+        },
+        {
+          "ssid": "Puma",
+          "bssid": "b8:dd:71:e3:9c:3a",
+          "signal": 88,
+          "signal_dbm": -37.0,
+          "snr_db": 58.0,
+          "signal_quality": "Excellent",
+          "channel": 1,
+          "band": "2.4GHz",
+          "authentication": "WPA2-Personal"
+        }
+      ],
+      "tests": {},
+      "client_network_info": null
+    },
+    {
+      "id": 44,
+      "timestamp": "2025-08-08T00:33:42.523163",
+      "location": null,
+      "networks": [
+        {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 99,
+          "signal_dbm": -30.5,
+          "snr_db": 69.5,
+          "signal_quality": "Excellent",
+          "channel": 149,
+          "band": "5GHz",
+          "authentication": "WPA2-Personal"
+        },
+        {
+          "ssid": "Puma",
+          "bssid": "b8:dd:71:e3:9c:3a",
+          "signal": 88,
+          "signal_dbm": -37.0,
+          "snr_db": 58.0,
+          "signal_quality": "Excellent",
+          "channel": 1,
+          "band": "2.4GHz",
+          "authentication": "WPA2-Personal"
+        }
+      ],
+      "tests": {},
+      "client_network_info": null
+    },
+    {
+      "id": 45,
+      "timestamp": "2025-08-08T00:56:02.741046",
+      "location": null,
+      "networks": [
+        {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 99,
+          "signal_dbm": -30.5,
+          "snr_db": 69.5,
+          "signal_quality": "Excellent",
+          "channel": 149,
+          "band": "5GHz",
+          "authentication": "WPA2-Personal"
+        }
+      ],
+      "tests": {},
+      "client_network_info": {
+        "client_ip": "192.168.1.8",
+        "gateway": "192.168.1.1",
+        "dns_servers": [],
+        "interface_name": "Adaptador de LAN inal\u00a0mbrica Wi-Fi 2:",
+        "subnet_mask": "255.255.255.0",
+        "timestamp": 1754625362.7420454
+      },
+      "test_type": "wifi_only",
+      "ap_summary": {
+        "total_aps_found": 1,
+        "strongest_ap": {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 99,
+          "signal_dbm": -30.5,
+          "channel": 149,
+          "band": "5GHz"
+        },
+        "client_ip": "192.168.1.8",
+        "gateway": "192.168.1.1",
+        "ap_list": [
+          {
+            "ssid": "Pumita",
+            "bssid": "b8:dd:71:e3:9c:3c",
+            "signal_percentage": 99,
+            "signal_dbm": -30.5,
+            "snr_db": 69.5,
+            "channel": 149,
+            "band": "5GHz",
+            "signal_quality": "Excellent",
+            "authentication": "WPA2-Personal"
+          }
+        ]
+      }
+    },
+    {
+      "id": 46,
+      "timestamp": "2025-08-08T00:56:17.496286",
+      "location": null,
+      "networks": [
+        {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 99,
+          "signal_dbm": -30.5,
+          "snr_db": 69.5,
+          "signal_quality": "Excellent",
+          "channel": 149,
+          "band": "5GHz",
+          "authentication": "WPA2-Personal"
+        },
+        {
+          "ssid": "Puma",
+          "bssid": "b8:dd:71:e3:9c:3a",
+          "signal": 83,
+          "signal_dbm": -42.0,
+          "snr_db": 53.0,
+          "signal_quality": "Excellent",
+          "channel": 1,
+          "band": "2.4GHz",
+          "authentication": "WPA2-Personal"
+        }
+      ],
+      "tests": {
+        "speedtest": {
+          "success": true,
+          "download_mbps": 52.430568,
+          "upload_mbps": 5.236872,
+          "ping_ms": 3.862,
+          "server": "Antel",
+          "raw_data": {
+            "type": "result",
+            "timestamp": "2025-08-08T03:56:34Z",
+            "ping": {
+              "jitter": 0.262,
+              "latency": 3.862,
+              "low": 3.584,
+              "high": 4.057
+            },
+            "download": {
+              "bandwidth": 52430568,
+              "bytes": 563954363,
+              "elapsed": 11522,
+              "latency": {
+                "iqm": 682.269,
+                "low": 14.654,
+                "high": 2067.057,
+                "jitter": 102.357
+              }
+            },
+            "upload": {
+              "bandwidth": 5236872,
+              "bytes": 19085838,
+              "elapsed": 3645,
+              "latency": {
+                "iqm": 306.904,
+                "low": 7.055,
+                "high": 560.532,
+                "jitter": 85.012
+              }
+            },
+            "packetLoss": 0,
+            "isp": "Antel Uruguay",
+            "interface": {
+              "internalIp": "2800:a4:1ca8:7a00:7546:6fc:f1ec:bf94",
+              "name": "",
+              "macAddr": "D8:FC:93:BC:E1:16",
+              "isVpn": false,
+              "externalIp": "2800:a4:1ca8:7a00:7546:6fc:f1ec:bf94"
+            },
+            "server": {
+              "id": 40741,
+              "host": "testdevelocidad.com.uy",
+              "port": 8080,
+              "name": "Antel",
+              "location": "Montevideo",
+              "country": "Uruguay",
+              "ip": "2800:a0:1:c828:1e00:1800:0:8"
+            },
+            "result": {
+              "id": "8cbb7b14-d50f-4363-a079-321fe3ed1b54",
+              "url": "https://www.speedtest.net/result/c/8cbb7b14-d50f-4363-a079-321fe3ed1b54",
+              "persisted": true
+            }
+          }
+        }
+      },
+      "client_network_info": {
+        "client_ip": "192.168.1.8",
+        "gateway": "192.168.1.1",
+        "dns_servers": [],
+        "interface_name": "Adaptador de LAN inal\u00a0mbrica Wi-Fi 2:",
+        "subnet_mask": "255.255.255.0",
+        "timestamp": 1754625377.4962866
+      },
+      "test_type": "wifi_speedtest",
+      "ap_summary": {
+        "total_aps_found": 2,
+        "strongest_ap": {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 99,
+          "signal_dbm": -30.5,
+          "channel": 149,
+          "band": "5GHz"
+        },
+        "client_ip": "192.168.1.8",
+        "gateway": "192.168.1.1",
+        "ap_list": [
+          {
+            "ssid": "Pumita",
+            "bssid": "b8:dd:71:e3:9c:3c",
+            "signal_percentage": 99,
+            "signal_dbm": -30.5,
+            "snr_db": 69.5,
+            "channel": 149,
+            "band": "5GHz",
+            "signal_quality": "Excellent",
+            "authentication": "WPA2-Personal"
+          },
+          {
+            "ssid": "Puma",
+            "bssid": "b8:dd:71:e3:9c:3a",
+            "signal_percentage": 83,
+            "signal_dbm": -42.0,
+            "snr_db": 53.0,
+            "channel": 1,
+            "band": "2.4GHz",
+            "signal_quality": "Excellent",
+            "authentication": "WPA2-Personal"
+          }
+        ]
+      }
+    },
+    {
+      "id": 47,
+      "timestamp": "2025-08-08T00:56:47.735102",
+      "location": null,
+      "networks": [
+        {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 99,
+          "signal_dbm": -30.5,
+          "snr_db": 69.5,
+          "signal_quality": "Excellent",
+          "channel": 149,
+          "band": "5GHz",
+          "authentication": "WPA2-Personal"
+        },
+        {
+          "ssid": "Puma",
+          "bssid": "b8:dd:71:e3:9c:3a",
+          "signal": 83,
+          "signal_dbm": -42.0,
+          "snr_db": 53.0,
+          "signal_quality": "Excellent",
+          "channel": 1,
+          "band": "2.4GHz",
+          "authentication": "WPA2-Personal"
+        }
+      ],
+      "tests": {},
+      "client_network_info": {
+        "client_ip": "192.168.1.8",
+        "gateway": "192.168.1.1",
+        "dns_servers": [],
+        "interface_name": "Adaptador de LAN inal\u00a0mbrica Wi-Fi 2:",
+        "subnet_mask": "255.255.255.0",
+        "timestamp": 1754625407.735102
+      },
+      "test_type": "wifi_only",
+      "ap_summary": {
+        "total_aps_found": 2,
+        "strongest_ap": {
+          "ssid": "Pumita",
+          "bssid": "b8:dd:71:e3:9c:3c",
+          "signal": 99,
+          "signal_dbm": -30.5,
+          "channel": 149,
+          "band": "5GHz"
+        },
+        "client_ip": "192.168.1.8",
+        "gateway": "192.168.1.1",
+        "ap_list": [
+          {
+            "ssid": "Pumita",
+            "bssid": "b8:dd:71:e3:9c:3c",
+            "signal_percentage": 99,
+            "signal_dbm": -30.5,
+            "snr_db": 69.5,
+            "channel": 149,
+            "band": "5GHz",
+            "signal_quality": "Excellent",
+            "authentication": "WPA2-Personal"
+          },
+          {
+            "ssid": "Puma",
+            "bssid": "b8:dd:71:e3:9c:3a",
+            "signal_percentage": 83,
+            "signal_dbm": -42.0,
+            "snr_db": 53.0,
+            "channel": 1,
+            "band": "2.4GHz",
+            "signal_quality": "Excellent",
+            "authentication": "WPA2-Personal"
+          }
+        ]
+      }
     }
   ],
   "ap_data": {},
   "network_test_results": {},
   "id_mapping": {},
-  "next_measurement_id": 39,
-  "last_updated": "2025-08-06T09:34:35.806022"
+  "next_measurement_id": 48,
+  "last_updated": "2025-08-08T00:56:47.817103"
 }

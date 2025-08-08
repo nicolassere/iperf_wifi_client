@@ -77,6 +77,11 @@ def main():
         print("10. Network diagnostics")
         print("11. Change iPerf server")
         print("12. Ethernet Test")
+        print("13. WiFi only analysis")
+        print("14. WiFi + SpeedTest")
+        print("15. WiFi + iPerf")
+        print("16. iPerf only")
+        print("17. iPerf + SpeedTest")
         print("0. Exit")
         print("="*60)
         
@@ -137,6 +142,35 @@ def main():
         
         elif choice =="12":
             ethernet_diagnostics()
+        
+        elif choice == "13":
+            # WiFi only analysis
+           manager.scan_wifi_only()
+
+        elif choice == "14":
+            # WiFi + SpeedTest
+            manager.wifi_and_speedtest()
+        elif choice == "15":
+            # WiFi + iPerf
+            manager.wifi_and_iperf()
+        elif choice == "16":
+            # iPerf only
+            manager.run_iperf_only()
+        elif choice == "17":
+            # iPerf + SpeedTest
+            manager.iperf_and_speedtest()
+
+
+
+
+
+
+
+    
+
+
+
+
 
 
 def ethernet_diagnostics():
